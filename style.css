@@ -1,0 +1,329 @@
+/* --- 1. RESET & VARIABLES --- */
+:root {
+    --primary: #E50914; /* Rouge */
+    --bg: #141414;      /* Fond Noir */
+    --light: #ffffff;
+    --gray: #aaa;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Helvetica Neue', Arial, sans-serif; outline: none; }
+body { background-color: var(--bg); color: var(--light); overflow-x: hidden; }
+
+/* --- 2. NAVBAR & LOGO --- */
+.navbar {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 15px 4%; position: fixed; width: 100%; top: 0; z-index: 1000;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 100%);
+    transition: 0.3s;
+}
+.navbar.scrolled { background-color: #0f0f0f; box-shadow: 0 2px 10px rgba(0,0,0,0.5); }
+
+/* --- CORRECTION LOGO NOIR --- */
+.logo-container { display: flex; align-items: center; }
+.logo-img {
+    height: 45px; width: auto; object-fit: contain;
+    /* CETTE LIGNE MAGIQUE TRANSFORME LE NOIR EN BLANC */
+    filter: invert(1) brightness(200%); 
+    transition: transform 0.3s;
+}
+.logo-img:hover { transform: scale(1.05); }
+
+/* Recherche & Menu */
+.search-box { display: flex; background: rgba(255,255,255,0.1); border-radius: 20px; padding: 5px 15px; border: 1px solid rgba(255,255,255,0.2); }
+.search-box input { background: transparent; border: none; color: white; width: 150px; }
+.nav-links { list-style: none; display: flex; gap: 20px; }
+.nav-links a { text-decoration: none; color: var(--gray); font-size: 14px; transition: 0.3s; }
+.nav-links a:hover, .nav-links a.active { color: var(--light); }
+.hamburger { display: none; font-size: 24px; cursor: pointer; color: white; }
+
+/* --- 3. HERO & FILMS --- */
+.hero { height: 60vh; position: relative; display: flex; align-items: center; padding: 0 4%; background-size: cover; background-position: center; }
+.hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to top, var(--bg) 0%, transparent 60%); }
+.hero-content { position: relative; z-index: 2; max-width: 600px; margin-top: 50px; }
+.hero h1 { font-size: 2.5rem; margin: 10px 0; }
+.btn { padding: 8px 20px; border-radius: 4px; border: none; font-weight: bold; cursor: pointer; margin-right: 10px; }
+.btn-white { background: white; color: black; }
+.btn-glass { background: rgba(100,100,100,0.6); color: white; }
+
+/* Grille Films */
+#main-container { padding: 20px 0; margin-top: -40px; position: relative; z-index: 10; }
+.category-section { margin-bottom: 30px; padding-left: 4%; }
+.category-title { font-size: 1.1rem; margin-bottom: 10px; color: #e5e5e5; }
+.movie-row { display: flex; gap: 10px; overflow-x: auto; padding-right: 4%; padding-bottom: 10px; scrollbar-width: none; }
+.movie-row::-webkit-scrollbar { display: none; }
+.movie-card { min-width: 140px; max-width: 140px; height: 210px; border-radius: 6px; overflow: hidden; cursor: pointer; transition: transform 0.3s; }
+.movie-card img { width: 100%; height: 100%; object-fit: cover; }
+.movie-card:hover { transform: scale(1.05); z-index: 5; }
+
+/* --- 4. MODAL & LECTEUR --- */
+.modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 2000; justify-content: center; align-items: center; backdrop-filter: blur(5px); }
+.modal-content { background: #141414; width: 100%; max-width: 900px; max-height: 90vh; border-radius: 10px; overflow-y: auto; position: relative; display: flex; flex-direction: column; }
+.modal-cover { height: 40vh; background-size: cover; background-position: center; position: relative; }
+.center-play { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 50px; color: white; background: rgba(229, 9, 20, 0.8); border: none; border-radius: 50%; width: 70px; height: 70px; cursor: pointer; }
+
+/* Vidéo Container 16:9 */
+.video-container { width: 100%; padding-bottom: 56.25%; position: relative; background: black; display: none; }
+.video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
+
+.modal-info { padding: 20px; }
+.modal-meta { display: flex; gap: 10px; margin: 10px 0; color: #bbb; font-size: 0.9rem; }
+.btn-red { background: var(--primary); color: white; width: 100%; padding: 10px; margin-bottom: 10px; }
+.btn-gray { background: #333; color: white; width: 100%; padding: 10px; text-decoration: none; display: inline-block; text-align: center; }
+.close-modal { position: absolute; top: 15px; right: 20px; font-size: 30px; cursor: pointer; z-index: 10; color: white; background: rgba(0,0,0,0.5); width: 40px; height: 40px; text-align: center; border-radius: 50%; }
+
+/* --- MOBILE --- */
+@media (max-width: 768px) {
+    .nav-links { display: none; position: absolute; top: 60px; right: 0; background: black; width: 100%; flex-direction: column; text-align: center; padding: 20px; }
+    .nav-links.active { display: flex; }
+    .hamburger { display: block; }
+    .modal { align-items: flex-end; }
+    .modal-content { height: 85vh; border-radius: 15px 15px 0 0; }
+    .logo-img { height: 35px; } /* Ajuste taille logo mobile */
+}
+/* --- PAGE GALERIE (images.html) --- */
+.gallery-grid {
+    display: grid;
+    /* Crée autant de colonnes que possible, minimum 150px de large */
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 15px;
+    padding: 20px 4%;
+}
+
+.gallery-card {
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+    aspect-ratio: 2/3; /* Format affiche standard */
+    transition: transform 0.3s;
+}
+
+.gallery-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* L'effet sombre avec le titre qui apparaît par dessus */
+.gallery-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+    padding: 20px 10px 10px 10px;
+    opacity: 0; /* Caché par défaut */
+    transition: opacity 0.3s;
+    text-align: center;
+}
+
+.gallery-card:hover {
+    transform: scale(1.05);
+    z-index: 2;
+    box-shadow: 0 0 15px rgba(229, 9, 20, 0.5); /* Lueur rouge */
+}
+
+.gallery-card:hover .gallery-overlay {
+    opacity: 1; /* Apparaît au survol */
+}
+
+.gallery-overlay h3 {
+    font-size: 14px;
+    color: white;
+    margin-bottom: 5px;
+}
+.gallery-overlay span {
+    font-size: 12px;
+    color: #ccc;
+    background: var(--primary);
+    padding: 2px 5px;
+    border-radius: 3px;
+}
+
+/* Ajustement Mobile pour la galerie */
+@media (max-width: 768px) {
+    .gallery-grid {
+        grid-template-columns: repeat(3, 1fr); /* 3 images par ligne sur mobile */
+        gap: 5px;
+    }
+    .gallery-overlay {
+        opacity: 1; /* Toujours afficher le titre sur mobile car pas de souris */
+        background: linear-gradient(to top, rgba(0,0,0,0.8) 50%, transparent);
+        padding: 5px;
+    }
+    .gallery-overlay h3 {
+        font-size: 10px;
+    }
+    .gallery-overlay span {
+        display: none; /* Cache l'origine sur mobile pour gagner de la place */
+    }
+}
+/* --- PAGE À PROPOS (apropos.html) --- */
+.about-container {
+    max-width: 900px;
+    margin: 80px auto 40px auto; /* Marge pour ne pas être caché par la navbar */
+    padding: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1.5fr; /* Deux colonnes : Gauche (Pierre), Droite (Projet) */
+    gap: 30px;
+}
+
+/* Carte Profil (Gauche) */
+.profile-section {
+    background: #1f1f1f;
+    border-radius: 15px;
+    padding: 30px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    border: 1px solid #333;
+}
+
+.profile-img {
+    width: 100px; height: 100px;
+    background: var(--primary);
+    border-radius: 50%;
+    margin: 0 auto 15px auto;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 40px; color: white;
+    border: 3px solid white;
+}
+
+.profile-header h1 { margin: 5px 0; font-size: 24px; color: white; }
+.real-name { font-size: 16px; color: #aaa; margin-bottom: 15px; font-weight: normal; }
+
+.profile-body { text-align: left; margin-top: 30px; }
+
+.info-group {
+    display: flex; align-items: center; gap: 15px; margin-bottom: 20px;
+    background: rgba(255,255,255,0.05); padding: 10px; border-radius: 8px;
+}
+.info-group i { font-size: 20px; color: var(--primary); width: 25px; text-align: center; }
+.info-group strong { display: block; color: white; font-size: 14px; }
+.info-group p { font-size: 13px; color: #888; margin: 0; }
+
+/* Badges Technologies */
+.tech-stack h3 { font-size: 16px; margin-bottom: 10px; color: #ddd; text-align: center; }
+.tags { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+
+.tag {
+    font-size: 12px; padding: 5px 10px; border-radius: 20px; font-weight: bold; color: #141414;
+}
+.tag.html { background: #e34c26; color: white; }
+.tag.css { background: #264de4; color: white; }
+.tag.js { background: #f7df1e; color: black; }
+.tag.json { background: #bbb; color: black; }
+
+/* Carte Projet (Droite) */
+.project-description {
+    background: linear-gradient(145deg, #1f1f1f, #141414);
+    border-radius: 15px;
+    padding: 30px;
+    border: 1px solid #333;
+}
+.project-description h2 { color: var(--primary); margin-bottom: 20px; }
+.project-description p { line-height: 1.6; color: #ccc; margin-bottom: 20px; }
+
+.features-list { list-style: none; }
+.features-list li {
+    margin-bottom: 15px;
+    display: flex; align-items: flex-start; gap: 10px;
+    color: #ddd; font-size: 14px; line-height: 1.5;
+}
+.features-list li i { color: #46d369; margin-top: 3px; } /* Vert pour validé */
+
+.footer-note {
+    margin-top: 40px; padding-top: 20px; border-top: 1px solid #333;
+    text-align: center; color: #666; font-size: 12px;
+}
+.footer-note strong { color: var(--primary); }
+
+/* RESPONSIVE MOBILE */
+@media (max-width: 768px) {
+    .about-container {
+        grid-template-columns: 1fr; /* Une seule colonne sur mobile */
+        margin-top: 60px;
+    }
+}
+/* --- PAGE COMMANDE (demande.html) --- */
+.request-container {
+    display: flex;
+    max-width: 1000px;
+    margin: 100px auto 50px auto;
+    padding: 0 20px;
+    gap: 40px;
+    align-items: flex-start;
+}
+
+/* Carte Prix (Gauche) */
+.price-card {
+    flex: 1;
+    background: linear-gradient(135deg, #f5af19, #f12711); /* Dégradé Or/Orange */
+    color: #1a1a1a;
+    padding: 30px;
+    border-radius: 15px;
+    position: relative;
+    text-align: center;
+    box-shadow: 0 0 20px rgba(241, 39, 17, 0.4);
+}
+
+.badge-vip {
+    position: absolute; top: -15px; right: -15px;
+    background: black; color: white; padding: 5px 15px;
+    border-radius: 20px; font-weight: bold; transform: rotate(10deg);
+}
+
+.price-card h2 { font-size: 22px; margin-bottom: 10px; }
+.price { font-size: 50px; font-weight: bold; margin: 15px 0; }
+
+.benefits { list-style: none; text-align: left; margin: 20px 0; background: rgba(255,255,255,0.2); padding: 15px; border-radius: 10px; }
+.benefits li { margin-bottom: 10px; font-weight: 500; display: flex; align-items: center; gap: 10px; }
+
+.payment-methods { margin-top: 20px; font-size: 14px; font-weight: bold; }
+
+/* Formulaire (Droite) */
+.form-section {
+    flex: 1.5;
+    background: #1f1f1f;
+    padding: 30px;
+    border-radius: 15px;
+    border: 1px solid #333;
+}
+
+.form-group { margin-bottom: 20px; }
+.form-group label { display: block; margin-bottom: 8px; color: #ddd; font-size: 14px; }
+
+.form-group input, 
+.form-group select, 
+.form-group textarea {
+    width: 100%;
+    padding: 12px;
+    background: #141414;
+    border: 1px solid #333;
+    color: white;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.form-group input:focus, .form-group textarea:focus {
+    border-color: var(--primary);
+}
+
+.btn-submit {
+    width: 100%;
+    background: var(--primary);
+    color: white;
+    padding: 15px;
+    font-size: 18px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+    font-weight: bold;
+}
+.btn-submit:hover { background: #b20710; }
+
+/* Responsive Mobile */
+@media (max-width: 768px) {
+    .request-container { flex-direction: column; margin-top: 70px; }
+    .price-card { width: 100%; }
+    .form-section { width: 100%; }
+}

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>FILMSall - Streaming Gratuit</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="logo/filmsall.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <meta name="theme-color" content="#000000">
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar" id="navbar">
+        <div class="logo-container">
+            <!-- Le logo noir sera inversé en blanc par le CSS -->
+            <img src="logo/filmsall.png" alt="FILMSall" class="logo-img">
+        </div>
+        
+        <div class="search-box">
+            <input type="text" id="search-input" placeholder="Titres, pays...">
+            <button id="search-btn"><i class="fas fa-search"></i></button>
+        </div>
+
+        <div class="hamburger" id="hamburger">
+            <i class="fas fa-bars"></i>
+        </div>
+
+        <ul class="nav-links" id="nav-links">
+            <li><a href="index.html" class="active">Accueil</a></li>
+            <li><a href="images.html">Galerie</a></li>
+            <li><a href="demande.html" style="color:#f5af19; font-weight:bold;">Commander (1$)</a></li>
+            <li><a href="apropos.html">À propos</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Banner -->
+    <header class="hero" id="hero-section">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <span class="hero-tag">À la une</span>
+            <h1 id="hero-title">Chargement...</h1>
+            <p id="hero-desc" class="hero-desc">...</p>
+            <div class="hero-buttons">
+                <button class="btn btn-white" id="hero-play"><i class="fas fa-play"></i> Lecture</button>
+                <button class="btn btn-glass" id="hero-info"><i class="fas fa-info-circle"></i> Infos</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Conteneur Films -->
+    <main id="main-container">
+        <!-- JS injectera les films ici -->
+    </main>
+
+    <!-- Modal Lecteur -->
+    <div id="video-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            
+            <!-- Zone Vidéo (Cachée au début) -->
+            <div id="video-wrapper" class="video-container" style="display:none;"></div>
+
+            <!-- Couverture (Visible au début) -->
+            <div id="modal-cover" class="modal-cover">
+                <button id="center-play-btn" class="center-play"><i class="fas fa-play"></i></button>
+            </div>
+
+            <div id="modal-info" class="modal-info">
+                <h2 id="modal-title">Titre</h2>
+                <div class="modal-meta">
+                    <span id="modal-year"></span>
+                    <span id="modal-origin" class="badge"></span>
+                    <span id="modal-cat" class="badge-outline"></span>
+                </div>
+                <p id="modal-desc">Description...</p>
+                <div class="modal-actions">
+                    <button id="modal-play" class="btn btn-red">REGARDER</button>
+                    <!-- Le lien sera généré par JS -->
+                    <a id="modal-download" class="btn btn-gray" target="_blank">TÉLÉCHARGER</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

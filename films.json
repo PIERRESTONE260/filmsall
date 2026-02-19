@@ -1,0 +1,134 @@
+[
+  {
+    "id": 1,
+    "titre": "Black Panther: Wakanda Forever 2",
+    "origine": "USA",
+    "categorie": "Action",
+    "annee": 2022,
+    "image": "films/actions/blackbanther.jpeg",
+    "banner": "films/banner/blackbantherbanner.jpeg",
+    "driveId": "", 
+    "description": "Après le décès du roi T'Challa, la Reine Ramonda, Shuri, M'Baku, Okoye et les Dora Milaje luttent pour protéger le Wakanda des ingérences de puissances mondiales. Le peuple doit s'unir pour faire face à une nouvelle menace venue des profondeurs des océans, menée par Namor."
+  },
+  {
+    "id": 2,
+    "titre": "Vaiana 2",
+    "origine": "USA",
+    "categorie": "Animé",
+    "annee": 2024,
+    "image": "films/animes/vaiana2.jpeg",
+    "banner": "films/banner/vaiana2banner.jpg",
+    "driveId": "1ujaVx7dw0LfOC3JemYdCbu7986DPdoeW",
+    "description": "Après avoir entendu un appel mystérieux, Vaiana se lance dans une nouvelle expédition audacieuse vers des mers leintaines et dangereuses. Accompagnée de ses alliés et d'un équipage inattendu, elle devra affronter de nouveaux défis, découvrir des civilisations oubliées et prouver une fois de plus que le courage et la détermination peuvent changer le destin."
+  },
+  {
+    "id": 3,
+    "titre": "Nsyuka",
+    "origine": "Tanzanie",
+    "categorie": "Horreur",
+    "annee": 2009,
+    "image": "films/tradition/SNYUKA.jpg",
+    "banner": "films/banner/nsyukabanner.jpg",
+    "driveId": "",
+    "description": "L'histoire tourne autour d'un mzimu(un esprit ou fantôme) qui revient hanter les vivants."
+  },
+  {
+    "id": 4,
+    "titre": "Mon coeur bat pour toi",
+    "origine": "Nigeria",
+    "categorie": "Romance",
+    "annee": 2020,
+    "image": "films/romance/moncoeurbatpourtoi.jpeg",
+    "banner": "films/banner/moncoeurbatpourtoibanner.jpg",
+    "driveId": "",
+    "description": "Le films met en vedette les acteurs Chidi Dike, Annabel Apara et Harmony Mark. il s'agit d'une histoire d'amour et de passion, de la loyauté et des seniments coplexes"
+  },
+  {
+    "id": 5,
+    "titre": "Luca",
+    "origine": "USA",
+    "categorie": "Animé",
+    "annee": 2021,
+    "image": "films/animes/luca.jpeg",
+    "banner": "films/banner/lucabanner.jpg",
+    "driveId": "",
+    "description": "Luca et Alberto, deux jeunes monstres marins, vivent une aventure estivale inoubliable sur la côte italienne."
+  },
+  {
+    "id": 6,
+    "titre": "Moana",
+    "origine": "USA",
+    "categorie": "Animé",
+    "annee": 2016,
+    "image": "films/animes/moana.jpeg",
+    "banner": "films/banner/moanabanner.jpg",
+    "driveId": "",
+    "description": "Moana, une jeune fille de Polynésie, entreprend un voyage audacieux pour sauver son peuple et son île."
+  },
+  {
+    "id": 7,
+    "titre": "Encanto",
+    "origine": "USA",
+    "categorie": "Animé",
+    "annee": 2021,
+    "image": "films/animes/encanto.jpeg",
+    "banner": "films/banner/encantobanner.jpg",
+    "driveId": "",
+    "description": "Dans les montagnes de Colombie, la famille Madrigal possède des pouvoirs magiques uniques..."
+  },
+  {
+    "id": 8,
+    "titre": "Cosmoball",
+    "origine": "Russie",
+    "categorie": "Action",
+    "annee": 2020,
+    "image": "films/actions/cosmoball.jpg",
+    "banner": "films/banner/cosmoballbanner.jpg",
+    "driveId": "1mCu6zOnqlEDqT2AAeouFVhdbmD_8-MOs",
+    "description": "Dans un futur lointain, la Terre est protégée par un immense vaisseau spatial où se déroule un sport spectaculaire appelé Cosmoball. Un jeune pilote talentueux rejoint l'équipe pour défendre la planète contre une menace extraterrestre imminente."
+  },
+  {
+    "id": 9,
+    "titre": "Raya and the Last Dragon",
+    "origine": "USA",
+    "categorie": "Animé",
+    "annee": 2021,
+    "image": "films/animes/raya.jpeg",
+    "banner": "films/banner/rayabanner.jpg",
+    "driveId": "",
+    "description": "Dans le royaume imaginaire de Kumandra, une guerrière nommée Raya part à la recherche du dernier dragon pour sauver son monde d'une force maléfique."
+  },
+  {
+    "id": 10,
+    "titre": "L'amour et les Dreams:Larmes",
+    "origine": "Nigeria",
+    "categorie": "Romance",
+    "annee": 2020,
+    "image": "films/romance/l'amouretledreamslarmes.jpeg",
+    "banner": "films/banner/l'amouretlesdreamslarmesbanner.jpg",
+    "driveId": "",
+    "description": "le films raconte l'histoire de jeunes confrontés aux réalités difficiles de la vie: amour contrarié, conflits familiaux et pressions sociales. Entre ambitions personnelles et blesseures émotionnelles, leurs choix détermineront si leurs rêves survivront aux épreuves."
+  },
+  {
+    "id": 11,
+    "titre": "Shumileta",
+    "origine": "Tanzanie",
+    "categorie": "Horreur",
+    "annee": 2010,
+    "image": "films/tradition/shumileta.jpg",
+    "banner": "films/banner/shumiletabanner.jpg",
+    "driveId": "",
+    "description": "le film suit l'histoire de Mack, un homme pris au piège par Shumileta, la 'Reine du Diable'. Sa femme tente désespérément de le ramener du royaume des morts avec l'aide d'un guèrisseur, mais la créature maléfique refuse de le laisser repartir sans combattre."
+  },
+  {
+    "id": 12,
+    "titre": "Mon coeur bat pour toi 2",
+    "origine": "Nigeria",
+    "categorie": "Romance",
+    "annee": 2025,
+    "image": "films/romance/fromghettowithlove2.jpeg",
+    "banner": "films/banner/fromghettowithlove2.jpg",
+    "driveId": "",
+    "description": "Cette suite réunit les acteurs Chidi Dike, Annabel Apara et Harmony Mark. L'histoire continue d'explorer les relations sentimentales complexes et les dilemes amoureux, marqués par des secrets et des questions de loyauté au sein de leur communauté."
+  }
+]

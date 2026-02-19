@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Commander un Film - FILMSall</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="logo/filmsall.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar" style="background: linear-gradient(to bottom, rgba(95, 95, 95, 0.9) 0%, rgba(0,0,0,0) 100%); position: fixed;">
+        <a href="index.html" class="logo-container">
+            <img src="logo/filmsall.png" alt="FILMSall" class="logo-img">
+        </a>
+        <ul class="nav-links" style="display:flex;">
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="apropos.html">A propos</a></li>
+        </ul>
+    </nav>
+
+    <div class="request-container">
+        
+        <!-- SECTION PRIX (GAUCHE) -->
+        <div class="price-card">
+            <div class="badge-vip">VIP</div>
+            <h2>Commande Spéciale</h2>
+            <p>Vous ne trouvez pas votre film ?</p>
+            <div class="price">5$ <span style="font-size: 14px; color: #333;">/ film</span></div>
+            <ul class="benefits">
+                <li><i class="fas fa-search"></i> Recherche approfondie</li>
+                <li><i class="fas fa-file-download"></i> Lien direct de téléchargement</li>
+                <li><i class="fas fa-bolt"></i> Réponse rapide</li>
+                <li><i class="fas fa-globe"></i> Films Indiens, US, Tanzaniens...</li>
+            </ul>
+            <div class="payment-methods">
+                <p>Paiement accepté via :</p>
+                <div class="icons">
+                    <i class="fas fa-mobile-alt"></i> Mobile Money
+                    <!-- Tu pourras ajouter les logos Airtel/Orange plus tard -->
+                </div>
+            </div>
+        </div>
+
+        <!-- FORMULAIRE (DROITE) -->
+        <div class="form-section">
+            <h1>Faire une demande</h1>
+            <p style="color:#aaa; margin-bottom:20px;">Remplissez ce formulaire. Votre application mail s'ouvrira pour envoyer la commande.</p>
+            
+            <form id="movieRequestForm">
+                <div class="form-group">
+                    <label>Votre Nom</label>
+                    <input type="text" id="userName" placeholder="Ex: Pierre Ngoy" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Titre du Film / Série</label>
+                    <input type="text" id="movieTitle" placeholder="Ex: Titanic, RRR, Saison 1..." required>
+                </div>
+
+                <div class="form-group">
+                    <label>Type</label>
+                    <select id="movieType">
+                        <option value="Film Américain">Film Américain</option>
+                        <option value="Film Tanzanien">Film Tanzanien (Bongo)</option>
+                        <option value="Film Indien">Film Indien (Bollywood)</option>
+                        <option value="Film Nigérian">Film Nigérian (Nollywood)</option>
+                        <option value="Dessin Animé">Dessin Animé</option>
+                        <option value="Série">Série TV</option>
+                        <option value="Autre">Autre</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Détails supplémentaires</label>
+                    <textarea id="movieDetails" rows="4" placeholder="Ex: Je le veux en version française si possible..."></textarea>
+                </div>
+
+                <button type="submit" class="btn-submit">
+                    <i class="fas fa-paper-plane"></i> Commander (5$)
+                </button>
+            </form>
+        </div>
+
+    </div>
+
+    <!-- SCRIPT JAVASCRIPT POUR L'EMAIL -->
+    <script>
+        document.getElementById('movieRequestForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // 1. Récupérer les infos
+            const name = document.getElementById('userName').value;
+            const title = document.getElementById('movieTitle').value;
+            const type = document.getElementById('movieType').value;
+            const details = document.getElementById('movieDetails').value;
+
+            // 2. Ton adresse email (REMPLACE PAR TON VRAI EMAIL ICI)
+            const myEmail = "filmsall1904@gmail.com"; 
+
+            // 3. Création du sujet et du corps du mail
+            const subject = `Commande FILMSall (5$) : ${title}`;
+            const body = `Bonjour Pierre-Stone,%0D%0A%0D%0AJe souhaite commander le fichier suivant sur FILMSall :%0D%0A%0D%0A- Nom : ${name}%0D%0A- Titre du film : ${title}%0D%0A- Type : ${type}%0D%0A- Détails : ${details}%0D%0A%0D%0AJe suis prêt à payer 5$. Merci de me donner le numéro pour le transfert.`;
+
+            // 4. Ouvrir l'application mail
+            window.location.href = `mailto:${myEmail}?subject=${subject}&body=${body}`;
+        });
+    </script>
+
+</body>
+</html>
