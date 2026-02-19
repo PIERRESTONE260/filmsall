@@ -1,16 +1,22 @@
-// --- ENREGISTREMENT PWA (INSTALLATION) ---
+/* =========================================
+   1. ENREGISTREMENT PWA (SERVICE WORKER)
+   ========================================= */
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
         navigator.serviceWorker.register('./sw.js')
-            .then(reg => console.log('Service Worker enregistré !', reg))
+            .then(reg => console.log('Service Worker enregistré !Scope:', reg.scope))
             .catch(err => console.log('Erreur SW:', err));
     });
 }
+
+/* =========================================
+   2. LOGIQUE PRINCIPALE DE L'APPLICATION
+   ========================================= */
 document.addEventListener("DOMContentLoaded", () => {
     
     let allMovies = []; // Stocke tous les films pour la recherche
 
-    // --- 1. CHARGEMENT DES DONNÉES ---
+    // --- A. CHARGEMENT DES DONNÉES ---
     fetch('films.json')
         .then(res => res.json())
         .then(data => {
@@ -20,7 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
         })
         .catch(err => console.error("Erreur chargement JSON:", err));
 
-    // --- 2. INTERFACE (Navbar & Menu) ---
+    // --- B. INTERFACE (Navbar & Menu) ---
     const navbar = document.getElementById('navbar');
     window.onscroll = () => { 
         if(window.scrollY > 50) navbar.classList.add('scrolled'); 
@@ -31,11 +37,10 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById('nav-links').classList.toggle('active'); 
     });
 
-    // --- 3. MOTEUR DE RECHERCHE ---
+    // --- C. MOTEUR DE RECHERCHE ---
     const searchInput = document.getElementById('search-input');
     const searchBtn = document.getElementById('search-btn');
 
-    // Fonction de recherche
     const performSearch = () => {
         const val = searchInput.value.toLowerCase();
         const main = document.getElementById('main-container');
@@ -69,7 +74,7 @@ document.addEventListener("DOMContentLoaded", () => {
     searchInput.addEventListener('input', performSearch);
     searchBtn.addEventListener('click', performSearch);
 
-    // --- 4. AFFICHAGE PAR CATÉGORIES ---
+    // --- D. AFFICHAGE PAR CATÉGORIES ---
     function displayCategories(movies) {
         const container = document.getElementById('main-container');
         container.innerHTML = "";
@@ -103,7 +108,7 @@ document.addEventListener("DOMContentLoaded", () => {
         container.appendChild(section);
     }
 
-    // --- 5. MODAL & LOGIQUE GOOGLE DRIVE ---
+    // --- E. MODAL & LOGIQUE GOOGLE DRIVE ---
     const modal = document.getElementById('video-modal');
     const videoWrapper = document.getElementById('video-wrapper');
     const modalCover = document.getElementById('modal-cover');
@@ -169,7 +174,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // --- 6. FERMETURE DU MODAL ---
+    // --- F. FERMETURE DU MODAL ---
     function closeModal() {
         modal.style.display = 'none';
         videoWrapper.innerHTML = ""; // Coupe le son et la vidéo immédiatement
@@ -177,7 +182,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelector('.close-modal').onclick = closeModal;
     window.onclick = (e) => { if(e.target == modal) closeModal(); };
 
-    // --- 7. HERO SECTION (Film Aléatoire) ---
+    // --- G. HERO SECTION (Film Aléatoire) ---
     function loadHero(movies) {
         if(movies.length > 0) {
             const random = movies[Math.floor(Math.random() * movies.length)];
@@ -196,8 +201,8 @@ document.addEventListener("DOMContentLoaded", () => {
             document.getElementById('hero-info').onclick = () => openModal(random);
         }
     }
-});
-// --- GESTION DE L'INSTALLATION PWA ---
+
+    // --- H. GESTION DE L'INSTALLATION PWA (Bouton Bas de Page) ---
     let deferredPrompt;
     const installBanner = document.getElementById('install-banner');
     const installBtn = document.getElementById('install-btn');
@@ -205,24 +210,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // 1. Détecter si l'installation est possible (Chrome/Android/PC)
     window.addEventListener('beforeinstallprompt', (e) => {
-        // Empêcher Chrome d'afficher sa propre barre tout de suite
         e.preventDefault();
-        // Sauvegarder l'événement pour plus tard
         deferredPrompt = e;
-        // AFFICHER NOTRE BANDEAU EN BAS
-        installBanner.style.display = 'flex';
+        installBanner.style.display = 'flex'; // Afficher le bandeau
     });
 
     // 2. Quand on clique sur "INSTALLER"
     installBtn.addEventListener('click', async () => {
         if (deferredPrompt) {
-            // Lancer l'installation native
             deferredPrompt.prompt();
-            // Attendre la réponse de l'utilisateur
             const { outcome } = await deferredPrompt.userChoice;
             console.log(`Résultat : ${outcome}`);
             
-            // Cacher le bandeau si accepté
             if (outcome === 'accepted') {
                 deferredPrompt = null;
                 installBanner.style.display = 'none';
@@ -235,8 +234,9 @@ document.addEventListener("DOMContentLoaded", () => {
         installBanner.style.display = 'none';
     });
 
-    // 4. Si l'app est déjà installée, on cache tout
+    // 4. Si l'app est déjà installée
     window.addEventListener('appinstalled', () => {
         installBanner.style.display = 'none';
         console.log('FILMSall est installé !');
     });
+});
