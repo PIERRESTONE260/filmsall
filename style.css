@@ -327,3 +327,80 @@ body { background-color: var(--bg); color: var(--light); overflow-x: hidden; }
     .price-card { width: 100%; }
     .form-section { width: 100%; }
 }
+/* --- BANDEAU D'INSTALLATION (PWA) --- */
+.install-banner {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: #1f1f1f; /* Gris foncé */
+    border-top: 2px solid var(--primary); /* Ligne rouge en haut */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    z-index: 9999; /* Toujours au-dessus */
+    box-shadow: 0 -4px 10px rgba(0,0,0,0.5);
+    animation: slideUp 0.5s ease;
+}
+
+.install-content {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.install-logo {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    background: black;
+    padding: 5px;
+    /* Inverse le logo noir en blanc si nécessaire */
+    filter: invert(1); 
+}
+
+.install-text h3 {
+    font-size: 16px;
+    color: white;
+    margin: 0;
+}
+
+.install-text p {
+    font-size: 12px;
+    color: #aaa;
+    margin: 0;
+}
+
+.btn-install {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 14px;
+    transition: 0.2s;
+}
+
+.btn-install:hover {
+    background: white;
+    color: var(--primary);
+}
+
+.btn-close {
+    background: transparent;
+    border: none;
+    color: #999;
+    font-size: 20px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+/* Sur mobile, on ajuste un peu */
+@media (max-width: 480px) {
+    .install-banner { padding: 10px; }
+    .install-text h3 { font-size: 14px; }
+    .install-text p { display: none; } /* Cache le petit texte pour gagner de la place */
+}

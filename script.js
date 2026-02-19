@@ -197,3 +197,46 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 });
+// --- GESTION DE L'INSTALLATION PWA ---
+    let deferredPrompt;
+    const installBanner = document.getElementById('install-banner');
+    const installBtn = document.getElementById('install-btn');
+    const closeInstallBtn = document.getElementById('close-install');
+
+    // 1. Détecter si l'installation est possible (Chrome/Android/PC)
+    window.addEventListener('beforeinstallprompt', (e) => {
+        // Empêcher Chrome d'afficher sa propre barre tout de suite
+        e.preventDefault();
+        // Sauvegarder l'événement pour plus tard
+        deferredPrompt = e;
+        // AFFICHER NOTRE BANDEAU EN BAS
+        installBanner.style.display = 'flex';
+    });
+
+    // 2. Quand on clique sur "INSTALLER"
+    installBtn.addEventListener('click', async () => {
+        if (deferredPrompt) {
+            // Lancer l'installation native
+            deferredPrompt.prompt();
+            // Attendre la réponse de l'utilisateur
+            const { outcome } = await deferredPrompt.userChoice;
+            console.log(`Résultat : ${outcome}`);
+            
+            // Cacher le bandeau si accepté
+            if (outcome === 'accepted') {
+                deferredPrompt = null;
+                installBanner.style.display = 'none';
+            }
+        }
+    });
+
+    // 3. Quand on clique sur "X" (Fermer)
+    closeInstallBtn.addEventListener('click', () => {
+        installBanner.style.display = 'none';
+    });
+
+    // 4. Si l'app est déjà installée, on cache tout
+    window.addEventListener('appinstalled', () => {
+        installBanner.style.display = 'none';
+        console.log('FILMSall est installé !');
+    });
