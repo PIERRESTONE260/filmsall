@@ -1,3 +1,11 @@
+// --- ENREGISTREMENT PWA (INSTALLATION) ---
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js')
+            .then(reg => console.log('Service Worker enregistré !', reg))
+            .catch(err => console.log('Erreur SW:', err));
+    });
+}
 document.addEventListener("DOMContentLoaded", () => {
     
     let allMovies = []; // Stocke tous les films pour la recherche
