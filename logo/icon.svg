@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Fond Carré Noir -->
+  <rect width="512" height="512" fill="#000000"/>
+  
+  <!-- Texte FILMS (En blanc pour le contraste) -->
+  <text x="50" y="200" font-family="Impact, Arial Black, sans-serif" font-size="140" fill="#ffffff" font-weight="bold">FILMS</text>
+  
+  <!-- Texte all (En rouge) -->
+  <text x="280" y="320" font-family="Arial, sans-serif" font-size="120" fill="#ff0000" font-weight="bold">all</text>
+  
+  <!-- Bouton Play (Style YouTube) -->
+  <rect x="330" y="350" width="120" height="80" rx="20" ry="20" fill="#ff0000"/>
+  <polygon points="380,370 410,390 380,410" fill="#ffffff"/>
+</svg>
