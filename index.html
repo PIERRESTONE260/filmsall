@@ -4,24 +4,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>FILMSall - Streaming Gratuit</title>
+    
     <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/png" href="logo/filmsall.png">
+    
+    <!-- PWA MANIFEST -->
     <link rel="manifest" href="manifest.json">
     <link rel="apple-touch-icon" href="logo/icon.svg">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <meta name="theme-color" content="#000000">
 </head>
 <body>
 
+    <!-- 1. ÉCRAN DE CHARGEMENT (LOADER) -->
+    <div id="loader">
+        <div class="spinner"></div>
+        <p>Chargement des films...</p>
+    </div>
+
     <!-- Navbar -->
     <nav class="navbar" id="navbar">
         <div class="logo-container">
-            <!-- Le logo noir sera inversé en blanc par le CSS -->
             <img src="logo/filmsall.png" alt="FILMSall" class="logo-img">
         </div>
         
         <div class="search-box">
-            <input type="text" id="search-input" placeholder="Titres, pays...">
+            <input type="text" id="search-input" placeholder="Titres, acteurs...">
             <button id="search-btn"><i class="fas fa-search"></i></button>
         </div>
 
@@ -42,7 +51,7 @@
         <div class="hero-overlay"></div>
         <div class="hero-content">
             <span class="hero-tag">À la une</span>
-            <h1 id="hero-title">Chargement...</h1>
+            <h1 id="hero-title">...</h1>
             <p id="hero-desc" class="hero-desc">...</p>
             <div class="hero-buttons">
                 <button class="btn btn-white" id="hero-play"><i class="fas fa-play"></i> Lecture</button>
@@ -61,16 +70,21 @@
         <div class="modal-content">
             <span class="close-modal">&times;</span>
             
-            <!-- Zone Vidéo (Cachée au début) -->
+            <!-- Zone Vidéo -->
             <div id="video-wrapper" class="video-container" style="display:none;"></div>
 
-            <!-- Couverture (Visible au début) -->
+            <!-- Couverture -->
             <div id="modal-cover" class="modal-cover">
                 <button id="center-play-btn" class="center-play"><i class="fas fa-play"></i></button>
             </div>
 
             <div id="modal-info" class="modal-info">
-                <h2 id="modal-title">Titre</h2>
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <h2 id="modal-title">Titre</h2>
+                    <!-- Cœur Favori dans le modal -->
+                    <i id="modal-fav-btn" class="far fa-heart" style="font-size:24px; cursor:pointer; color:red;"></i>
+                </div>
+                
                 <div class="modal-meta">
                     <span id="modal-year"></span>
                     <span id="modal-origin" class="badge"></span>
@@ -79,14 +93,14 @@
                 <p id="modal-desc">Description...</p>
                 <div class="modal-actions">
                     <button id="modal-play" class="btn btn-red">REGARDER</button>
-                    <!-- Le lien sera généré par JS -->
+                    <!-- Les boutons Télécharger et WhatsApp seront ajoutés ici par JS -->
                     <a id="modal-download" class="btn btn-gray" target="_blank">TÉLÉCHARGER</a>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- BANDEAU D'INSTALLATION (Visible seulement si pas installé) -->
+    <!-- BANDEAU INSTALLATION -->
     <div id="install-banner" class="install-banner" style="display: none;">
         <div class="install-content">
             <img src="logo/filmsall.png" alt="Logo" class="install-logo">
