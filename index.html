@@ -17,7 +17,7 @@
 </head>
 <body>
 
-    <!-- 1. ÉCRAN DE CHARGEMENT (LOADER) -->
+    <!-- LOADER -->
     <div id="loader">
         <div class="spinner"></div>
         <p>Chargement des films...</p>
@@ -28,20 +28,17 @@
         <div class="logo-container">
             <img src="logo/filmsall.png" alt="FILMSall" class="logo-img">
         </div>
-        
         <div class="search-box">
             <input type="text" id="search-input" placeholder="Titres, acteurs...">
             <button id="search-btn"><i class="fas fa-search"></i></button>
         </div>
-
         <div class="hamburger" id="hamburger">
             <i class="fas fa-bars"></i>
         </div>
-
         <ul class="nav-links" id="nav-links">
             <li><a href="index.html" class="active">Accueil</a></li>
             <li><a href="images.html">Galerie</a></li>
-            <li><a href="demande.html" style="color:#f5af19; font-weight:bold;">Commander (1$)</a></li>
+            <li><a href="demande.html" style="color:#f5af19; font-weight:bold;">Commander (5$)</a></li>
             <li><a href="apropos.html">À propos</a></li>
         </ul>
     </nav>
@@ -51,7 +48,7 @@
         <div class="hero-overlay"></div>
         <div class="hero-content">
             <span class="hero-tag">À la une</span>
-            <h1 id="hero-title">...</h1>
+            <h1 id="hero-title">Chargement...</h1>
             <p id="hero-desc" class="hero-desc">...</p>
             <div class="hero-buttons">
                 <button class="btn btn-white" id="hero-play"><i class="fas fa-play"></i> Lecture</button>
@@ -61,46 +58,44 @@
     </header>
 
     <!-- Conteneur Films -->
-    <main id="main-container">
-        <!-- JS injectera les films ici -->
-    </main>
+    <main id="main-container"></main>
 
     <!-- Modal Lecteur -->
     <div id="video-modal" class="modal">
         <div class="modal-content">
             <span class="close-modal">&times;</span>
-            
-            <!-- Zone Vidéo -->
             <div id="video-wrapper" class="video-container" style="display:none;"></div>
-
-            <!-- Couverture -->
             <div id="modal-cover" class="modal-cover">
                 <button id="center-play-btn" class="center-play"><i class="fas fa-play"></i></button>
             </div>
-
             <div id="modal-info" class="modal-info">
                 <div style="display:flex; justify-content:space-between; align-items:center;">
                     <h2 id="modal-title">Titre</h2>
-                    <!-- Cœur Favori dans le modal -->
                     <i id="modal-fav-btn" class="far fa-heart" style="font-size:24px; cursor:pointer; color:red;"></i>
                 </div>
-                
                 <div class="modal-meta">
                     <span id="modal-year"></span>
                     <span id="modal-origin" class="badge"></span>
                     <span id="modal-cat" class="badge-outline"></span>
                 </div>
                 <p id="modal-desc">Description...</p>
-                <div class="modal-actions">
+                
+                <!-- Zone Film -->
+                <div id="movie-actions" class="modal-actions">
                     <button id="modal-play" class="btn btn-red">REGARDER</button>
-                    <!-- Les boutons Télécharger et WhatsApp seront ajoutés ici par JS -->
                     <a id="modal-download" class="btn btn-gray" target="_blank">TÉLÉCHARGER</a>
+                </div>
+
+                <!-- Zone Série -->
+                <div id="series-area" style="display:none; margin-top:20px;">
+                    <select id="season-select" class="season-select"></select>
+                    <div id="episodes-list" class="episodes-list"></div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- BANDEAU INSTALLATION -->
+    <!-- Bandeau Installation -->
     <div id="install-banner" class="install-banner" style="display: none;">
         <div class="install-content">
             <img src="logo/filmsall.png" alt="Logo" class="install-logo">

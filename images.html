@@ -2,18 +2,17 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Galerie - FILMSall</title>
     <link rel="stylesheet" href="style.css">
     <link rel="manifest" href="manifest.json">
     <link rel="icon" type="image/png" href="logo/filmsall.png">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <meta name="theme-color" content="#000000">
 </head>
 <body>
 
-    <!-- Navbar simplifiée -->
-    <nav class="navbar" style="background: linear-gradient(to bottom, rgba(95, 95, 95, 0.9) 0%, rgba(0,0,0,0) 100%);">
+    <!-- Navbar -->
+    <nav class="navbar">
         <a href="index.html" class="logo-container">
             <img src="logo/filmsall.png" alt="FILMSall" class="logo-img">
         </a>
@@ -22,115 +21,51 @@
         </ul>
     </nav>
 
-    <!-- Titre de la page -->
-    <div style="padding-top: 150px; text-align: center; margin-bottom: 40px; position: inherit;">
-        <h1>Toutes les Affiches</h1>
-        <p style="color: #777;">Retrouvez un film grâce à son image</p>
+    <!-- Titre -->
+    <div style="padding-top: 100px; text-align: center;">
+        <h1>Galerie des Affiches</h1>
+        <p style="color: #777;">Cliquez sur une affiche pour aller voir le film</p>
     </div>
 
     <!-- GRILLE D'IMAGES -->
     <main id="gallery-container" class="gallery-grid">
-        <!-- Les images seront injectées ici par JS -->
+        <p style="text-align:center; color:#aaa; width:100%;">Chargement...</p>
     </main>
 
-    <!-- Modal Lecteur (Copié de l'index pour que ça marche ici aussi) -->
-    <div id="video-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-modal">&times;</span>
-            
-            <div class="video-container" id="video-wrapper" style="display:none;">
-                <video id="main-player" controls controlsList="nodownload">
-                    <source src="" type="video/mp4">
-                </video>
-            </div>
-
-            <div class="modal-cover" id="modal-cover"></div>
-
-            <div class="modal-info">
-                <h2 id="modal-title">Titre</h2>
-                <div class="modal-meta">
-                    <span id="modal-year"></span>
-                    <span id="modal-origin" class="badge"></span>
-                    <span id="modal-cat" class="badge-outline"></span>
-                </div>
-                <p id="modal-desc">Description...</p>
-                <div class="modal-actions">
-                    <button id="modal-play" class="btn btn-red"><i class="fas fa-play"></i> Regarder</button>
-                    <a id="modal-download" href="#" class="btn btn-gray" download><i class="fas fa-download"></i> Télécharger</a>
-                </div>
-            </div>
-        </div>
-         </div>
-
-    <!-- SCRIPT SPÉCIFIQUE POUR LA GALERIE -->
     <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            fetch('films.json')
-                .then(res => res.json())
-                .then(data => {
-                    const grid = document.getElementById('gallery-container');
-                    
-                    // On mélange les films pour un effet "découverte"
-                    data.sort(() => Math.random() - 0.5);
-
-                    data.forEach(movie => {
-                        const card = document.createElement('div');
-                        card.classList.add('gallery-card');
-                        
-                        // L'image + Le titre qui apparaît au survol
-                        card.innerHTML = `
-                            <img src="${movie.image}" loading="lazy" alt="${movie.titre}">
-                            <div class="gallery-overlay">
-                                <h3>${movie.titre}</h3>
-                                <span>${movie.origine}</span>
-                            </div>
-                        `;
-                        
-                        // Ouvrir le modal au clic
-                        card.onclick = () => openModal(movie);
-                        grid.appendChild(card);
-                    });
-                });
-
-            // --- Logique du Modal (Identique à l'accueil) ---
-            const modal = document.getElementById('video-modal');
-            const player = document.getElementById('main-player');
-            const videoWrapper = document.getElementById('video-wrapper');
-            const modalCover = document.getElementById('modal-cover');
-            const modalInfo = document.querySelector('.modal-info');
-
-            window.openModal = function(movie) {
-                modal.style.display = 'flex';
-                document.getElementById('modal-title').innerText = movie.titre;
-                document.getElementById('modal-desc').innerText = movie.description;
-                document.getElementById('modal-year').innerText = movie.annee;
-                document.getElementById('modal-origin').innerText = movie.origine;
-                document.getElementById('modal-cat').innerText = movie.categorie;
+    document.addEventListener("DOMContentLoaded", () => {
+        // Chargement des films
+        fetch('films.json?t=' + Date.now())
+            .then(res => res.json())
+            .then(data => {
+                const grid = document.getElementById('gallery-container');
+                grid.innerHTML = "";
                 
-                modalCover.style.display = 'block';
-                modalCover.style.backgroundImage = `url('${movie.banner || movie.image}')`;
-                modalInfo.style.display = 'block';
-                videoWrapper.style.display = 'none';
+                // Mélanger pour l'effet découverte
+                data.sort(() => Math.random() - 0.5);
 
-                const dlBtn = document.getElementById('modal-download');
-                dlBtn.href = movie.videoUrl;
-                dlBtn.setAttribute('download', movie.titre);
-
-                document.getElementById('modal-play').onclick = () => {
-                    modalCover.style.display = 'none';
-                    modalInfo.style.display = 'none';
-                    videoWrapper.style.display = 'block';
-                    player.src = movie.videoUrl;
-                    player.play();
-                };
-            }
-
-            document.querySelector('.close-modal').onclick = () => {
-                modal.style.display = 'none';
-                player.pause();
-                player.src = "";
-            };
-        });
+                data.forEach(movie => {
+                    const card = document.createElement('div');
+                    card.className = 'gallery-card';
+                    card.innerHTML = `
+                        <img src="${movie.image}" loading="lazy" alt="${movie.titre}" onerror="this.src='logo/filmsall.png'">
+                        <div class="gallery-overlay">
+                            <h3>${movie.titre}</h3>
+                            <span style="background:var(--primary); padding:2px 5px; border-radius:3px; font-size:12px;">Regarder</span>
+                        </div>
+                    `;
+                    
+                    // --- LA REDIRECTION MAGIQUE ---
+                    // On envoie l'ID du film dans l'adresse (URL)
+                    card.onclick = () => {
+                        window.location.href = `index.html?id=${movie.id}`;
+                    };
+                    
+                    grid.appendChild(card);
+                });
+            })
+            .catch(err => console.error("Erreur:", err));
+    });
     </script>
 </body>
 </html>

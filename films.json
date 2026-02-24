@@ -1,17 +1,19 @@
 [
   {
     "id": 1,
-    "titre": "Black Panther: Wakanda Forever 2",
+    "type": "film",
+    "titre": "Black Panther: Wakanda Forever",
     "origine": "USA",
     "categorie": "Action",
     "annee": 2022,
     "image": "films/actions/blackbanther.jpeg",
     "banner": "films/banner/blackbantherbanner.jpeg",
     "driveId": "", 
-    "description": "Après le décès du roi T'Challa, la Reine Ramonda, Shuri, M'Baku, Okoye et les Dora Milaje luttent pour protéger le Wakanda des ingérences de puissances mondiales. Le peuple doit s'unir pour faire face à une nouvelle menace venue des profondeurs des océans, menée par Namor."
+    "description": "Après le décès du roi T'Challa, la Reine Ramonda et Shuri luttent pour protéger le Wakanda des ingérences de puissances mondiales."
   },
   {
     "id": 2,
+    "type": "film",
     "titre": "Vaiana 2",
     "origine": "USA",
     "categorie": "Animé",
@@ -19,10 +21,11 @@
     "image": "films/animes/vaiana2.jpeg",
     "banner": "films/banner/vaiana2banner.jpg",
     "driveId": "1ujaVx7dw0LfOC3JemYdCbu7986DPdoeW",
-    "description": "Après avoir entendu un appel mystérieux, Vaiana se lance dans une nouvelle expédition audacieuse vers des mers leintaines et dangereuses. Accompagnée de ses alliés et d'un équipage inattendu, elle devra affronter de nouveaux défis, découvrir des civilisations oubliées et prouver une fois de plus que le courage et la détermination peuvent changer le destin."
+    "description": "Après avoir entendu un appel mystérieux, Vaiana se lance dans une nouvelle expédition vers des mers lointaines."
   },
   {
     "id": 3,
+    "type": "film",
     "titre": "Nsyuka",
     "origine": "Tanzanie",
     "categorie": "Horreur",
@@ -30,21 +33,23 @@
     "image": "films/tradition/SNYUKA.jpg",
     "banner": "films/banner/nsyukabanner.jpg",
     "driveId": "",
-    "description": "L'histoire tourne autour d'un mzimu(un esprit ou fantôme) qui revient hanter les vivants."
+    "description": "L'histoire tourne autour d'un mzimu (un esprit) qui revient hanter les vivants."
   },
   {
     "id": 4,
+    "type": "film",
     "titre": "Mon coeur bat pour toi",
     "origine": "Nigeria",
-    "categorie": "Romance",
+    "categorie": "Drame",
     "annee": 2020,
     "image": "films/romance/moncoeurbatpourtoi.jpeg",
     "banner": "films/banner/moncoeurbatpourtoibanner.jpg",
     "driveId": "",
-    "description": "Le films met en vedette les acteurs Chidi Dike, Annabel Apara et Harmony Mark. il s'agit d'une histoire d'amour et de passion, de la loyauté et des seniments coplexes"
+    "description": "Une histoire d'amour et de passion, de la loyauté et des sentiments complexes."
   },
   {
     "id": 5,
+    "type": "film",
     "titre": "Luca",
     "origine": "USA",
     "categorie": "Animé",
@@ -52,10 +57,11 @@
     "image": "films/animes/luca.jpeg",
     "banner": "films/banner/lucabanner.jpg",
     "driveId": "",
-    "description": "Luca et Alberto, deux jeunes monstres marins, vivent une aventure estivale inoubliable sur la côte italienne."
+    "description": "Luca et Alberto, deux jeunes monstres marins, vivent une aventure estivale inoubliable."
   },
   {
     "id": 6,
+    "type": "film",
     "titre": "Moana",
     "origine": "USA",
     "categorie": "Animé",
@@ -63,10 +69,11 @@
     "image": "films/animes/moana.jpeg",
     "banner": "films/banner/moanabanner.jpg",
     "driveId": "",
-    "description": "Moana, une jeune fille de Polynésie, entreprend un voyage audacieux pour sauver son peuple et son île."
+    "description": "Moana entreprend un voyage audacieux pour sauver son peuple et son île."
   },
   {
     "id": 7,
+    "type": "film",
     "titre": "Encanto",
     "origine": "USA",
     "categorie": "Animé",
@@ -74,10 +81,11 @@
     "image": "films/animes/encanto.jpeg",
     "banner": "films/banner/encantobanner.jpg",
     "driveId": "",
-    "description": "Dans les montagnes de Colombie, la famille Madrigal possède des pouvoirs magiques uniques..."
+    "description": "Dans les montagnes de Colombie, la famille Madrigal possède des pouvoirs magiques."
   },
   {
     "id": 8,
+    "type": "film",
     "titre": "Cosmoball",
     "origine": "Russie",
     "categorie": "Action",
@@ -85,32 +93,35 @@
     "image": "films/actions/cosmoball.jpg",
     "banner": "films/banner/cosmoballbanner.jpg",
     "driveId": "1mCu6zOnqlEDqT2AAeouFVhdbmD_8-MOs",
-    "description": "Dans un futur lointain, la Terre est protégée par un immense vaisseau spatial où se déroule un sport spectaculaire appelé Cosmoball. Un jeune pilote talentueux rejoint l'équipe pour défendre la planète contre une menace extraterrestre imminente."
+    "description": "Dans un futur lointain, un sport spectaculaire appelé Cosmoball décide du sort de la planète."
   },
   {
     "id": 9,
-    "titre": "Raya and the Last Dragon",
+    "type": "film",
+    "titre": "Raya et le Dernier Dragon",
     "origine": "USA",
     "categorie": "Animé",
     "annee": 2021,
     "image": "films/animes/raya.jpeg",
     "banner": "films/banner/rayabanner.jpg",
     "driveId": "",
-    "description": "Dans le royaume imaginaire de Kumandra, une guerrière nommée Raya part à la recherche du dernier dragon pour sauver son monde d'une force maléfique."
+    "description": "Raya part à la recherche du dernier dragon pour sauver son monde d'une force maléfique."
   },
   {
     "id": 10,
+    "type": "film",
     "titre": "L'amour et les Dreams:Larmes",
     "origine": "Nigeria",
-    "categorie": "Romance",
+    "categorie": "Drame",
     "annee": 2020,
-    "image": "films/romance/l'amouretledreamslarmes.jpeg",
-    "banner": "films/banner/l'amouretlesdreamslarmesbanner.jpg",
+    "image": "films/romance/lamouretledreamslarmes.jpeg",
+    "banner": "films/banner/lamouretlesdreamslarmesbanner.jpg",
     "driveId": "",
-    "description": "le films raconte l'histoire de jeunes confrontés aux réalités difficiles de la vie: amour contrarié, conflits familiaux et pressions sociales. Entre ambitions personnelles et blesseures émotionnelles, leurs choix détermineront si leurs rêves survivront aux épreuves."
+    "description": "Entre ambitions personnelles et blessures émotionnelles, leurs choix détermineront leur avenir."
   },
   {
     "id": 11,
+    "type": "film",
     "titre": "Shumileta",
     "origine": "Tanzanie",
     "categorie": "Horreur",
@@ -118,17 +129,140 @@
     "image": "films/tradition/shumileta.jpg",
     "banner": "films/banner/shumiletabanner.jpg",
     "driveId": "",
-    "description": "le film suit l'histoire de Mack, un homme pris au piège par Shumileta, la 'Reine du Diable'. Sa femme tente désespérément de le ramener du royaume des morts avec l'aide d'un guèrisseur, mais la créature maléfique refuse de le laisser repartir sans combattre."
+    "description": "L'histoire de Mack, un homme pris au piège par Shumileta, la Reine du Diable."
   },
   {
     "id": 12,
+    "type": "film",
     "titre": "Mon coeur bat pour toi 2",
     "origine": "Nigeria",
-    "categorie": "Romance",
+    "categorie": "Drame",
     "annee": 2025,
     "image": "films/romance/fromghettowithlove2.jpeg",
     "banner": "films/banner/fromghettowithlove2.jpg",
     "driveId": "",
-    "description": "Cette suite réunit les acteurs Chidi Dike, Annabel Apara et Harmony Mark. L'histoire continue d'explorer les relations sentimentales complexes et les dilemes amoureux, marqués par des secrets et des questions de loyauté au sein de leur communauté."
+    "description": "Cette suite explore les relations sentimentales complexes et les secrets de famille."
+  },
+  {
+    "id": 13,
+    "type": "serie",
+    "titre": "Kaeloo",
+    "origine": "France",
+    "categorie": "Animé",
+    "annee": 2010,
+    "image": "films/animes/kaeloo.jpg",
+    "banner": "films/banner/Kaeloobanner.jpg",
+    "description": "Kaeloo est une série animée qui suit les aventures de Kaeloo et ses amis au Pays Trop Mignon.",
+    "saisons": [
+      {
+        "nom": "Saison 1",
+        "episodes": [
+          { "titre": "Si on jouait à la Balle au prisonnier", "driveId": "1eRMGo-T2B9O61VO8lYGR7ma0z-ACcZh4" },
+          { "titre": "Si on jouait au Docteur", "driveId": "1gmCgIzuZVctSkpNoCT42KCRfaAi3qYpM" }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 14,
+    "type": "film",
+    "titre": "High school musical 1",
+    "origine": "USA",
+    "categorie": "Comedie musicale",
+    "annee": 2006,
+    "image": "films/romance/highschoolmusical1.jpg",
+    "banner": "films/banner/highschoolmusicalbanner1.jpg",
+    "driveId": "1nXTGsQVlqw_SC5qK-zhVDHAcFEcBkPaM",
+    "description": "Troy et Gabriella, deux lycéens, découvrent leur passion commune pour la musique et doivent concilier leur amour avec les attentes de leurs amis et familles. Le film explore les thèmes de l'amitié, de l'amour et de la poursuite de ses rêves à travers des chansons entraînantes et des chorégraphies dynamiques. C'est une histoire de découverte de soi et de dépassement des stéréotypes sociaux dans un cadre scolaire. Le film a connu un immense succès, donnant lieu à plusieurs suites et une série télévisée, devenant un phénomène culturel pour les jeunes audiences du monde entier."
+  },
+  {
+    "id": 15,
+    "type": "film",
+    "titre": "Tension",
+    "origine": "Ghana",
+    "categorie": "Drame",
+    "annee": 2014,
+    "image": "films/romance/tension.jpeg",
+    "banner": "films/romance/tension.jpeg",
+    "driveId": "",
+    "description": "le film suit une intrigue complexe mêlant secret, trahison et amour, où les personnages sont confrontés à des choix difficiles qui mettent à l'épreuve leurs relations et leur loyauté. À travers des rebondissements inattendus et des moments de tension intense, le film explore les thèmes de la confiance, de la rédemption et de la nature humaine dans un contexte dramatique."
+  },
+  {
+    "id": 16,
+    "type": "film",
+    "titre": "Alfred & The Mischiefs",
+    "origine": "Nigéria",
+    "categorie": "Drame",
+    "annee": 2024,
+    "image": "films/romance/alfredthemischiefs.jpeg",
+    "banner": "films/banner/alfredthemischiefsbanner.jpg",
+    "driveId": "",
+    "description": "le film raconte l'histoire d'Alfred, un jeune homme qui tente de se faire un nom tout en faisant face à divers défis et mésaventures comiques. L'intrigue explore également les dynamiques familiales, notamment les préoccupations de parents face aux résultats scolaires de leurs enfants et aux aléas de la vie quotidienne."
+  },
+  {
+    "id": 17,
+    "type": "film",
+    "titre": "Amoureux de toi",
+    "origine": "Nigéria",
+    "categorie": "Drame",
+    "annee": 2024,
+    "image": "films/romance/amoureuxdetoi.jpeg",
+    "banner": "films/banner/amoureuxdetoibanner.jpeg",
+    "driveId": "",
+    "description": "le film met en vedette Stephane Kakouu et Anabel Apara. L'histoire explore les thèmes classiques de la romance nollywoodienne, centrée sur les relations sentimentales, les défis amoureux et les secrets au sein d'un couple."
+  },
+  {
+    "id": 17,
+    "type": "film",
+    "titre": "Love in Every Word",
+    "origine": "Nigéria",
+    "categorie": "Drame",
+    "annee": 2025,
+    "image": "films/romance/loveineveryword.jpeg",
+    "banner": "films/banner/loveineverywordbanner.jpeg",
+    "driveId": "",
+    "description": "le film raconte l'histoire de Chioma, une femme d'&ffaires ambitieuse qui a été blessée par des relations passées. Lors d'un voyage à Anamba pour un mariage, elle rencontre Obiora, un homme riche et fier de sa culture, qui tente de la séduire par des gestes grandioses et extravagants. L'intrigue explore les thèmes des différences culturelles, de la guérison émotionnelle et de l'équilibre entre carrière et amour."
+  },
+  {
+    "id": 18,
+    "type": "serie",
+    "titre": "Kasam",
+    "origine": "Inde",
+    "categorie": "Drame romatique",
+    "annee": 2016,
+    "image": "films/india/KASAM.jpg",
+    "banner": "films/banner/kasambanner.jpeg",
+    "description": "Cette série raconte l'histoire d'amour éternelle entre Rishi et Tanu. Destinés l'un à l'autre depuis l'enfance, ils sont séparés par un destin tragique. L'intrigue suit leur amour qui transcende la mort à travers le temps et la réincarnation, alors que Tanu renaît sous une nouvelle identité pour retrouver Rishi des années plus tard.",
+    "saisons": [
+      {
+        "nom": "Saison 1",
+        "episodes": [
+          { "titre": "", "driveId": "" },
+          { "titre": "", "driveId": "" },
+          { "titre": "", "driveId": "" }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 19,
+    "type": "serie",
+    "titre": "Le Gendre Parfait",
+    "origine": "Inde",
+    "categorie": "Drame romatique",
+    "annee": 2016,
+    "image": "films/india/GENTRAISPARFAIT.jpg",
+    "banner": "films/banner/gentraisparfaitbanner.jpeg",
+    "description": "La série raconte l'histoire de Siddharth Khurana, un riche hôtelier qui tombe amoureux de Roshni, qui méprise la richesse, siddharth cache sa véritable identité et se fait passer pour un homme de la classe moyenne. Après leur mariage, il s'installe chez ses beaux-parents en tant que 'Ghar Jamai' pour tenter de réconcilier Roshni avec sa mère autoritaire et obsédée par l' argent.",
+    "saisons": [
+      {
+        "nom": "Saison 1",
+        "episodes": [
+          { "titre": "", "driveId": "" },
+          { "titre": "", "driveId": "" },
+          { "titre": "", "driveId": "" }
+        ]
+      }
+    ]
   }
 ]
