@@ -3,110 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>FILMSall - Streaming Gratuit</title>
-    
+    <title>FILMSall - Accueil</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="icon" type="image/png" href="logo/filmsall.png">
-    
-    <!-- PWA MANIFEST -->
     <link rel="manifest" href="manifest.json">
-    <link rel="apple-touch-icon" href="logo/icon.svg">
-
+    <link rel="icon" type="image/png" href="logo/filmsall.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <meta name="theme-color" content="#000000">
 </head>
 <body>
+    <div id="loader"><div class="spinner"></div></div>
 
-    <!-- LOADER -->
-    <div id="loader">
-        <div class="spinner"></div>
-        <p>Chargement des films...</p>
-    </div>
-
-    <!-- Navbar -->
-    <nav class="navbar" id="navbar">
-        <div class="logo-container">
-            <img src="logo/filmsall.png" alt="FILMSall" class="logo-img">
-        </div>
-        <div class="search-box">
-            <input type="text" id="search-input" placeholder="Titres, acteurs...">
-            <button id="search-btn"><i class="fas fa-search"></i></button>
-        </div>
-        <div class="hamburger" id="hamburger">
-            <i class="fas fa-bars"></i>
-        </div>
-        <ul class="nav-links" id="nav-links">
-            <li><a href="index.html" class="active">Accueil</a></li>
+    <nav class="navbar">
+        <div class="logo-container"><img src="logo/filmsall.png" class="logo-img"></div>
+        <div class="search-box"><input type="text" id="search-input" placeholder="Rechercher..."><button id="search-btn"><i class="fas fa-search"></i></button></div>
+        <ul class="nav-links">
+            <li><a href="index.html" class="active">Films</a></li>
+            <li><a href="musique.html">Musique</a></li>
             <li><a href="images.html">Galerie</a></li>
-            <li><a href="demande.html" style="color:#f5af19; font-weight:bold;">Commander (5$)</a></li>
-            <li><a href="apropos.html">À propos</a></li>
         </ul>
     </nav>
 
-    <!-- Hero Banner -->
     <header class="hero" id="hero-section">
         <div class="hero-overlay"></div>
         <div class="hero-content">
-            <span class="hero-tag">À la une</span>
-            <h1 id="hero-title">Chargement...</h1>
-            <p id="hero-desc" class="hero-desc">...</p>
-            <div class="hero-buttons">
-                <button class="btn btn-white" id="hero-play"><i class="fas fa-play"></i> Lecture</button>
-                <button class="btn btn-glass" id="hero-info"><i class="fas fa-info-circle"></i> Infos</button>
-            </div>
+            <h1 id="hero-title">...</h1>
+            <p id="hero-desc" style="color:#aaa; font-size:13px; margin-bottom:10px;"></p>
+            <button class="btn btn-white" id="hero-play"><i class="fas fa-play"></i> LECTURE</button>
         </div>
     </header>
 
-    <!-- Conteneur Films -->
     <main id="main-container"></main>
 
-    <!-- Modal Lecteur -->
     <div id="video-modal" class="modal">
         <div class="modal-content">
-            <span class="close-modal">&times;</span>
-            <div id="video-wrapper" class="video-container" style="display:none;"></div>
-            <div id="modal-cover" class="modal-cover">
-                <button id="center-play-btn" class="center-play"><i class="fas fa-play"></i></button>
-            </div>
+            <span class="close-modal"><i class="fas fa-times"></i></span>
+            <div id="video-wrapper" class="video-container"></div>
+            <div id="modal-cover" class="modal-cover"><button id="center-play-btn" class="center-play"><i class="fas fa-play"></i></button></div>
             <div id="modal-info" class="modal-info">
-                <div style="display:flex; justify-content:space-between; align-items:center;">
-                    <h2 id="modal-title">Titre</h2>
-                    <i id="modal-fav-btn" class="far fa-heart" style="font-size:24px; cursor:pointer; color:red;"></i>
-                </div>
-                <div class="modal-meta">
-                    <span id="modal-year"></span>
-                    <span id="modal-origin" class="badge"></span>
-                    <span id="modal-cat" class="badge-outline"></span>
-                </div>
-                <p id="modal-desc">Description...</p>
-                
-                <!-- Zone Film -->
-                <div id="movie-actions" class="modal-actions">
-                    <button id="modal-play" class="btn btn-red">REGARDER</button>
-                    <a id="modal-download" class="btn btn-gray" target="_blank">TÉLÉCHARGER</a>
-                </div>
-
-                <!-- Zone Série -->
-                <div id="series-area" style="display:none; margin-top:20px;">
-                    <select id="season-select" class="season-select"></select>
-                    <div id="episodes-list" class="episodes-list"></div>
-                </div>
+                <div class="modal-title-row"><h2 id="modal-title">Titre</h2></div>
+                <div class="modal-meta"><span id="modal-year"></span> • <span id="modal-cat" style="color:var(--primary);"></span></div>
+                <p id="modal-desc" style="color:#ccc; font-size:13px;"></p>
+                <div id="action-grid" class="action-grid"></div>
+                <div id="series-area" style="display:none;"><select id="season-select" class="season-select"></select><div id="episodes-list" class="episodes-list"></div></div>
             </div>
         </div>
     </div>
 
-    <!-- Bandeau Installation -->
-    <div id="install-banner" class="install-banner" style="display: none;">
-        <div class="install-content">
-            <img src="logo/filmsall.png" alt="Logo" class="install-logo">
-            <div class="install-text">
-                <h3>Installer FILMSall</h3>
-                <p>Accès rapide, sans internet.</p>
-            </div>
-        </div>
-        <button id="install-btn" class="btn-install">INSTALLER</button>
-        <button id="close-install" class="btn-close">✕</button>
-    </div>
+    <nav class="bottom-nav">
+        <a href="index.html" class="bottom-nav-item active"><i class="fas fa-home"></i><span>Accueil</span></a>
+        <a href="images.html" class="bottom-nav-item"><i class="fas fa-th-large"></i><span>Galerie</span></a>
+        <a href="musique.html" class="bottom-nav-item"><i class="fas fa-music"></i><span>Musique</span></a>
+        <a href="apropos.html" class="bottom-nav-item"><i class="fas fa-user-circle"></i><span>Profil</span></a>
+    </nav>
+
+    <div id="install-banner" class="install-banner" style="display:none;"><div class="install-content"><img src="logo/filmsall.png" class="install-logo"><div class="install-text"><h3>Installer FILMSall</h3></div></div><button id="install-btn" class="btn-install">INSTALLER</button><button id="close-install" class="btn-close">✕</button></div>
 
     <script src="script.js"></script>
 </body>

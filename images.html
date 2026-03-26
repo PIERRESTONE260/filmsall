@@ -3,69 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Galerie - FILMSall</title>
+    <title>FILMSall - Galerie</title>
     <link rel="stylesheet" href="style.css">
     <link rel="manifest" href="manifest.json">
     <link rel="icon" type="image/png" href="logo/filmsall.png">
-    <meta name="theme-color" content="#000000">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script>window.isGalleryPage = true;</script>
 </head>
 <body>
+    <div id="loader"><div class="spinner"></div></div>
+    <nav class="navbar"><div class="logo-container"><img src="logo/filmsall.png" class="logo-img"></div><div class="search-box"><input type="text" id="search-input" placeholder="Rechercher affiches..."></div></nav>
+    <div class="page-header-fix"><h1>Galerie</h1></div>
+    <main id="gallery-container" class="gallery-grid"></main>
 
-    <!-- Navbar -->
-    <nav class="navbar">
-        <a href="index.html" class="logo-container">
-            <img src="logo/filmsall.png" alt="FILMSall" class="logo-img">
-        </a>
-        <ul class="nav-links" style="display:flex;">
-            <li><a href="index.html">Retour à l'accueil</a></li>
-        </ul>
+    <div id="video-modal" class="modal"><div class="modal-content"><span class="close-modal"><i class="fas fa-times"></i></span><div id="video-wrapper" class="video-container"></div><div id="modal-cover" class="modal-cover"><button id="center-play-btn" class="center-play"><i class="fas fa-play"></i></button></div><div id="modal-info" class="modal-info"><div class="modal-title-row"><h2 id="modal-title">Titre</h2></div><p id="modal-desc" style="color:#ccc; font-size:13px;"></p><div id="action-grid" class="action-grid"></div><div id="series-area" style="display:none;"><select id="season-select" class="season-select"></select><div id="episodes-list" class="episodes-list"></div></div></div></div></div>
+
+    <nav class="bottom-nav">
+        <a href="index.html" class="bottom-nav-item"><i class="fas fa-home"></i><span>Accueil</span></a>
+        <a href="images.html" class="bottom-nav-item active"><i class="fas fa-th-large"></i><span>Galerie</span></a>
+        <a href="musique.html" class="bottom-nav-item"><i class="fas fa-music"></i><span>Musique</span></a>
+        <a href="apropos.html" class="bottom-nav-item"><i class="fas fa-user-circle"></i><span>Profil</span></a>
     </nav>
-
-    <!-- Titre -->
-    <div style="padding-top: 100px; text-align: center;">
-        <h1>Galerie des Affiches</h1>
-        <p style="color: #777;">Cliquez sur une affiche pour aller voir le film</p>
-    </div>
-
-    <!-- GRILLE D'IMAGES -->
-    <main id="gallery-container" class="gallery-grid">
-        <p style="text-align:center; color:#aaa; width:100%;">Chargement...</p>
-    </main>
-
-    <script>
-    document.addEventListener("DOMContentLoaded", () => {
-        // Chargement des films
-        fetch('films.json?t=' + Date.now())
-            .then(res => res.json())
-            .then(data => {
-                const grid = document.getElementById('gallery-container');
-                grid.innerHTML = "";
-                
-                // Mélanger pour l'effet découverte
-                data.sort(() => Math.random() - 0.5);
-
-                data.forEach(movie => {
-                    const card = document.createElement('div');
-                    card.className = 'gallery-card';
-                    card.innerHTML = `
-                        <img src="${movie.image}" loading="lazy" alt="${movie.titre}" onerror="this.src='logo/filmsall.png'">
-                        <div class="gallery-overlay">
-                            <h3>${movie.titre}</h3>
-                            <span style="background:var(--primary); padding:2px 5px; border-radius:3px; font-size:12px;">Regarder</span>
-                        </div>
-                    `;
-                    
-                    // --- LA REDIRECTION MAGIQUE ---
-                    // On envoie l'ID du film dans l'adresse (URL)
-                    card.onclick = () => {
-                        window.location.href = `index.html?id=${movie.id}`;
-                    };
-                    
-                    grid.appendChild(card);
-                });
-            })
-            .catch(err => console.error("Erreur:", err));
-    });
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>

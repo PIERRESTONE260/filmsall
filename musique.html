@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>FILMSall - Musique</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/png" href="logo/filmsall.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script>window.isMusicPage = true;</script>
+</head>
+<body>
+    <div id="loader"><div class="spinner"></div></div>
+    <nav class="navbar"><div class="logo-container"><img src="logo/filmsall.png" class="logo-img"></div><div class="search-box"><input type="text" id="search-input" placeholder="Rechercher musiques..."></div></nav>
+    <div class="page-header-fix"><h1>Espace Musique 🎵</h1></div>
+    <main id="music-container" class="gallery-grid"></main>
+
+    <div id="video-modal" class="modal"><div class="modal-content"><span class="close-modal"><i class="fas fa-times"></i></span><div id="video-wrapper" class="video-container"></div><div id="modal-cover" class="modal-cover"><button id="center-play-btn" class="center-play"><i class="fas fa-play"></i></button></div><div id="modal-info" class="modal-info"><div class="modal-title-row"><h2 id="modal-title">Titre</h2></div><p id="modal-desc" style="color:#ccc; font-size:13px;"></p><div id="action-grid" class="action-grid"></div></div></div></div>
+
+    <nav class="bottom-nav">
+        <a href="index.html" class="bottom-nav-item"><i class="fas fa-home"></i><span>Accueil</span></a>
+        <a href="images.html" class="bottom-nav-item"><i class="fas fa-th-large"></i><span>Galerie</span></a>
+        <a href="musique.html" class="bottom-nav-item active"><i class="fas fa-music"></i><span>Musique</span></a>
+        <a href="apropos.html" class="bottom-nav-item"><i class="fas fa-user-circle"></i><span>Profil</span></a>
+    </nav>
+    <script src="script.js"></script>
+</body>
+</html>

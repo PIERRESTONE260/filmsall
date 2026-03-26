@@ -1,0 +1,74 @@
+[
+  {
+    "id": 1001,
+    "type": "musique",
+    "titre": "Ima",
+    "artiste": "Dadju",
+    "origine": "Franco-Congolais",
+    "categorie": "Pop-Urbain, R&B, Afrobeat",
+    "annee": 2022,
+    "likes": 10420,
+    "image": "music/dadju/ima.jpg",
+    "banner": "music/banner/imabanner.jpg",
+    "driveId": "12RMZhdehaAhqK7q5NYgwxVOud6JROubz",
+    "downloads": {
+      "video": "12RMZhdehaAhqK7q5NYgwxVOud6JROubz",
+      "audio": "1TWF1wGNhOYUpagSAUUyVqxRSnNRwPqOg"
+    },
+    "description": "c'est une ballade romantique et sincère. Les paroles décrivent un coup de foudre et une promesse d'engagement, avec la phrase emblématique : 'J'immortaliserais aujourd'hui pour que demain s'en souvienne.'"
+  },
+  {
+    "id": 1002,
+    "type": "musique",
+    "titre": "Prends ma mains",
+    "artiste": "Gims ft Vitaa",
+    "origine": "Franco-Congolais & Franco-Italienne",
+    "categorie": "Pop, Hip-Hop mélodique",
+    "annee": 2021,
+    "likes": 3200,
+    "image": "music/dadju/gims&vitaa.webp",
+    "banner": "music/banner/prendsmamainsbanner.jpg",
+    "driveId": "1bsvrfyadvhfpiH5zI386-6gZ79LfGoNe",
+    "downloads": {
+      "video": "1bsvrfyadvhfpiH5zI386-6gZ79LfGoNe",
+      "audio": "1gEJF4-9mNmw5JHLfTrfEKuSQzQ9c3RVq"
+    },
+    "description": "Un morceau sur l'évasion, le voyage et l'amour, avec un clip tourné pour un partenariat avec la manque Oppo, mettant en scène des paysages exotiques et une histoire d'amour à travers le monde."
+  },
+  {
+    "id": 1003,
+    "type": "musique",
+    "titre": "Un Coup",
+    "artiste": "Fally_Ipupa Ft Dadju",
+    "origine": "RDC",
+    "categorie": "Rumba-Congolaise, Pop-Urbain, R&B",
+    "annee": 2022,
+    "likes": 8900,
+    "image": "music/dadju/fally&dadju.jpg",
+    "banner": "music/banner/uncoupbanner.jpg",
+    "driveId": "17qF9w2roVHoYBKJD-Eb_nhVL51psdv4z",
+    "downloads": {
+      "video": "17qF9w2roVHoYBKJD-Eb_nhVL51psdv4z",
+      "audio": "1L7gzebgGnoZmQG29DP60VAMJ9NM9ThVd"
+    },
+    "description": "La chanson traite d'un coup de foudre amoureux immédiat et intense ('D'un coup, amoureux d'un coup'). Elle se distingue par une ambiance romantique et un clip au décor rétro/oldschool."
+  },
+  {
+    "id": 1004,
+    "type": "musique",
+    "titre": "Ma Woman",
+    "artiste": "Jeady Jay",
+    "origine": "Franco-congolais",
+    "categorie": "R&B, Soul, Pop-Urbain",
+    "annee": 2024,
+    "likes": 6500,
+    "image": "music/dadju/jeadyjay.jpg",
+    "banner": "music/banner/mawomanbanner.jpg",
+    "driveId": "1C4OiGl_nvdrZicb9ebJ7vByvXIoVM3nc",
+    "downloads": {
+      "video": "1C4OiGl_nvdrZicb9ebJ7vByvXIoVM3nc",
+      "audio": "1931i_gRk9IRczSqW0nKoOp1EBXXE8e7L"
+    },
+    "description": "C'est une chanson d'amour et d'engagement. L'artiste y exprime un coup de foudre ('Tu m'as fait craquer dès le premier rendez-vous') et sa volonté de s'engager durablement, demandant même la main de sa compagne à genoux. Les paroles mêlent le français et des expressions en lingala."
+  }
+]
