@@ -1,121 +1,135 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact</title>
-     <link rel="manifest" href="manifest.json">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Contact & Auteur - FILMSall</title>
+    
+    <!-- On relie à ton style principal pour garder le beau design -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
     <link rel="icon" type="image/png" href="logo/filmsall.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <meta name="theme-color" content="#0b0f19">
+
+    <!-- Styles spécifiques pour cette page -->
+    <style>
+        .contact-wrapper { padding: 80px 4% 100px 4%; max-width: 800px; margin: auto; }
+        
+        /* Carte de l'Auteur */
+        .author-card { background: var(--surface); border-radius: 16px; padding: 30px; text-align: center; border: 1px solid #1f2937; box-shadow: 0 10px 25px rgba(0,0,0,0.5); margin-bottom: 30px; }
+        .author-avatar { width: 100px; height: 100px; border-radius: 50%; background: var(--primary); color: white; font-size: 40px; display: flex; justify-content: center; align-items: center; margin: 0 auto 15px auto; border: 4px solid #1f2937; box-shadow: 0 5px 15px rgba(229,9,20,0.3);}
+        .author-bio { color: var(--gray); font-size: 14px; line-height: 1.6; margin-top: 15px; text-align: left; background: #0b0f19; padding: 20px; border-radius: 12px; border: 1px solid #1f2937;}
+        .author-bio strong { color: white; }
+        
+        /* Réseaux sociaux */
+        .social-links { display: flex; justify-content: center; gap: 15px; margin-top: 20px; }
+        .social-links a { color: white; background: #1f2937; width: 45px; height: 45px; display: flex; justify-content: center; align-items: center; border-radius: 50%; font-size: 20px; transition: 0.3s; text-decoration: none; }
+        .social-links a:hover { background: var(--primary); transform: translateY(-5px); box-shadow: 0 5px 15px rgba(229,9,20,0.4);}
+        
+        /* Carte Formulaire */
+        .contact-form-card { background: var(--surface); border-radius: 16px; padding: 30px; border: 1px solid #1f2937; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
+        .contact-form-card h2 { margin-bottom: 5px; color: white; text-align: center; font-size: 24px;}
+        .contact-form-card p { text-align: center; color: var(--gray); font-size: 13px; margin-bottom: 20px;}
+        
+        .header-title { text-align: center; margin-bottom: 30px; }
+        .header-title h1 { color: white; font-size: 28px; }
+        .header-title span { color: var(--primary); }
+    </style>
 </head>
-<style>
-    body {
-        font-family: Arial, sans-serif;
-        margin: 20px;
-        background-color: #101120;
-    }
-    h1 {
-        color: #f80808;
-    }
-    h2 {
-        color: #f70505;
-    }
-    p {
-        color: #fcfcfc;
-    }
-    a {
-        color: #05f398;
-        text-decoration: none;
-    }
-    a:hover {
-        text-decoration: underline;
-    }
-    form {
-        background-color: #524f4f;
-        padding: 20px;
-        border-radius: 5px;
-        box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        max-width: 500px;
-        margin-top: 20px;
-    }
-    label {
-        display: block;
-        margin-bottom: 5px;
-        color: #f70505;
-    }
-    input[type="text"],
-    input[type="email"],
-    textarea {
-        width: 90%;
-        padding: 10px;
-        margin-bottom: 15px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-    }
-    input[type="submit"] {
-        background-color: #080808;
-        color: rgb(242, 247, 244);
-        padding: 10px 20px;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-    }
-    input[type="submit"]:hover {
-        background-color: #0056b3;
-    }
-    button {
-        background-color: #080808;
-        color: rgb(242, 247, 244);
-        padding: 10px 20px;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        margin-top: 20px;
-    }
-</style>
 <body>
-    <h1>Contactez-nous</h1>
-    <p>Pour toute question ou assistance, veuillez nous contacter à l'adresse suivante :</p>
-    <p>Email : <a href="mailto:filmsall190@gmail.com">filmsall190@gmail.com</a></p>
-    <p>Nous sommes également disponibles sur les réseaux sociaux :</p>
-    <ul>
-        <li><a href="https://www.facebook.com/filmsall">Facebook</a></li>
-        <li><a href="https://www.twitter.com/filmsall">Twitter</a></li>
-        <li><a href="https://www.instagram.com/filmsall">Instagram</a></li>
-    </ul>
-    <div>
-        <h2>Formulaire de contact</h2>
-        <form id="contact-form" method="post">
-            <label for="name">Nom :</label><br>
-            <input type="text" id="name" name="name" required><br><br>
-            <label for="email">Email :</label><br>
-            <input type="email" id="email" name="email" required><br><br>
-            <label for="message">Message :</label><br>
-            <textarea id="message" name="message" rows="5" required></textarea><br><br>
-            <input type="submit" value="Envoyer">
-        </form>
+
+    <!-- NAVBAR HAUT -->
+    <nav class="navbar">
+        <a href="index.html" class="logo-container" style="text-decoration: none;">
+            <img src="logo/filmsall.png" alt="FILMSall" class="logo-img">
+        </a>
+        <ul class="nav-links" style="display:flex;">
+            <li><a href="index.html"><i class="fas fa-arrow-left"></i> Retour</a></li>
+        </ul>
+    </nav>
+
+    <div class="contact-wrapper">
+        
+        <div class="header-title">
+            <h1><span>Contact</span></h1>
+        </div>
+
+        <!-- SECTION 1 : LA VIE DE L'AUTEUR -->
+        <div class="author-card">
+            <div class="author-avatar">
+                <i class="fas fa-crown"></i>
+            </div>
+            <h2 style="color: white; margin-bottom: 5px;">Pierre-Stone</h2>
+            <p style="color: var(--primary); font-weight: bold; font-size: 14px;">Créateur & Ingénieur Full-Stack</p>
+            
+            <div class="author-bio">
+                <p>Bonjour, je suis <strong>Ngoy Wa Banza Pierre</strong>, plus connu sous le nom de Pierre-Stone.</p>
+                <p style="margin-top: 10px;">Né le <strong>19 Avril 2005 à Bukama</strong> (RDC), je suis un développeur passionné par les nouvelles technologies. Actuellement étudiant en <strong>L2 à l'Université Don Bosco de Lubumbashi</strong>, j'ai conçu FILMSall de A à Z.</p>
+                <p style="margin-top: 10px;">Mon objectif avec cette plateforme est de briser les frontières du divertissement et d'offrir à l'Afrique et au monde entier une expérience de streaming rapide, fluide et premium.</p>
+            </div>
+
+            <div class="social-links">
+                <a href="mailto:filmsall190@gmail.com" title="Email"><i class="fas fa-envelope"></i></a>
+                <a href="https://www.facebook.com/filmsall" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://www.twitter.com/filmsall" target="_blank" title="Twitter"><i class="fab fa-twitter"></i></a>
+                <a href="https://www.instagram.com/filmsall" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+
+        <!-- SECTION 2 : LE FORMULAIRE DE CONTACT -->
+        <div class="contact-form-card">
+            <h2>Laissez-nous un message</h2>
+            <p>Une question ? Un film à proposer ? Écrivez-nous !</p>
+            
+            <form id="contact-form">
+                <div class="form-group">
+                    <input type="text" id="name" name="name" placeholder="Votre Nom complet" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" id="email" name="email" placeholder="Votre Email" required>
+                </div>
+                <div class="form-group">
+                    <textarea id="message" name="message" rows="5" placeholder="Écrivez votre message ici..." required></textarea>
+                </div>
+                <button type="submit" class="btn-submit"><i class="fas fa-paper-plane"></i> Envoyer le message</button>
+            </form>
+        </div>
+
     </div>
-    <button type="button" onclick="window.history.back()">Retour</button>
+
+    <!-- BOTTOM NAV (Pour mobile) -->
+    <nav class="bottom-nav">
+        <a href="index.html" class="bottom-nav-item"><i class="fas fa-home"></i><span>Accueil</span></a>
+        <a href="images.html" class="bottom-nav-item"><i class="fas fa-th-large"></i><span>Galerie</span></a>
+        <a href="musique.html" class="bottom-nav-item"><i class="fas fa-music"></i><span>Musique</span></a>
+        <a href="#" class="bottom-nav-item active"><i class="fas fa-user-circle"></i><span>Profil</span></a>
+    </nav>
+
+    <!-- SCRIPT DE SOUMISSION -->
     <script>
         document.getElementById('contact-form').addEventListener('submit', function(event) {
+            // Empêche la page de se recharger
             event.preventDefault();
-            alert('Merci pour votre message ! Nous vous répondrons dans les plus brefs délais.');
+
+            // Récupérer les valeurs
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+            
+            // Formatage de l'email
+            const subject = encodeURIComponent("Contact depuis FILMSall");
+            const body = encodeURIComponent(`Nom: ${name}\nEmail: ${email}\n\nMessage:\n${message}`);
+            
+            // Ouvrir l'application mail du téléphone/PC
+            window.location.href = `mailto:filmsall190@gmail.com?subject=${subject}&body=${body}`;
+
+            // Petit message sympa pour l'utilisateur
+            alert('Merci ' + name + ' ! Votre application email va s\'ouvrir pour envoyer le message.');
+            
+            // Vider le formulaire
             this.reset();
         });
-        // envoyé sur mon compte email pour test :
-         document.getElementById('contact-form').addEventListener('submit', function(event) {
-             event.preventDefault();
-
-             const name = document.getElementById('name').value;
-             const email = document.getElementById('email').value;
-             const message = document.getElementById('message').value;
-             const mailtoLink = `mailto:filmsall190@gmail.com?subject=Contact&body=Nom: ${name}%0AEmail: ${email}%0AMessage: ${message}`;
-             window.location.href = mailtoLink;
-         });
-         // bouton retour :
-         function goBack() {
-             window.history.back();
-         }
     </script>
 </body>
 </html>

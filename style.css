@@ -1,5 +1,5 @@
 /* =========================================
-   1. RESET & VARIABLES (STYLE PREMIUM)
+   1. RESET & VARIABLES (PREMIUM MOVIEBOX)
    ========================================= */
 :root { 
     --primary: #E50914; 
@@ -9,226 +9,447 @@
     --gray: #8ba0b2; 
     --whatsapp: #25D366; 
 }
-* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; outline: none; -webkit-tap-highlight-color: transparent;}
-body { background-color: var(--bg); color: var(--light); overflow-x: hidden; padding-bottom: 70px; }
-img { image-rendering: -webkit-optimize-contrast; object-fit: cover; }
+
+* { 
+    margin: 0; padding: 0; box-sizing: border-box; 
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
+    outline: none; -webkit-tap-highlight-color: transparent;
+}
+
+body { 
+    background-color: var(--bg); 
+    color: var(--light); 
+    overflow-x: hidden; 
+    padding-bottom: 80px; /* Espace pour la barre mobile */
+}
+
+img { 
+    image-rendering: -webkit-optimize-contrast; 
+    object-fit: cover; 
+}
 
 /* =========================================
-   2. LOADER & NAVBAR
+   2. LOADER (ÉCRAN DE CHARGEMENT)
    ========================================= */
-#loader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg); z-index: 99999; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: opacity 0.5s; }
-.spinner { border: 4px solid #1f2937; border-top: 4px solid var(--primary); border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; margin-bottom: 20px; }
+#loader { 
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+    background: var(--bg); z-index: 99999; 
+    display: flex; flex-direction: column; justify-content: center; align-items: center; 
+    transition: opacity 0.5s; 
+}
+.spinner { 
+    border: 4px solid #1f2937; border-top: 4px solid var(--primary); 
+    border-radius: 50%; width: 50px; height: 50px; 
+    animation: spin 1s linear infinite; margin-bottom: 20px; 
+}
 @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
+/* =========================================
+   3. NAVBAR (HAUT) & RECHERCHE
+   ========================================= */
 .navbar { 
     display: flex; justify-content: space-between; align-items: center; 
-    padding: 15px 4%; position: fixed; width: 100%; top: 0; z-index: 1000; 
-    background-color: var(--bg); /* Fond 100% solide pour bloquer l'image */
-    box-shadow: 0 2px 10px rgba(0,0,0,0.5); /* Petite ombre sous le menu */
+    padding: 12px 4%; position: fixed; width: 100%; top: 0; z-index: 5000; 
+    background-color: rgba(11, 15, 25, 0.95); /* Fond solide pour éviter le débordement */
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); 
+    height: 70px;
     transition: 0.3s; 
 }
-.logo-img { height: 35px; width: auto; object-fit: contain; filter: invert(1) brightness(200%); }
-.search-box { display: flex; background: var(--surface); border-radius: 20px; padding: 8px 15px; width: 100%; max-width: 300px; border: 1px solid #1f2937;}
-.search-box input { background: transparent; border: none; color: white; width: 100%; font-size:14px;}
-.search-box button { background: transparent; border: none; color: var(--gray); cursor: pointer; }
-.nav-links { list-style: none; display: flex; gap: 20px; }
-.nav-links a { text-decoration: none; color: var(--gray); font-size: 15px; font-weight: 500; transition: 0.3s; white-space: nowrap; }
+
+.logo-img { height: 35px; width: auto; object-fit: contain; transition: transform 0.3s; }
+
+.search-box { 
+    display: flex; background: var(--surface); border-radius: 25px; 
+    padding: 10px 20px; width: 100%; max-width: 350px; 
+    border: 1px solid #1f2937; box-shadow: inset 0 2px 5px rgba(0,0,0,0.2);
+}
+.search-box input { background: transparent; border: none; color: white; width: 100%; font-size: 15px; }
+.search-box input::placeholder { color: #5c6b7a; }
+.search-box button { background: transparent; border: none; color: var(--gray); cursor: pointer; font-size: 16px;}
+
+.nav-links { list-style: none; display: flex; gap: 25px; }
+.nav-links a { text-decoration: none; color: var(--gray); font-size: 15px; font-weight: 600; transition: 0.3s; white-space: nowrap; }
 .nav-links a:hover, .nav-links a.active { color: white; }
 
 /* =========================================
-   3. BARRE DU BAS (BOTTOM NAV MOBILE)
+   4. BARRE DU BAS (MOBILE NAVIGATION)
    ========================================= */
-.bottom-nav { display: none; position: fixed; bottom: 0; left: 0; width: 100%; background: #111827; border-top: 1px solid #1f2937; z-index: 9000; justify-content: space-around; align-items: center; padding: 10px 0; padding-bottom: calc(10px + env(safe-area-inset-bottom)); }
-.bottom-nav-item { display: flex; flex-direction: column; align-items: center; color: var(--gray); text-decoration: none; font-size: 10px; gap: 4px; transition: 0.3s;}
-.bottom-nav-item i { font-size: 20px; }
+.bottom-nav { 
+    display: none; position: fixed; bottom: 0; left: 0; width: 100%; 
+    background: rgba(17, 24, 39, 0.95); backdrop-filter: blur(10px);
+    border-top: 1px solid #1f2937; z-index: 9000; 
+    justify-content: space-around; align-items: center; 
+    padding: 12px 0; padding-bottom: calc(12px + env(safe-area-inset-bottom)); 
+}
+.bottom-nav-item { 
+    display: flex; flex-direction: column; align-items: center; 
+    color: #5c6b7a; text-decoration: none; font-size: 11px; gap: 5px; 
+    transition: 0.3s; font-weight: 600;
+}
+.bottom-nav-item i { font-size: 22px; transition: transform 0.2s;}
 .bottom-nav-item.active { color: var(--light); }
-.bottom-nav-item.active i { color: var(--primary); transform: scale(1.1); }
+.bottom-nav-item.active i { color: var(--primary); transform: scale(1.15); }
 
 /* =========================================
-   4. SECTION FILMS & AFFICHES
+   5. HERO BANNER (CARTE FLOTTANTE - LE FIX)
    ========================================= */
 .hero { 
-    height: 45vh; /* Hauteur un peu réduite pour faire propre */
-    margin: 85px 4% 20px 4%; /* LE SECRET EST ICI : 85px en haut pour s'écarter du menu ! */
-    border-radius: 16px; /* Bords arrondis comme une application premium */
-    overflow: hidden; /* Coupe l'image si elle déborde des bords arrondis */
-    position: relative; 
-    display: flex; 
-    align-items: flex-end; 
-    padding: 30px; 
-    background-size: cover; 
-    background-position: center; /* Centre toujours les visages */
-    box-shadow: 0 10px 25px rgba(0,0,0,0.6); /* Belle ombre sous la carte */
+    height: 45vh; 
+    margin: 90px 4% 30px 4%; /* 90px margin-top pour descendre sous le menu ! */
+    border-radius: 20px; /* Carte arrondie premium */
+    position: relative; display: flex; align-items: flex-end; 
+    padding: 40px; background-size: cover; background-position: center top; 
+    box-shadow: 0 15px 35px rgba(0,0,0,0.6); 
+    overflow: hidden;
 }
-
 .hero-overlay { 
     position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
-    /* Dégradé noir qui part du bas pour bien lire le titre blanc */
-    background: linear-gradient(to top, rgba(11,15,25, 1) 0%, rgba(11,15,25, 0.4) 60%, transparent 100%); 
+    background: linear-gradient(to top, rgba(11,15,25,1) 0%, rgba(11,15,25,0.4) 50%, transparent 100%); 
 }
-
 .hero-content { position: relative; z-index: 2; max-width: 600px; width: 100%; }
-.hero h1 { font-size: 2.2rem; margin: 5px 0; text-shadow: 2px 2px 4px black; font-weight: 800;}
-.hero-desc { color: #ccc; font-size: 14px; margin-bottom: 15px; line-height: 1.4; text-shadow: 1px 1px 3px black; }
+.hero h1 { font-size: 2.8rem; margin: 5px 0 10px 0; text-shadow: 2px 2px 6px black; font-weight: 800; line-height: 1.1;}
+.hero-desc { color: #d1d5db; font-size: 15px; margin-bottom: 20px; line-height: 1.5; text-shadow: 1px 1px 3px black; display: -webkit-box; -webkit-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 
-.btn { padding: 10px 20px; border-radius: 25px; border: none; font-weight: bold; cursor: pointer; margin-right: 10px; font-size: 14px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); transition: 0.2s;}
-.btn:hover { transform: scale(1.05); }
+.btn { 
+    padding: 12px 25px; border-radius: 30px; border: none; font-weight: 700; 
+    cursor: pointer; margin-right: 15px; font-size: 15px; 
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3); transition: 0.2s; display: inline-flex; align-items: center; gap: 8px;
+}
+.btn:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.5); }
 .btn-white { background: white; color: black; }
 
-#main-container, #gallery-container, #music-container { padding: 10px 4%; }
-.category-section { margin-bottom: 25px; }
-.category-title { font-size: 1.2rem; margin-bottom: 12px; color: var(--light); font-weight: 600; border-left: 3px solid var(--primary); padding-left: 8px;}
-.movie-row { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 10px; scrollbar-width: none; }
-.movie-row::-webkit-scrollbar { display: none; }
-.gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 12px; padding-top: 20px;}
-
-.movie-card, .gallery-card, .rec-card { 
-    min-width: 120px; max-width: 120px; height: 180px; 
-    border-radius: 8px; overflow: hidden; cursor: pointer; 
-    position: relative; box-shadow: 0 4px 8px rgba(0,0,0,0.4);
-    transition: transform 0.3s;
+/* =========================================
+   6. SECTIONS FILMS & AFFICHES
+   ========================================= */
+#main-container, #gallery-container, #music-container { padding: 0 4%; }
+.category-section { margin-bottom: 35px; }
+.category-title { 
+    font-size: 1.3rem; margin-bottom: 15px; color: var(--light); 
+    font-weight: 700; border-left: 4px solid var(--primary); 
+    padding-left: 10px; line-height: 1;
 }
-.movie-card img, .gallery-card img, .rec-card img { width: 100%; height: 100%; object-fit: cover; }
-.movie-card:hover, .gallery-card:hover, .rec-card:hover { transform: scale(1.05); z-index: 5; }
+
+/* Défilement horizontal fluide */
+.movie-row { 
+    display: flex; gap: 15px; overflow-x: auto; padding-bottom: 15px; 
+    scrollbar-width: none; scroll-behavior: smooth;
+}
+.movie-row::-webkit-scrollbar { display: none; }
+
+/* Cartes (Films) */
+.movie-card, .gallery-card { 
+    min-width: 130px; max-width: 130px; height: 195px; 
+    border-radius: 10px; overflow: hidden; cursor: pointer; 
+    position: relative; box-shadow: 0 6px 12px rgba(0,0,0,0.4);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+.movie-card img, .gallery-card img { width: 100%; height: 100%; object-fit: cover; }
+.movie-card:hover, .gallery-card:hover { transform: scale(1.05); z-index: 5; box-shadow: 0 10px 20px rgba(0,0,0,0.6); }
 
 /* Badge Likes */
-.like-badge { position: absolute; top: 5px; right: 5px; background: rgba(0,0,0,0.7); padding: 3px 8px; border-radius: 12px; display: flex; align-items: center; gap: 4px; z-index: 6; backdrop-filter: blur(2px); border: 1px solid rgba(255,255,255,0.1);}
-.heart-icon { font-size: 12px; color: white; transition: 0.3s; cursor: pointer; }
+.like-badge { 
+    position: absolute; top: 6px; right: 6px; background: rgba(0,0,0,0.75); 
+    padding: 4px 8px; border-radius: 12px; display: flex; align-items: center; gap: 5px; 
+    z-index: 6; backdrop-filter: blur(4px); border: 1px solid rgba(255,255,255,0.1);
+}
+.heart-icon { font-size: 13px; color: white; transition: 0.3s; cursor: pointer; }
 .heart-icon.active { color: var(--primary); transform: scale(1.2); }
-.like-count { font-size: 11px; color: white; font-weight: bold; }
+.like-count { font-size: 12px; color: white; font-weight: bold; }
+
+/* Grille pour la Galerie */
+.gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 15px; padding-top: 10px;}
 
 /* =========================================
-   5. MODAL & STICKY PLAYER (LA MAGIE EST ICI)
+   7. MODAL & LECTEUR STICKY (MOVIEBOX STYLE)
    ========================================= */
 .modal { 
     display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-    background: var(--bg); z-index: 9999; flex-direction: column; 
-    overflow-y: auto; /* Le modal entier peut scroller */
-    scroll-behavior: smooth;
+    background: var(--bg); z-index: 9999; flex-direction: column; overflow-y: auto;
 }
 
-/* 🟢 LE SECRET : POSITION STICKY & Z-INDEX 🟢 */
-.video-container, .modal-cover { 
-    position: sticky; /* Reste collé en haut quand on scrolle ! */
-    top: 0; 
-    z-index: 9999; /* Passe au-dessus des épisodes et du texte en dessous */
-    width: 100%; 
-    background: black; 
-    flex-shrink: 0; 
-    box-shadow: 0 10px 20px rgba(0,0,0,0.8); /* Fait une belle ombre sur le texte qui passe en dessous */
+/* Le Lecteur reste collé en haut pendant qu'on scrolle ! */
+.video-container { 
+    width: 100%; background: black; position: sticky; top: 0; 
+    z-index: 100; aspect-ratio: 16/9; display: none; flex-shrink: 0; 
+    box-shadow: 0 10px 30px rgba(0,0,0,0.9); /* Grosse ombre sous la vidéo */
 }
-
-.modal-cover { height: 35vh; background-size: cover; background-position: center; }
-.modal-cover::after { content:''; position: absolute; bottom:0; left:0; width:100%; height:50%; background: linear-gradient(to top, var(--bg), transparent); }
-.video-container { aspect-ratio: 16/9; display: none; }
 .video-container iframe { width: 100%; height: 100%; border: none; }
-
-/* Le Carré Noir Anti-Google Drive */
 .video-overlay-fix { position: absolute; top: 0; right: 0; width: 60px; height: 60px; background: #000000; z-index: 10; }
 
-/* Bouton Fermer (Reste fixe même quand on scrolle) */
+.modal-cover { height: 40vh; background-size: cover; background-position: center; position: relative; flex-shrink: 0; }
+.modal-cover::after { content:''; position: absolute; bottom:0; left:0; width:100%; height:60%; background: linear-gradient(to top, var(--bg) 0%, transparent 100%); }
+
 .close-modal { 
-    position: fixed; /* Reste toujours à sa place */
-    top: 15px; left: 15px; font-size: 20px; color: white; 
-    background: rgba(0,0,0,0.6); width: 40px; height: 40px; 
-    border-radius: 50%; display: flex; justify-content: center; align-items: center; 
-    z-index: 10000; cursor: pointer; border: 1px solid rgba(255,255,255,0.2);
-    backdrop-filter: blur(5px);
+    position: fixed; top: 15px; left: 15px; font-size: 22px; color: white; 
+    background: rgba(0,0,0,0.6); width: 45px; height: 45px; border-radius: 50%; 
+    display: flex; justify-content: center; align-items: center; z-index: 10000; 
+    cursor: pointer; border: 1px solid rgba(255,255,255,0.2); backdrop-filter: blur(5px); transition: 0.2s;
 }
-.center-play { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 40px; color: white; background: rgba(229, 9, 20, 0.8); border: none; border-radius: 50%; width: 70px; height: 70px; cursor: pointer; z-index: 5; box-shadow: 0 0 20px rgba(229,9,20,0.5);}
+.close-modal:hover { background: var(--primary); border-color: var(--primary); }
 
-/* Informations en dessous du lecteur (Elles vont scroller) */
-.modal-info { padding: 20px; background: var(--bg); flex: 1; position: relative; z-index: 1; }
-.modal-title-row { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
-.modal-title-row h2 { font-size: 22px; line-height: 1.2; font-weight: bold; }
-.modal-meta { color: var(--gray); font-size: 13px; margin-bottom: 15px; font-weight: 500;}
+.center-play { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 45px; color: white; background: rgba(229, 9, 20, 0.85); border: none; border-radius: 50%; width: 80px; height: 80px; cursor: pointer; z-index: 5; box-shadow: 0 0 25px rgba(229,9,20,0.6); transition: 0.3s;}
+.center-play:hover { transform: translate(-50%, -50%) scale(1.1); background: var(--primary); }
 
-/* BOUTONS ACTIONS */
-.action-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 20px; }
-.btn-action { background: var(--surface); color: white; padding: 12px; border-radius: 8px; text-align: center; text-decoration: none; font-size: 14px; font-weight: bold; display: flex; flex-direction: column; align-items: center; gap: 5px; border: 1px solid #1f2937; cursor: pointer; transition: 0.2s;}
-.btn-action:hover { background: #1f2937; }
-.btn-action i { font-size: 20px; }
-.btn-action.play { background: var(--primary); color: white; grid-column: span 2; flex-direction: row; justify-content: center; border:none; box-shadow: 0 4px 15px rgba(229,9,20,0.4);}
-.btn-action.whatsapp { background: var(--whatsapp); border:none; grid-column: span 2; flex-direction: row; justify-content: center; box-shadow: 0 4px 15px rgba(37,211,102,0.3);}
+.modal-info { padding: 25px; background: var(--bg); flex: 1; position: relative; z-index: 1; }
+.modal-title-row { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
+.modal-title-row h2 { font-size: 26px; line-height: 1.2; font-weight: 800; text-shadow: 1px 1px 2px black;}
+.modal-meta { color: var(--gray); font-size: 14px; margin-bottom: 20px; font-weight: 600; display:flex; gap:10px; align-items:center;}
 
-/* SÉRIES & ÉPISODES */
-.season-select { width: 100%; padding: 12px; background: var(--surface); color: white; border: 1px solid #1f2937; border-radius: 8px; margin: 15px 0; font-weight: bold; font-size: 15px; outline: none;}
+/* Boutons d'Action (Lecture, Download, WA) */
+.action-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 25px; }
+.btn-action { 
+    background: var(--surface); color: white; padding: 12px; border-radius: 12px; 
+    text-align: center; text-decoration: none; font-size: 13px; font-weight: bold; 
+    display: flex; flex-direction: column; align-items: center; gap: 6px; 
+    border: 1px solid #1f2937; cursor: pointer; transition: 0.2s;
+}
+.btn-action:hover { background: #1f2937; transform: translateY(-2px); }
+.btn-action i { font-size: 22px; }
+.btn-action.play { background: var(--primary); color: white; grid-column: span 2; flex-direction: row; justify-content: center; border:none; box-shadow: 0 4px 15px rgba(229,9,20,0.4); font-size: 15px;}
+.btn-action.whatsapp { background: var(--whatsapp); border:none; grid-column: span 2; flex-direction: row; justify-content: center; box-shadow: 0 4px 15px rgba(37,211,102,0.3); font-size: 15px;}
+
+/* Séries & Épisodes */
+.season-select { width: 100%; padding: 15px; background: var(--surface); color: white; border: 1px solid #1f2937; border-radius: 10px; margin: 20px 0; font-weight: 700; font-size: 16px; outline: none; appearance: none;}
 .episodes-list { display: flex; flex-direction: column; gap: 10px;}
-.episode-item { display: flex; justify-content: space-between; align-items: center; padding: 15px; background: var(--surface); border-radius: 8px; border: 1px solid #1f2937; cursor: pointer; transition: 0.2s;}
-.episode-item:hover { background: #1f2937; transform: translateX(5px); }
-.episode-title { color: white; font-size: 14px; display: flex; align-items: center; gap: 10px; font-weight: 500;}
-.episode-title i { color: var(--primary); font-size: 18px; }
-.episode-download { color: var(--gray); font-size: 18px; padding: 5px; text-decoration:none; transition: 0.2s;}
-.episode-download:hover { color: white; }
-
-/* RECOMMANDATIONS */
-.rec-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 15px;}
-.rec-card { width: 100%; height: auto; }
+.episode-item { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; background: var(--surface); border-radius: 10px; border: 1px solid #1f2937; cursor: pointer; transition: 0.2s;}
+.episode-item:hover { background: #1f2937; border-color: var(--primary); }
+.episode-title { color: white; font-size: 15px; display: flex; align-items: center; gap: 12px; font-weight: 600;}
+.episode-title i { color: var(--primary); font-size: 20px; }
+.episode-download { color: var(--gray); font-size: 20px; padding: 5px; text-decoration:none; transition: 0.2s;}
+.episode-download:hover { color: white; transform: scale(1.1); }
 
 /* =========================================
-   6. BANDEAU INSTALLATION PWA
+   8. RECOMMANDATIONS (ALÉATOIRE - DISPOSITION FIXE)
    ========================================= */
-.install-banner { position: fixed; bottom: 75px; left: 10px; right: 10px; background: var(--surface); border-radius: 12px; display: flex; justify-content: space-between; align-items: center; padding: 15px; z-index: 9999; box-shadow: 0 4px 20px rgba(0,0,0,0.8); border: 1px solid #1f2937; }
-.install-logo { width: 40px; height: 40px; border-radius: 8px; background: black; padding: 5px; filter: invert(1); }
-.install-text h3 { font-size: 14px; color: white; margin: 0; font-weight: bold;}
-.btn-install { background: var(--primary); color: white; border: none; padding: 8px 15px; border-radius: 20px; font-weight: bold; box-shadow: 0 2px 8px rgba(229,9,20,0.5);}
-.btn-close { background: transparent; border: none; color: #999; font-size: 20px; margin-left: 10px; cursor: pointer;}
+/* La grille des recommandations est ultra-robuste. Elle ne cassera jamais. */
+.rec-grid { 
+    display: grid; 
+    grid-template-columns: repeat(auto-fill, minmax(105px, 1fr)); 
+    gap: 12px; 
+    margin-top: 15px;
+}
+.rec-card { 
+    width: 100%; 
+    background: transparent; 
+    cursor: pointer; 
+    transition: 0.2s;
+}
+.rec-card:hover { transform: scale(1.05); }
+
+/* On force l'image à rester un rectangle parfait (Ratio Affiche 2:3) */
+.rec-card img { 
+    width: 100%; 
+    aspect-ratio: 2/3; 
+    border-radius: 8px; 
+    object-fit: cover; 
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+}
+
+/* Le titre de la recommandation ne débordera jamais */
+.rec-card h4 { 
+    font-size: 12px; 
+    color: #d1d5db; 
+    margin-top: 8px; 
+    font-weight: 600;
+    text-align: center;
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+}
 
 /* =========================================
-   7. RESPONSIVE MOBILE
+   9. BANDEAU INSTALLATION PWA
+   ========================================= */
+.install-banner { position: fixed; bottom: 85px; left: 10px; right: 10px; background: rgba(21, 26, 40, 0.95); backdrop-filter: blur(10px); border-radius: 16px; display: flex; justify-content: space-between; align-items: center; padding: 15px; z-index: 9999; box-shadow: 0 10px 25px rgba(0,0,0,0.8); border: 1px solid rgba(255,255,255,0.1); }
+.install-logo { width: 45px; height: 45px; border-radius: 10px; background: black; padding: 6px; filter: invert(1); }
+.install-text h3 { font-size: 15px; color: white; margin: 0; font-weight: 700;}
+.btn-install { background: var(--primary); color: white; border: none; padding: 10px 18px; border-radius: 20px; font-weight: 700; box-shadow: 0 4px 10px rgba(229,9,20,0.4); font-size: 13px;}
+.btn-close { background: transparent; border: none; color: #999; font-size: 22px; margin-left: 12px; cursor: pointer;}
+
+/* =========================================
+   10. RESPONSIVE MOBILE (SMARTPHONES)
    ========================================= */
 @media (max-width: 768px) {
-    .nav-links, .hamburger { display: none !important; }
-    .bottom-nav { display: flex; }
+    /* Navbar devient petite */
     .navbar { padding: 10px 15px; height: 60px; }
-    .search-box { width: 65%; }
-    .page-header-fix { padding-top: 80px; text-align: center; }
-    .gallery-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; }
-    .movie-card, .gallery-card, .rec-card { width: 100%; height: 160px; max-width: none; }
+    .nav-links, .hamburger { display: none !important; }
+    .search-box { width: 65%; padding: 6px 12px; }
     
-    /* Le modal prend tout l'écran comme une nouvelle page */
+    /* Affiche la bottom nav */
+    .bottom-nav { display: flex; }
+    
+    /* Correction de la Bannière Hero sur Mobile */
+    .hero { 
+        height: 38vh; 
+        margin: 75px 4% 20px 4%; /* Parfaitement sous la barre de recherche */
+        border-radius: 14px;
+        padding: 20px;
+    }
+    .hero h1 { font-size: 1.8rem; }
+    
+    /* Grilles et Cartes */
+    .gallery-grid { grid-template-columns: repeat(3, 1fr); gap: 10px; padding-top: 85px; }
+    .movie-card, .gallery-card { width: 100%; height: 165px; min-width: 105px; }
+    
+    /* Grille de recommandations 3 colonnes fixes sur mobile */
+    .rec-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    
+    /* Modal en mode Page */
     .modal { height: 100vh; height: 100dvh; border-radius: 0; }
     .modal-content { max-height: none; height: 100%; border-radius: 0; }
+    .close-modal { top: 10px; left: 10px; }
     
-    /* Le lecteur vidéo devient bien collant sur mobile */
-    .video-container { position: sticky; top: 0; z-index: 9999; }
+    /* Page formulaires/profil */
+    .request-container { flex-direction: column; margin-top: 80px; padding-bottom: 100px;}
+    .price-card, .form-section { width: 100%; }
+    .page-header-fix { padding-top: 85px; text-align: center; }
 }
 
 /* =========================================
-   8. PAGES SIMPLES (PROFIL & DEMANDE)
+   11. PAGES SIMPLES (PROFIL / COMMANDES)
    ========================================= */
-.profile-header-app { text-align: center; padding: 80px 20px 30px 20px; background: linear-gradient(to bottom, #151a28, var(--bg)); }
-.profile-avatar { width: 100px; height: 100px; border-radius: 50%; background: var(--primary); color: white; font-size: 40px; display: flex; justify-content: center; align-items: center; margin: 0 auto 15px auto; border: 4px solid #1f2937; box-shadow: 0 4px 15px rgba(229,9,20,0.3);}
-.profile-menu { padding: 0 20px; }
-.menu-item { display: flex; align-items: center; padding: 15px; background: var(--surface); margin-bottom: 10px; border-radius: 12px; color: white; text-decoration: none; font-weight: 500; border: 1px solid #1f2937; transition: 0.2s;}
-.menu-item i { font-size: 20px; color: var(--gray); margin-right: 15px; width: 25px; text-align: center; }
-.menu-item:hover { background: #1f2937; transform: translateX(5px); }
+.profile-header-app { text-align: center; padding: 90px 20px 30px 20px; background: linear-gradient(to bottom, #151a28, var(--bg)); }
+.profile-avatar { width: 100px; height: 100px; border-radius: 50%; background: var(--primary); color: white; font-size: 45px; display: flex; justify-content: center; align-items: center; margin: 0 auto 15px auto; border: 4px solid #1f2937; box-shadow: 0 8px 20px rgba(229,9,20,0.3);}
+.profile-menu { padding: 0 4%; max-width: 600px; margin: 0 auto; }
+.menu-item { display: flex; align-items: center; padding: 18px; background: var(--surface); margin-bottom: 12px; border-radius: 14px; color: white; text-decoration: none; font-weight: 600; border: 1px solid #1f2937; transition: 0.2s; box-shadow: 0 4px 6px rgba(0,0,0,0.2);}
+.menu-item i { font-size: 22px; color: var(--gray); margin-right: 18px; width: 30px; text-align: center; }
+.menu-item:hover { background: #1f2937; transform: translateX(5px); border-color: var(--primary); }
 
-.request-container { display: flex; max-width: 1000px; margin: 80px auto 50px auto; padding: 20px; gap: 40px; align-items: flex-start; }
-.price-card { flex: 1; background: linear-gradient(135deg, #f5af19, #f12711); color: #1a1a1a; padding: 30px; border-radius: 15px; text-align: center; box-shadow: 0 10px 20px rgba(241, 39, 17, 0.3);}
-.form-section { flex: 1.5; background: var(--surface); padding: 30px; border-radius: 15px; border: 1px solid #1f2937; }
-.form-group input, .form-group select, .form-group textarea { width: 100%; padding: 15px; background: #0b0f19; border: 1px solid #1f2937; color: white; border-radius: 8px; margin-top:5px; margin-bottom:15px; font-size: 15px;}
-.form-group input:focus { border-color: var(--primary); }
-.btn-submit { width: 100%; background: var(--primary); color: white; padding: 15px; font-size: 16px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; box-shadow: 0 4px 15px rgba(229,9,20,0.4); transition: 0.2s;}
-.btn-submit:hover { background: white; color: var(--primary); }
+.request-container { display: flex; max-width: 1000px; margin: 90px auto 50px auto; padding: 20px; gap: 40px; align-items: flex-start; }
+.price-card { flex: 1; background: linear-gradient(135deg, #f5af19, #f12711); color: #1a1a1a; padding: 40px; border-radius: 20px; text-align: center; box-shadow: 0 15px 30px rgba(241, 39, 17, 0.3);}
+.form-section { flex: 1.5; background: var(--surface); padding: 35px; border-radius: 20px; border: 1px solid #1f2937; box-shadow: 0 10px 25px rgba(0,0,0,0.5);}
+.form-group input, .form-group select, .form-group textarea { width: 100%; padding: 15px; background: #0b0f19; border: 1px solid #1f2937; color: white; border-radius: 10px; margin-top:8px; margin-bottom:20px; font-size: 15px; transition: 0.3s;}
+.form-group input:focus { border-color: var(--primary); box-shadow: 0 0 0 2px rgba(229,9,20,0.2); }
+.btn-submit { width: 100%; background: var(--primary); color: white; padding: 16px; font-size: 16px; border: none; border-radius: 10px; cursor: pointer; font-weight: 800; box-shadow: 0 6px 20px rgba(229,9,20,0.4); transition: 0.3s;}
+.btn-submit:hover { background: white; color: var(--primary); transform: translateY(-2px); }
 
-@media (max-width: 768px) {
-    .request-container { flex-direction: column; margin-top: 60px; padding-bottom: 100px;}
-    .price-card, .form-section { width: 100%; }
-    .hero { 
-        height: 35vh; 
-        margin: 75px 4% 15px 4%; /* S'écarte de la barre de recherche sur mobile */
-        padding: 20px; 
-        border-radius: 12px;
+/* =========================================
+   12. OPTIMISATION POUR ORDINATEUR (DESKTOP APP)
+   ========================================= */
+@media (min-width: 769px) {
+    
+    /* 1. On empêche le site de s'étirer à l'infini sur les écrans géants (4K) */
+    body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background-color: #05070c; /* Fond encore plus sombre derrière l'app */
     }
-    .hero h1 { font-size: 1.6rem; }
-    .hero-desc { 
-        font-size: 12px; 
-        margin-bottom: 10px; 
-        display: -webkit-box; 
-        -webkit-line-clamp: 2; /* Coupe le texte après 2 lignes pour ne pas surcharger */
-        line-clamp: 2;
-        -webkit-box-orient: vertical; 
-        overflow: hidden; 
+
+    /* Le conteneur principal a une taille maximale (comme l'app Netflix) */
+    .navbar, .hero, #main-container, #gallery-container, #music-container, .profile-header-app, .profile-menu {
+        width: 100%;
+        max-width: 1400px; 
+        margin-left: auto;
+        margin-right: auto;
     }
+    
+    /* On recentre la barre de navigation fixée en haut */
+    .navbar {
+        left: 50%;
+        transform: translateX(-50%);
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+
+    /* 2. BARRE DE DÉFILEMENT (SCROLLBAR) PREMIUM ET SOMBRE */
+    ::-webkit-scrollbar { 
+        width: 10px; 
+        height: 10px; 
+    }
+    ::-webkit-scrollbar-track { 
+        background: var(--bg); 
+    }
+    ::-webkit-scrollbar-thumb { 
+        background: #1f2937; 
+        border-radius: 5px; 
+    }
+    ::-webkit-scrollbar-thumb:hover { 
+        background: var(--primary); /* Devient rouge quand on passe la souris ! */
+    }
+
+    /* 3. TAILLE DES AFFICHES SUR ORDINATEUR (Plus grandes) */
+    .movie-card, .gallery-card, .rec-card {
+        min-width: 160px; 
+        max-width: 160px; 
+        height: 240px;
+    }
+
+    .gallery-grid { 
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); 
+        gap: 20px; 
+        padding-top: 120px; 
+    }
+
+    /* 4. LE LECTEUR VIDÉO (MODAL) EN MODE FENÊTRE FLOTTANTE 3D */
+    .modal-content {
+        width: 85%;
+        max-width: 1100px;
+        height: 88vh; /* Ne touche pas les bords de l'écran */
+        border-radius: 16px;
+        box-shadow: 0 25px 60px rgba(0,0,0,0.9); /* Grosse ombre 3D */
+        border: 1px solid #1f2937;
+        margin-top: 2vh;
+    }
+
+    /* On cache le bouton "Retour à l'accueil" sur la galerie PC car on a le vrai menu en haut */
+    .nav-links i.fa-arrow-left { display: none; }
+}
+
+/* =========================================
+   13. NOTIFICATIONS IN-APP (TOAST)
+   ========================================= */
+.toast-notification {
+    position: fixed;
+    top: -100px; /* Caché en haut de l'écran au début */
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(229, 9, 20, 0.95); /* Rouge Netflix/FILMSall */
+    color: white;
+    padding: 12px 20px;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+    z-index: 100000; /* Par-dessus TOUT le reste */
+    transition: top 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55); /* Effet rebond */
+    backdrop-filter: blur(5px);
+    width: 90%;
+    max-width: 400px;
+    cursor: pointer;
+}
+
+.toast-notification.show {
+    top: 20px; /* Fait descendre la notification */
+}
+
+.toast-notification img {
+    width: 40px; 
+    height: 40px; 
+    border-radius: 50%; 
+    object-fit: cover;
+    border: 2px solid white;
+}
+
+.toast-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.toast-tag {
+    font-size: 10px;
+    text-transform: uppercase;
+    font-weight: 800;
+    color: rgba(255,255,255,0.7);
+    letter-spacing: 1px;
+}
+
+.toast-title {
+    font-size: 14px;
+    font-weight: bold;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 250px;
 }

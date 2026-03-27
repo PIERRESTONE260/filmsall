@@ -16,15 +16,15 @@ document.addEventListener("DOMContentLoaded", () => {
     let favorites = JSON.parse(localStorage.getItem('filmsall_favs')) ||[];
     let likesData = JSON.parse(localStorage.getItem('filmsall_likes')) || {};
 
-    // --- 2. CHARGEMENT INTELLIGENT DES DONNÉES ---
+    // --- 2. CHARGEMENT INTELLIGENT DES DONNÉES & NOTIFICATIONS ---
     const jsonFile = window.isMusicPage ? 'musique.json' : 'films.json';
 
-    fetch(jsonFile + '?t=' + Date.now()) // Anti-cache pour avoir les nouveautés direct
+    fetch(jsonFile + '?t=' + Date.now()) 
         .then(res => res.json())
         .then(data => {
             allData = data;
             
-            // A. Affichage selon la page
+            // A. Affichage
             if (window.isGalleryPage) {
                 displayGrid(data, 'gallery-container');
             } else if (window.isMusicPage) {
@@ -39,7 +39,37 @@ document.addEventListener("DOMContentLoaded", () => {
             const loader = document.getElementById('loader');
             if(loader) loader.style.display = 'none';
 
-            // C. Détection : Redirection depuis la Galerie ?
+            // ===================================================
+            // 🔥 NOUVEAU : SYSTÈME DE DÉTECTION DE NOUVEAUTÉS 🔥
+            // ===================================================
+            const dataType = window.isMusicPage ? 'musique' : 'films';
+            const storageKey = `filmsall_last_count_${dataType}`;
+            
+            // On regarde combien de films on avait la dernière fois (si 0, on met le nombre actuel pour ne pas spammer la première fois)
+            const previousCount = parseInt(localStorage.getItem(storageKey)) || data.length;
+
+            // Si le nouveau fichier JSON a PLUS de films qu'avant
+            if (data.length > previousCount) {
+                // On prend le dernier film ajouté dans le JSON
+                const newItem = data[data.length - 1]; 
+
+                // 1. Notification Système (Vibration Android/PC) si l'utilisateur l'a autorisé
+                if ("Notification" in window && Notification.permission === "granted") {
+                    new Notification("Nouveauté sur FILMSall 🍿", {
+                        body: `Nouveau contenu disponible : ${newItem.titre}`,
+                        icon: "logo/filmsall.png"
+                    });
+                }
+
+                // 2. Superbe Notification Visuelle dans l'application (Toast)
+                showToastNotification(newItem);
+            }
+
+            // On met à jour la mémoire du téléphone avec le nouveau nombre de films
+            localStorage.setItem(storageKey, data.length);
+            // ===================================================
+
+            // Redirection depuis la Galerie
             const urlParams = new URLSearchParams(window.location.search);
             const movieId = urlParams.get('id');
             if (movieId) {
@@ -52,6 +82,51 @@ document.addEventListener("DOMContentLoaded", () => {
         })
         .catch(err => console.error("Erreur de chargement:", err));
 
+    // --- FONCTION POUR AFFICHER LA BELLE NOTIFICATION ---
+    function showToastNotification(item) {
+        // Nettoyer si une ancienne existe
+        let oldToast = document.getElementById('app-toast');
+        if (oldToast) oldToast.remove();
+
+        const toast = document.createElement('div');
+        toast.id = 'app-toast';
+        toast.className = 'toast-notification';
+        
+        let typeText = item.type === 'musique' ? 'Nouveau Son' : (item.type === 'serie' ? 'Nouvelle Série' : 'Nouveau Film');
+
+        toast.innerHTML = `
+            <img src="${item.image}" onerror="this.src='logo/filmsall.png'">
+            <div class="toast-text">
+                <span class="toast-tag">${typeText}</span>
+                <span class="toast-title">${item.titre}</span>
+            </div>
+            <i class="fas fa-chevron-right" style="margin-left:auto; color:rgba(255,255,255,0.5);"></i>
+        `;
+        
+        // Si on clique sur la notification, ça ouvre directement le film !
+        toast.onclick = () => {
+            toast.classList.remove('show');
+            openModal(item);
+        };
+
+        document.body.appendChild(toast);
+        
+        // Animation d'entrée (Rebond)
+        setTimeout(() => toast.classList.add('show'), 1500);
+        
+        // Animation de sortie (Disparaît après 6 secondes)
+        setTimeout(() => {
+            toast.classList.remove('show');
+            setTimeout(() => toast.remove(), 600);
+        }, 7000);
+    }
+
+    // Demander la permission d'envoyer des notifications Android au premier clic de l'utilisateur
+    document.body.addEventListener('click', () => {
+        if ("Notification" in window && Notification.permission === "default") {
+            Notification.requestPermission();
+        }
+    }, { once: true });
     // --- 3. NAVBAR & MENU MOBILE ---
     const navbar = document.getElementById('navbar');
     if(navbar) {
@@ -298,14 +373,14 @@ document.addEventListener("DOMContentLoaded", () => {
         // Prendre tout le catalogue SAUF le film actuel, et mélanger
         let mixedContent = allData.filter(item => item.id !== data.id);
         mixedContent.sort(() => Math.random() - 0.5);
-        let suggestions = mixedContent.slice(0, 6); // Prendre 6 affiches
+        let suggestions = mixedContent.slice(0, 20); // Prendre 6 affiches
 
         suggestions.forEach(rec => {
             const card = document.createElement('div');
             card.className = 'rec-card';
             card.style.cursor = "pointer";
             card.innerHTML = `
-                <img src="${rec.image}" style="width:100%; border-radius:6px; aspect-ratio:2/3; object-fit:cover;" onerror="this.src='logo/filmsall.png'">
+                <img src="${rec.image}" style="width:100%; border-radius:6px; aspect-ratio:2/3; object-fit:cover;" onerror="this.src='logo/icon.svg'">
                 <h4 style="font-size:11px; color:#ccc; margin-top:5px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${rec.titre}</h4>
             `;
             
