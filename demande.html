@@ -3,37 +3,153 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Commander - FILMSall</title>
+    <title>Commande VIP - FILMSall</title>
+    
     <link rel="stylesheet" href="style.css">
     <link rel="manifest" href="manifest.json">
     <link rel="icon" type="image/png" href="logo/filmsall.png">
+    <!-- J'ai ajouté le lien FontAwesome qui manquait dans ton code -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <meta name="theme-color" content="#0b0f19">
+
+    <!-- Styles spécifiques pour rendre la page VIP magnifique -->
+    <style>
+        .vip-header { text-align: center; padding-top: 100px; margin-bottom: 20px; }
+        .vip-header h1 { font-size: 28px; color: white; font-weight: 800; }
+        .vip-header h1 span { color: #f5af19; /* Couleur Or */ }
+        .vip-header p { color: var(--gray); font-size: 14px; margin-top: 5px; }
+
+        /* Carte VIP Premium */
+        .price-card {
+            background: linear-gradient(135deg, #f5af19 0%, #e65c00 100%);
+            color: white;
+            padding: 40px 20px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 15px 30px rgba(245, 175, 25, 0.3);
+            position: relative;
+            overflow: hidden;
+            border: 2px solid #ffcc00;
+        }
+        /* Effet d'étoile géante en fond de carte */
+        .price-card::after {
+            content: '\f005';
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+            position: absolute;
+            font-size: 180px;
+            opacity: 0.1;
+            top: -30px;
+            right: -30px;
+            transform: rotate(15deg);
+        }
+        .price-card h2 { font-size: 22px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; }
+        .price-card .price { font-size: 65px; font-weight: 900; margin: 10px 0; text-shadow: 3px 3px 6px rgba(0,0,0,0.3); }
+        .price-card p { font-size: 15px; font-weight: 600; }
+
+        /* Formulaire */
+        .form-group-wrap { margin-bottom: 20px; text-align: left; }
+        .form-group-wrap label { display: block; color: var(--gray); font-size: 13px; margin-bottom: 8px; font-weight: 600; }
+        .form-group-wrap input { 
+            width: 100%; padding: 15px; background: #0b0f19; border: 1px solid #1f2937; 
+            color: white; border-radius: 10px; font-size: 15px; transition: 0.3s;
+        }
+        .form-group-wrap input:focus { border-color: #f5af19; box-shadow: 0 0 0 2px rgba(245, 175, 25, 0.2); }
+        
+        .btn-whatsapp-submit {
+            width: 100%; background: var(--whatsapp); color: white; padding: 16px; font-size: 16px; 
+            border: none; border-radius: 10px; cursor: pointer; font-weight: 800; 
+            box-shadow: 0 6px 20px rgba(37,211,102,0.4); transition: 0.3s;
+            display: flex; justify-content: center; align-items: center; gap: 10px;
+        }
+        .btn-whatsapp-submit:hover { transform: translateY(-2px); background: #128C7E; }
+
+        /* Liste des étapes */
+        .steps-list { margin-top: 30px; list-style: none; padding: 0; text-align: left; background: #0b0f19; padding: 20px; border-radius: 12px;}
+        .steps-list li { color: #d1d5db; font-size: 13.5px; margin-bottom: 12px; display: flex; align-items: center; gap: 12px; }
+        .steps-list li i { color: #f5af19; font-size: 18px; width: 20px; text-align: center; }
+        .steps-list li:last-child { margin-bottom: 0; }
+    </style>
 </head>
 <body>
-    <div class="request-container">
+
+    <!-- NAVBAR HAUT (Bouton retour discret) -->
+    <nav class="navbar">
+        <a href="apropos.html" class="logo-container" style="text-decoration: none;">
+            <img src="logo/filmsall.png" alt="FILMSall" class="logo-img">
+        </a>
+        <ul class="nav-links" style="display:flex;">
+            <li><a href="apropos.html"><i class="fas fa-arrow-left"></i> Retour</a></li>
+        </ul>
+    </nav>
+
+    <!-- EN-TÊTE -->
+    <div class="vip-header">
+        <h1>Commande <span>VIP</span></h1>
+        <p>Un film introuvable ? On s'en occupe.</p>
+    </div>
+
+    <!-- CONTENEUR PRINCIPAL -->
+    <div class="request-container" style="margin-top: 0;">
+        
+        <!-- CARTE PRIX (GAUCHE / HAUT) -->
         <div class="price-card">
-            <h2>Commande VIP</h2>
+            <h2>Service Premium</h2>
             <div class="price">1$</div>
-            <p>On trouve le film pour vous !</p>
+            <p>Le film directement sur votre téléphone</p>
         </div>
+        
+        <!-- FORMULAIRE (DROITE / BAS) -->
         <div class="form-section">
             <form id="reqForm">
-                <input type="text" id="nom" placeholder="Votre Nom" class="form-group" required>
-                <input type="text" id="film" placeholder="Titre du film/série" class="form-group" required>
-                <button type="submit" class="btn-submit">Envoyer via WhatsApp</button>
+                <div class="form-group-wrap">
+                    <label for="nom">Votre Nom</label>
+                    <input type="text" id="nom" placeholder="Ex: Pierre Ngoy" required>
+                </div>
+                
+                <div class="form-group-wrap">
+                    <label for="film">Film, Série, Animé ou Music recherché</label>
+                    <input type="text" id="film" placeholder="Ex: Saison 2 de Loki..." required>
+                </div>
+                
+                <button type="submit" class="btn-whatsapp-submit">
+                    <i class="fab fa-whatsapp" style="font-size: 22px;"></i> Envoyer ma commande
+                </button>
             </form>
+
+            <!-- EXPLICATION RASSURANTE POUR LE CLIENT -->
+            <ul class="steps-list">
+                <li><i class="fas fa-paper-plane"></i> 1. Envoyez votre demande.</li>
+                <li><i class="fas fa-mobile-alt"></i> 2. Recevez le numéro Mobile Money.</li>
+                <li><i class="fas fa-film"></i> 3. Obtenez le lien direct du film !</li>
+            </ul>
         </div>
     </div>
 
+    <!-- BOTTOM NAV COMPLÈTE (Pour rester cohérent avec l'app) -->
     <nav class="bottom-nav">
-        <a href="index.html" class="bottom-nav-item"><i class="fas fa-arrow-left"></i><span>Retour</span></a>
+        <a href="index.html" class="bottom-nav-item"><i class="fas fa-home"></i><span>Accueil</span></a>
+        <a href="images.html" class="bottom-nav-item"><i class="fas fa-th-large"></i><span>Galerie</span></a>
+        <a href="annonces.html" class="bottom-nav-item"><i class="fas fa-bell"></i><span>Annonces</span></a>
+        <a href="musique.html" class="bottom-nav-item"><i class="fas fa-music"></i><span>Musique</span></a>
+        <a href="apropos.html" class="bottom-nav-item active"><i class="fas fa-user-circle"></i><span>Profil</span></a>
     </nav>
 
+    <!-- SCRIPT WHATSAPP INTELLIGENT -->
     <script>
         document.getElementById('reqForm').onsubmit = (e) => {
             e.preventDefault();
-            let msg = `Salut Pierre-Stone, je veux commander le film : ${document.getElementById('film').value} (Nom: ${document.getElementById('nom').value}).`;
-            // METS TON NUMERO WHATSAPP ICI (avec le code pays, ex: 243...)
-            window.location.href = `https://wa.me/243000000000?text=${encodeURIComponent(msg)}`;
+            
+            const nom = document.getElementById('nom').value;
+            const film = document.getElementById('film').value;
+            
+            // Formatage du message pour WhatsApp avec des sauts de lignes et emojis
+            let msg = `Salut Pierre-Stone ! 🎬\n\nJe souhaite commander un film VIP sur FILMSall :\n\n*Titre recherché :* ${film}\n*Mon nom :* ${nom}\n\nComment puis-je procéder au paiement de 1$ ?`;
+            
+            // TON NUMERO WHATSAPP ICI
+            const numeroWhatsApp = "+243992846700"; 
+            
+            window.location.href = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(msg)}`;
         };
     </script>
 </body>

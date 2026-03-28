@@ -24,18 +24,19 @@ document.addEventListener("DOMContentLoaded", () => {
         .then(data => {
             allData = data;
             
-            // A. Affichage selon la page
+            // A. Filtrer l'affichage selon la page
             if (window.isGalleryPage) {
                 displayGrid(data, 'gallery-container');
             } else if (window.isAnnoncesPage) {
-                // PAGE ANNONCES : Seulement "bientot" ou année >= 2026
+                // PAGE ANNONCES : Ne montre que les films de 2026 ou taggés "bientot"
                 const annonces = data.filter(i => i.bientot === true || i.annee >= 2026);
                 displayGrid(annonces, 'annonces-container');
             } else if (window.isMusicPage) {
                 displayGrid(data, 'music-container');
             } else {
-                const movies = data.filter(i => i.type !== 'musique');
-                loadHeroAnimated(movies); // Le Diaporama Animé
+                // PAGE ACCUEIL : On cache la musique ET les annonces 2026 !
+                const movies = data.filter(i => i.type !== 'musique' && i.bientot !== true);
+                loadHeroAnimated(movies); 
                 displayCategories(movies);
             }
             
@@ -60,13 +61,21 @@ document.addEventListener("DOMContentLoaded", () => {
             }
             localStorage.setItem(storageKey, data.length);
 
-            // D. Redirection depuis la Galerie
+            // D. LECTURE DIRECTE DEPUIS LA GALERIE
             const urlParams = new URLSearchParams(window.location.search);
             const movieId = urlParams.get('id');
             if (movieId) {
                 const filmATrouver = allData.find(m => m.id == movieId);
                 if (filmATrouver) {
                     openModal(filmATrouver);
+                    
+                    // Lancement 100% Automatique du film !
+                    setTimeout(() => {
+                        const playBtn = document.getElementById('modal-play');
+                        if(playBtn) playBtn.click();
+                    }, 600);
+
+                    // Nettoie l'URL pour ne pas reboucler
                     window.history.replaceState({}, document.title, window.location.pathname);
                 }
             }
@@ -101,10 +110,10 @@ document.addEventListener("DOMContentLoaded", () => {
             if(val === "") {
                 if(document.getElementById('hero-section')) document.getElementById('hero-section').style.display = 'flex';
                 if(window.isGalleryPage || window.isMusicPage || window.isAnnoncesPage) displayGrid(allData, activeMain.id);
-                else displayCategories(allData.filter(i => i.type !== 'musique'));
+                else displayCategories(allData.filter(i => i.type !== 'musique' && i.bientot !== true));
             } else {
                 if(document.getElementById('hero-section')) document.getElementById('hero-section').style.display = 'none';
-                activeMain.innerHTML = `<h3 class="category-title" style="margin-left:4%;">Résultats</h3><div class="gallery-grid" id="search-results"></div>`;
+                activeMain.innerHTML = `<h3 class="category-title" style="margin-left:4%;">Résultats de recherche</h3><div class="gallery-grid" id="search-results"></div>`;
                 const results = allData.filter(m => m.titre.toLowerCase().includes(val));
                 const row = document.getElementById('search-results');
                 if(results.length === 0) row.innerHTML = "<p style='color:gray; padding-left:4%;'>Aucun résultat trouvé.</p>";
@@ -120,7 +129,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const container = document.getElementById('main-container');
         if(!container) return;
         container.innerHTML = "";
-        const categories = [...new Set(list.map(m => m.categorie))];
+        const categories =[...new Set(list.map(m => m.categorie))];
         categories.forEach(cat => {
             const section = document.createElement('div');
             section.className = 'category-section';
@@ -143,7 +152,6 @@ document.addEventListener("DOMContentLoaded", () => {
         const div = document.createElement('div');
         div.className = isGrid ? 'gallery-card' : 'movie-card';
         
-        // Calcul Likes & Vues
         let isLiked = likesData[item.id] ? true : false;
         let baseLikes = item.likes || 0;
         let displayLikes = baseLikes + (isLiked ? 1 : 0);
@@ -152,7 +160,7 @@ document.addEventListener("DOMContentLoaded", () => {
         let baseVues = item.vues || 120;
         let formatVues = baseVues > 999 ? (baseVues/1000).toFixed(1) + 'k' : baseVues;
         
-        let badgeBientot = item.bientot ? `<div class="bientot-badge">Bientôt</div>` : '';
+        let badgeBientot = item.bientot ? `<div class="bientot-badge">2026</div>` : '';
 
         div.innerHTML = `
             ${badgeBientot}
@@ -169,8 +177,11 @@ document.addEventListener("DOMContentLoaded", () => {
         
         div.onclick = (e) => { 
             if(!e.target.classList.contains('heart-icon')) {
-                if (window.isGalleryPage || window.isAnnoncesPage) window.location.href = `index.html?id=${item.id}`;
-                else openModal(item);
+                if (window.isGalleryPage || window.isAnnoncesPage) {
+                    window.location.href = `index.html?id=${item.id}`;
+                } else {
+                    openModal(item);
+                }
             }
         };
         return div;
@@ -200,13 +211,11 @@ document.addEventListener("DOMContentLoaded", () => {
         if(!modal) return;
         modal.style.display = 'flex';
         
-        // A. Remplissage des textes
         document.getElementById('modal-title').innerText = data.titre;
         if(document.getElementById('modal-desc')) document.getElementById('modal-desc').innerText = data.description || "";
         if(document.getElementById('modal-year')) document.getElementById('modal-year').innerText = data.annee || "";
         if(document.getElementById('modal-cat')) document.getElementById('modal-cat').innerText = data.categorie || "";
 
-        // B. Reset Interface
         const modalCover = document.getElementById('modal-cover');
         const videoWrapper = document.getElementById('video-wrapper');
         const actionGrid = document.getElementById('action-grid') || document.getElementById('movie-actions');
@@ -219,11 +228,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if(actionGrid) actionGrid.innerHTML = "";
 
-        // C. Fonction LECTURE & MODE CINÉMA
+        // FONCTION LECTURE & MODE CINÉMA
         const playMedia = () => {
             if (!data.driveId) { alert("⚠️ Ce contenu sera bientôt disponible sur FILMSall !"); return; }
             
-            // +1 Vue simulée
+            // Augmentation vue
             let vueElement = document.getElementById(`vue-card-${data.id}`);
             if (vueElement && !vueElement.dataset.viewed) {
                 data.vues = (data.vues || 120) + 1;
@@ -248,7 +257,7 @@ document.addEventListener("DOMContentLoaded", () => {
             document.getElementById('center-play-btn').style.display = 'block';
         }
 
-        // D. Gestion SÉRIES
+        // GESTION DES SÉRIES
         if (data.type === 'serie' && seriesArea) {
             if(actionGrid) actionGrid.style.display = 'none';
             seriesArea.style.display = 'block';
@@ -278,7 +287,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 };
             }
         } 
-        // E. Gestion FILMS ET MUSIQUE
+        // GESTION FILMS ET MUSIQUE
         else if (actionGrid) {
             if(seriesArea) seriesArea.style.display = 'none';
             actionGrid.style.display = 'grid';
@@ -287,6 +296,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const playBtn = document.createElement('button');
             playBtn.className = 'btn-action play';
             playBtn.innerHTML = '<i class="fas fa-play"></i> LECTURE';
+            playBtn.id = 'modal-play'; // ID Important pour l'auto-play
             playBtn.onclick = playMedia;
             actionGrid.appendChild(playBtn);
 
@@ -306,7 +316,9 @@ document.addEventListener("DOMContentLoaded", () => {
             actionGrid.innerHTML += `<a href="https://wa.me/?text=Regarde *${encodeURIComponent(data.titre)}* sur FILMSall ! C'est gratuit ici : ${window.location.href.split('?')[0]}" class="btn-action whatsapp" target="_blank"><i class="fab fa-whatsapp"></i> PARTAGER</a>`;
         }
 
-        // F. ALGORITHME DE RECOMMANDATIONS ALÉATOIRES
+        // ========================================================
+        // G. ALGORITHME DE RECOMMANDATIONS ALÉATOIRES (FIXE & PARFAIT)
+        // ========================================================
         let recArea = document.getElementById('recommendations-area');
         if (recArea) recArea.remove(); 
 
@@ -322,17 +334,20 @@ document.addEventListener("DOMContentLoaded", () => {
         
         let mixedContent = allData.filter(item => item.id !== data.id);
         mixedContent.sort(() => Math.random() - 0.5);
-        let suggestions = mixedContent.slice(0, 15); // Affiche 15 recommandations
+        let suggestions = mixedContent.slice(0, 15); // Affiche 15 recommandations max
 
         suggestions.forEach(rec => {
             const card = document.createElement('div');
             card.className = 'rec-card';
+            
+            // LA MAGIE DES IMAGES FIXES EST ICI (rec-img-wrapper)
             card.innerHTML = `
                 <div class="rec-img-wrapper">
                     <img src="${rec.image}" alt="${rec.titre}" onerror="this.src='logo/filmsall.png'">
                 </div>
                 <h4>${rec.titre}</h4>
             `;
+            
             card.onclick = () => {
                 document.querySelector('.modal-content').scrollTop = 0; 
                 openModal(rec); 
@@ -383,7 +398,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             changeSlide();
-            setInterval(changeSlide, 5000); // Change toutes les 5 secondes
+            setInterval(changeSlide, 5000); 
         }
     }
 
