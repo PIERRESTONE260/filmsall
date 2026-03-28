@@ -56,7 +56,7 @@ img {
     height: 70px;
     transition: 0.3s; 
 }
-.logo-img { height: 35px; width: auto; filter: invert(1) brightness(200%); }
+.logo-img { height: 35px; width: auto; object-fit: contain; transition: transform 0.3s;}
 
 .search-box { 
     display: flex; background: var(--surface); border-radius: 25px; 
