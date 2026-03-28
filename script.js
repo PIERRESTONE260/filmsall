@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let favorites = JSON.parse(localStorage.getItem('filmsall_favs')) ||[];
     let likesData = JSON.parse(localStorage.getItem('filmsall_likes')) || {};
 
-    // --- 2. CHARGEMENT INTELLIGENT DES DONNÉES & NOTIFICATIONS ---
+    // --- 2. CHARGEMENT INTELLIGENT ET NOTIFICATIONS ---
     const jsonFile = window.isMusicPage ? 'musique.json' : 'films.json';
 
     fetch(jsonFile + '?t=' + Date.now()) 
@@ -24,14 +24,18 @@ document.addEventListener("DOMContentLoaded", () => {
         .then(data => {
             allData = data;
             
-            // A. Affichage
+            // A. Affichage selon la page
             if (window.isGalleryPage) {
                 displayGrid(data, 'gallery-container');
+            } else if (window.isAnnoncesPage) {
+                // PAGE ANNONCES : Seulement "bientot" ou année >= 2026
+                const annonces = data.filter(i => i.bientot === true || i.annee >= 2026);
+                displayGrid(annonces, 'annonces-container');
             } else if (window.isMusicPage) {
                 displayGrid(data, 'music-container');
             } else {
                 const movies = data.filter(i => i.type !== 'musique');
-                loadHero(movies);
+                loadHeroAnimated(movies); // Le Diaporama Animé
                 displayCategories(movies);
             }
             
@@ -39,37 +43,24 @@ document.addEventListener("DOMContentLoaded", () => {
             const loader = document.getElementById('loader');
             if(loader) loader.style.display = 'none';
 
-            // ===================================================
-            // 🔥 NOUVEAU : SYSTÈME DE DÉTECTION DE NOUVEAUTÉS 🔥
-            // ===================================================
+            // C. Système de Notifications Locales
             const dataType = window.isMusicPage ? 'musique' : 'films';
             const storageKey = `filmsall_last_count_${dataType}`;
-            
-            // On regarde combien de films on avait la dernière fois (si 0, on met le nombre actuel pour ne pas spammer la première fois)
             const previousCount = parseInt(localStorage.getItem(storageKey)) || data.length;
 
-            // Si le nouveau fichier JSON a PLUS de films qu'avant
             if (data.length > previousCount) {
-                // On prend le dernier film ajouté dans le JSON
                 const newItem = data[data.length - 1]; 
-
-                // 1. Notification Système (Vibration Android/PC) si l'utilisateur l'a autorisé
                 if ("Notification" in window && Notification.permission === "granted") {
                     new Notification("Nouveauté sur FILMSall 🍿", {
-                        body: `Nouveau contenu disponible : ${newItem.titre}`,
+                        body: `Nouveau : ${newItem.titre}`,
                         icon: "logo/filmsall.png"
                     });
                 }
-
-                // 2. Superbe Notification Visuelle dans l'application (Toast)
                 showToastNotification(newItem);
             }
-
-            // On met à jour la mémoire du téléphone avec le nouveau nombre de films
             localStorage.setItem(storageKey, data.length);
-            // ===================================================
 
-            // Redirection depuis la Galerie
+            // D. Redirection depuis la Galerie
             const urlParams = new URLSearchParams(window.location.search);
             const movieId = urlParams.get('id');
             if (movieId) {
@@ -80,53 +71,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             }
         })
-        .catch(err => console.error("Erreur de chargement:", err));
+        .catch(err => console.error("Erreur de chargement JSON:", err));
 
-    // --- FONCTION POUR AFFICHER LA BELLE NOTIFICATION ---
-    function showToastNotification(item) {
-        // Nettoyer si une ancienne existe
-        let oldToast = document.getElementById('app-toast');
-        if (oldToast) oldToast.remove();
-
-        const toast = document.createElement('div');
-        toast.id = 'app-toast';
-        toast.className = 'toast-notification';
-        
-        let typeText = item.type === 'musique' ? 'Nouveau Son' : (item.type === 'serie' ? 'Nouvelle Série' : 'Nouveau Film');
-
-        toast.innerHTML = `
-            <img src="${item.image}" onerror="this.src='logo/filmsall.png'">
-            <div class="toast-text">
-                <span class="toast-tag">${typeText}</span>
-                <span class="toast-title">${item.titre}</span>
-            </div>
-            <i class="fas fa-chevron-right" style="margin-left:auto; color:rgba(255,255,255,0.5);"></i>
-        `;
-        
-        // Si on clique sur la notification, ça ouvre directement le film !
-        toast.onclick = () => {
-            toast.classList.remove('show');
-            openModal(item);
-        };
-
-        document.body.appendChild(toast);
-        
-        // Animation d'entrée (Rebond)
-        setTimeout(() => toast.classList.add('show'), 1500);
-        
-        // Animation de sortie (Disparaît après 6 secondes)
-        setTimeout(() => {
-            toast.classList.remove('show');
-            setTimeout(() => toast.remove(), 600);
-        }, 7000);
-    }
-
-    // Demander la permission d'envoyer des notifications Android au premier clic de l'utilisateur
-    document.body.addEventListener('click', () => {
-        if ("Notification" in window && Notification.permission === "default") {
-            Notification.requestPermission();
-        }
-    }, { once: true });
     // --- 3. NAVBAR & MENU MOBILE ---
     const navbar = document.getElementById('navbar');
     if(navbar) {
@@ -135,7 +81,6 @@ document.addEventListener("DOMContentLoaded", () => {
             else navbar.classList.remove('scrolled'); 
         };
     }
-
     const hamburger = document.getElementById('hamburger');
     if (hamburger) {
         hamburger.addEventListener('click', () => { 
@@ -150,20 +95,16 @@ document.addEventListener("DOMContentLoaded", () => {
     if(searchInput) {
         const performSearch = (e) => {
             const val = searchInput.value.toLowerCase();
-            const mainContainer = document.getElementById('main-container');
-            const galleryContainer = document.getElementById('gallery-container');
-            const musicContainer = document.getElementById('music-container');
-            
-            const activeMain = mainContainer || galleryContainer || musicContainer;
+            const activeMain = document.getElementById('main-container') || document.getElementById('gallery-container') || document.getElementById('music-container') || document.getElementById('annonces-container');
             if(!activeMain) return;
 
             if(val === "") {
                 if(document.getElementById('hero-section')) document.getElementById('hero-section').style.display = 'flex';
-                if(window.isGalleryPage || window.isMusicPage) displayGrid(allData, activeMain.id);
+                if(window.isGalleryPage || window.isMusicPage || window.isAnnoncesPage) displayGrid(allData, activeMain.id);
                 else displayCategories(allData.filter(i => i.type !== 'musique'));
             } else {
                 if(document.getElementById('hero-section')) document.getElementById('hero-section').style.display = 'none';
-                activeMain.innerHTML = `<h3 class="category-title" style="margin-left:4%;">Résultats de recherche</h3><div class="gallery-grid" id="search-results"></div>`;
+                activeMain.innerHTML = `<h3 class="category-title" style="margin-left:4%;">Résultats</h3><div class="gallery-grid" id="search-results"></div>`;
                 const results = allData.filter(m => m.titre.toLowerCase().includes(val));
                 const row = document.getElementById('search-results');
                 if(results.length === 0) row.innerHTML = "<p style='color:gray; padding-left:4%;'>Aucun résultat trouvé.</p>";
@@ -194,7 +135,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const container = document.getElementById(containerId);
         if(!container) return;
         container.innerHTML = "";
-        list.sort(() => Math.random() - 0.5); // Mélanger la grille
+        list.sort(() => Math.random() - 0.5); 
         list.forEach(item => container.appendChild(createCard(item, true)));
     }
 
@@ -202,28 +143,34 @@ document.addEventListener("DOMContentLoaded", () => {
         const div = document.createElement('div');
         div.className = isGrid ? 'gallery-card' : 'movie-card';
         
-        // Calcul des Likes
+        // Calcul Likes & Vues
         let isLiked = likesData[item.id] ? true : false;
         let baseLikes = item.likes || 0;
         let displayLikes = baseLikes + (isLiked ? 1 : 0);
         let heartClass = isLiked ? "fas fa-heart active" : "far fa-heart";
 
+        let baseVues = item.vues || 120;
+        let formatVues = baseVues > 999 ? (baseVues/1000).toFixed(1) + 'k' : baseVues;
+        
+        let badgeBientot = item.bientot ? `<div class="bientot-badge">Bientôt</div>` : '';
+
         div.innerHTML = `
+            ${badgeBientot}
             <div class="like-badge">
                 <i class="${heartClass} heart-icon" onclick="toggleLike(event, ${item.id}, this)"></i>
                 <span class="like-count">${displayLikes}</span>
+            </div>
+            <div class="view-badge">
+                <i class="fas fa-eye view-icon"></i>
+                <span class="view-count" id="vue-card-${item.id}">${formatVues}</span>
             </div>
             <img src="${item.image}" loading="lazy" alt="${item.titre}" onerror="this.src='logo/filmsall.png'">
         `;
         
         div.onclick = (e) => { 
-            // Si on ne clique pas sur le cœur, on ouvre le film
             if(!e.target.classList.contains('heart-icon')) {
-                if (window.isGalleryPage) {
-                    window.location.href = `index.html?id=${item.id}`;
-                } else {
-                    openModal(item);
-                }
+                if (window.isGalleryPage || window.isAnnoncesPage) window.location.href = `index.html?id=${item.id}`;
+                else openModal(item);
             }
         };
         return div;
@@ -234,7 +181,6 @@ document.addEventListener("DOMContentLoaded", () => {
         e.stopPropagation();
         let countSpan = icon.nextElementSibling;
         let current = parseInt(countSpan.innerText);
-        
         if (likesData[id]) {
             delete likesData[id];
             icon.className = "far fa-heart heart-icon";
@@ -260,7 +206,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if(document.getElementById('modal-year')) document.getElementById('modal-year').innerText = data.annee || "";
         if(document.getElementById('modal-cat')) document.getElementById('modal-cat').innerText = data.categorie || "";
 
-        // B. Reset de la vidéo et affichage de la couverture
+        // B. Reset Interface
         const modalCover = document.getElementById('modal-cover');
         const videoWrapper = document.getElementById('video-wrapper');
         const actionGrid = document.getElementById('action-grid') || document.getElementById('movie-actions');
@@ -273,18 +219,28 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if(actionGrid) actionGrid.innerHTML = "";
 
-        // C. Fonction pour lancer la vidéo (Avec le carré noir anti-flèche Drive)
+        // C. Fonction LECTURE & MODE CINÉMA
         const playMedia = () => {
             if (!data.driveId) { alert("⚠️ Ce contenu sera bientôt disponible sur FILMSall !"); return; }
+            
+            // +1 Vue simulée
+            let vueElement = document.getElementById(`vue-card-${data.id}`);
+            if (vueElement && !vueElement.dataset.viewed) {
+                data.vues = (data.vues || 120) + 1;
+                vueElement.innerText = data.vues > 999 ? (data.vues/1000).toFixed(1) + 'k' : data.vues;
+                vueElement.dataset.viewed = "true";
+            }
+
+            document.body.classList.add('cinema-mode'); 
             modalCover.style.display = 'none';
             videoWrapper.style.display = 'block';
             
-            // Le div .video-overlay-fix sert à cacher la flèche Google Drive !
+            // Le carré noir .video-overlay-fix cache la flèche Drive
             videoWrapper.innerHTML = `
                 <div class="video-overlay-fix"></div> 
                 <iframe src="https://drive.google.com/file/d/${data.driveId}/preview" allow="autoplay; fullscreen" style="width:100%; height:100%; border:none;"></iframe>
             `;
-            document.querySelector('.modal-content').scrollTop = 0; // Remonte en haut
+            document.querySelector('.modal-content').scrollTop = 0; 
         };
 
         if(document.getElementById('center-play-btn')) {
@@ -292,9 +248,8 @@ document.addEventListener("DOMContentLoaded", () => {
             document.getElementById('center-play-btn').style.display = 'block';
         }
 
-        // D. Gestion du Type (Série, Musique, Film)
+        // D. Gestion SÉRIES
         if (data.type === 'serie' && seriesArea) {
-            // SÉRIE
             if(actionGrid) actionGrid.style.display = 'none';
             seriesArea.style.display = 'block';
             if(document.getElementById('center-play-btn')) document.getElementById('center-play-btn').style.display = 'none';
@@ -323,20 +278,18 @@ document.addEventListener("DOMContentLoaded", () => {
                 };
             }
         } 
+        // E. Gestion FILMS ET MUSIQUE
         else if (actionGrid) {
-            // FILM OU MUSIQUE
             if(seriesArea) seriesArea.style.display = 'none';
             actionGrid.style.display = 'grid';
-            actionGrid.className = 'action-grid'; // S'assure que c'est bien une grille
+            actionGrid.className = 'action-grid';
             
-            // Bouton LECTURE
             const playBtn = document.createElement('button');
             playBtn.className = 'btn-action play';
             playBtn.innerHTML = '<i class="fas fa-play"></i> LECTURE';
             playBtn.onclick = playMedia;
             actionGrid.appendChild(playBtn);
 
-            // Boutons TÉLÉCHARGEMENT
             if (data.downloads) {
                 if(data.downloads.video) actionGrid.innerHTML += `<a href="${data.downloads.video}" class="btn-action" target="_blank"><i class="fas fa-video"></i> MP4</a>`;
                 if(data.downloads.audio) actionGrid.innerHTML += `<a href="${data.downloads.audio}" class="btn-action" target="_blank"><i class="fas fa-music"></i> MP3</a>`;
@@ -350,15 +303,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 actionGrid.appendChild(dlBtn);
             }
 
-            // Bouton WHATSAPP
             actionGrid.innerHTML += `<a href="https://wa.me/?text=Regarde *${encodeURIComponent(data.titre)}* sur FILMSall ! C'est gratuit ici : ${window.location.href.split('?')[0]}" class="btn-action whatsapp" target="_blank"><i class="fab fa-whatsapp"></i> PARTAGER</a>`;
         }
 
-        // ========================================================
-        // E. ALGORITHME DE RECOMMANDATIONS ALÉATOIRES (MOVIEBOX)
-        // ========================================================
+        // F. ALGORITHME DE RECOMMANDATIONS ALÉATOIRES
         let recArea = document.getElementById('recommendations-area');
-        if (recArea) recArea.remove(); // Nettoyer les anciennes suggestions
+        if (recArea) recArea.remove(); 
 
         recArea = document.createElement('div');
         recArea.id = 'recommendations-area';
@@ -370,49 +320,103 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById('modal-info').appendChild(recArea);
         const recGrid = document.getElementById('rec-grid');
         
-        // Prendre tout le catalogue SAUF le film actuel, et mélanger
         let mixedContent = allData.filter(item => item.id !== data.id);
         mixedContent.sort(() => Math.random() - 0.5);
-        let suggestions = mixedContent.slice(0, 20); // Prendre 6 affiches
+        let suggestions = mixedContent.slice(0, 15); // Affiche 15 recommandations
 
         suggestions.forEach(rec => {
             const card = document.createElement('div');
             card.className = 'rec-card';
-            card.style.cursor = "pointer";
             card.innerHTML = `
-                <img src="${rec.image}" style="width:100%; border-radius:6px; aspect-ratio:2/3; object-fit:cover;" onerror="this.src='logo/icon.svg'">
-                <h4 style="font-size:11px; color:#ccc; margin-top:5px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${rec.titre}</h4>
+                <div class="rec-img-wrapper">
+                    <img src="${rec.image}" alt="${rec.titre}" onerror="this.src='logo/filmsall.png'">
+                </div>
+                <h4>${rec.titre}</h4>
             `;
-            
             card.onclick = () => {
-                document.querySelector('.modal-content').scrollTop = 0; // Remonte en haut
-                openModal(rec); // Ouvre ce nouveau film !
+                document.querySelector('.modal-content').scrollTop = 0; 
+                openModal(rec); 
             };
-            
             recGrid.appendChild(card);
         });
     }
 
     // --- 8. FERMETURE DU MODAL ---
     const closeBtn = document.querySelector('.close-modal');
-    if(closeBtn) closeBtn.onclick = () => { modal.style.display = 'none'; if(videoWrapper) videoWrapper.innerHTML = ""; };
-    window.onclick = (e) => { if(e.target == modal) { modal.style.display = 'none'; if(videoWrapper) videoWrapper.innerHTML = ""; } };
+    if(closeBtn) closeBtn.onclick = () => { 
+        modal.style.display = 'none'; 
+        if(videoWrapper) videoWrapper.innerHTML = ""; 
+        document.body.classList.remove('cinema-mode'); 
+    };
+    window.onclick = (e) => { 
+        if(e.target == modal) { 
+            modal.style.display = 'none'; 
+            if(videoWrapper) videoWrapper.innerHTML = ""; 
+            document.body.classList.remove('cinema-mode'); 
+        } 
+    };
 
-    // --- 9. HERO SECTION (Bannière Principale) ---
-    function loadHero(movies) {
-        if(movies.length > 0 && document.getElementById('hero-section')) {
-            const random = movies[Math.floor(Math.random() * movies.length)];
-            document.getElementById('hero-section').style.backgroundImage = `url('${random.banner || random.image}')`;
-            document.getElementById('hero-title').innerText = random.titre;
-            if(document.getElementById('hero-desc')) document.getElementById('hero-desc').innerText = random.description || "";
-            document.getElementById('hero-play').onclick = () => {
-                openModal(random);
-                if(random.driveId) setTimeout(() => document.getElementById('center-play-btn').click(), 300);
-            };
+    // --- 9. HERO SECTION (DIAPORAMA ANIMÉ) ---
+    function loadHeroAnimated(movies) {
+        const heroSection = document.getElementById('hero-section');
+        const heroTitle = document.getElementById('hero-title');
+        const heroDesc = document.getElementById('hero-desc');
+        const heroPlay = document.getElementById('hero-play');
+
+        if(movies.length > 0 && heroSection) {
+            let featuredMovies = movies.filter(m => m.vues > 10000 || m.bientot);
+            if(featuredMovies.length === 0) featuredMovies = movies; 
+            
+            featuredMovies.sort(() => Math.random() - 0.5);
+            let currentIndex = 0;
+
+            function changeSlide() {
+                const currentMovie = featuredMovies[currentIndex];
+                heroSection.style.backgroundImage = `url('${currentMovie.banner || currentMovie.image}')`;
+                heroTitle.innerText = currentMovie.titre;
+                if(heroDesc) heroDesc.innerText = currentMovie.description || "";
+                heroPlay.onclick = () => {
+                    openModal(currentMovie);
+                    if(currentMovie.driveId) setTimeout(() => document.getElementById('center-play-btn').click(), 300);
+                };
+                currentIndex = (currentIndex + 1) % featuredMovies.length;
+            }
+
+            changeSlide();
+            setInterval(changeSlide, 5000); // Change toutes les 5 secondes
         }
     }
 
-    // --- 10. BANDEAU D'INSTALLATION PWA ---
+    // --- 10. NOTIFICATIONS (TOAST) ---
+    function showToastNotification(item) {
+        let oldToast = document.getElementById('app-toast');
+        if (oldToast) oldToast.remove();
+
+        const toast = document.createElement('div');
+        toast.id = 'app-toast';
+        toast.className = 'toast-notification';
+        let typeText = item.type === 'musique' ? 'Nouveau Son' : (item.type === 'serie' ? 'Nouvelle Série' : 'Nouveau Film');
+
+        toast.innerHTML = `
+            <img src="${item.image}" onerror="this.src='logo/filmsall.png'">
+            <div class="toast-text">
+                <span class="toast-tag">${typeText}</span>
+                <span class="toast-title">${item.titre}</span>
+            </div>
+            <i class="fas fa-chevron-right" style="margin-left:auto; color:rgba(255,255,255,0.5);"></i>
+        `;
+        toast.onclick = () => { toast.classList.remove('show'); openModal(item); };
+        document.body.appendChild(toast);
+        
+        setTimeout(() => toast.classList.add('show'), 1500);
+        setTimeout(() => { toast.classList.remove('show'); setTimeout(() => toast.remove(), 600); }, 7000);
+    }
+
+    document.body.addEventListener('click', () => {
+        if ("Notification" in window && Notification.permission === "default") Notification.requestPermission();
+    }, { once: true });
+
+    // --- 11. BANDEAU INSTALLATION PWA ---
     let deferredPrompt;
     const installBanner = document.getElementById('install-banner');
     if(installBanner) {
@@ -421,7 +425,6 @@ document.addEventListener("DOMContentLoaded", () => {
             deferredPrompt = e; 
             installBanner.style.display = 'flex'; 
         });
-        
         document.getElementById('install-btn').onclick = async () => {
             if (deferredPrompt) { 
                 deferredPrompt.prompt(); 
@@ -429,11 +432,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (outcome === 'accepted') installBanner.style.display = 'none'; 
             }
         };
-        
         document.getElementById('close-install').onclick = () => installBanner.style.display = 'none';
-        
-        window.addEventListener('appinstalled', () => {
-            installBanner.style.display = 'none';
-        });
+        window.addEventListener('appinstalled', () => installBanner.style.display = 'none');
     }
 });

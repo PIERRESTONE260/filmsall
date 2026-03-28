@@ -26,7 +26,8 @@
         "ignore": [
           "scrollbar-width",
           "scrollbar-width: none",
-          "backdrop-filter"
+          "backdrop-filter",
+          "-webkit-line-break"
         ]
       }
     ],
