@@ -248,7 +248,7 @@ img {
    ========================================= */
 .toast-notification {
     position: fixed; top: -100px; left: 50%; transform: translateX(-50%);
-    background: rgba(229, 9, 20, 0.95); color: white; padding: 12px 20px;
+    background: rgba(5, 99, 240, 0.95); color: white; padding: 12px 20px;
     border-radius: 30px; display: flex; align-items: center; gap: 15px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.6); z-index: 100000; 
     transition: top 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55); 
