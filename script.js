@@ -334,7 +334,7 @@ document.addEventListener("DOMContentLoaded", () => {
         
         let mixedContent = allData.filter(item => item.id !== data.id);
         mixedContent.sort(() => Math.random() - 0.5);
-        let suggestions = mixedContent.slice(0, 15); // Affiche 15 recommandations max
+        let suggestions = mixedContent.slice(0, 10); // Affiche 10 recommandations max
 
         suggestions.forEach(rec => {
             const card = document.createElement('div');
