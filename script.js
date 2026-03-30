@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // --- VARIABLES GLOBALES ---
     let allData =[];
 
-    // --- 2. CHARGEMENT INTELLIGENT ET NOTIFICATIONS ---
+    // --- 2. CHARGEMENT INTELLIGENT DES DONNÉES ---
     const jsonFile = window.isMusicPage ? 'musique.json' : 'films.json';
 
     fetch(jsonFile + '?t=' + Date.now()) 
@@ -112,7 +112,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if(searchBtn) searchBtn.addEventListener('click', performSearch);
     }
 
-    // --- 5. FONCTIONS D'AFFICHAGE ---
+    // --- 5. FONCTIONS D'AFFICHAGE DES AFFICHES (ACCUEIL & GALERIE) ---
     function displayCategories(list) {
         const container = document.getElementById('main-container');
         if(!container) return;
@@ -136,18 +136,23 @@ document.addEventListener("DOMContentLoaded", () => {
         list.forEach(item => container.appendChild(createCard(item, true)));
     }
 
-    // Création des cartes sur l'accueil et galerie (SANS likes ni vues)
     function createCard(item, isGrid) {
         const div = document.createElement('div');
         div.className = isGrid ? 'gallery-card' : 'movie-card';
+        
         let badgeBientot = item.bientot ? `<div class="bientot-badge">2026</div>` : '';
+        let langue = item.langue || "V.F.";
+        let note = item.note ? item.note : (Math.random() * (9.5 - 6.0) + 6.0).toFixed(1);
 
+        // ON AFFICHE LE BADGE LANGUE ET LA NOTE, ON A SUPPRIMÉ LIKES ET VUES !
         div.innerHTML = `
             ${badgeBientot}
-            <img src="${item.image}" loading="lazy" alt="${item.titre}" onerror="this.src='logo/filmsall.png'" style="width:100%; height:100%;">
+            <div class="card-lang">${langue}</div>
+            <img src="${item.image}" loading="lazy" alt="${item.titre}" onerror="this.src='logo/filmsall.png'" width="100%" height="100%">
+            <span class="card-rating">${note}</span>
         `;
         
-        div.onclick = (e) => { 
+        div.onclick = () => { 
             if (window.isGalleryPage || window.isAnnoncesPage) {
                 window.location.href = `index.html?id=${item.id}`;
             } else {
@@ -260,7 +265,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         // ========================================================
-        // G. ALGORITHME DE RECOMMANDATIONS (TAILLE 100% ET FIXE)
+        // 7. ALGORITHME DE RECOMMANDATIONS FIXES
         // ========================================================
         let recArea = document.getElementById('recommendations-area');
         if (recArea) recArea.remove(); 
@@ -286,13 +291,13 @@ document.addEventListener("DOMContentLoaded", () => {
             let langue = rec.langue || "V.F.";
             let note = rec.note ? rec.note : (Math.random() * (9.5 - 6.0) + 6.0).toFixed(1);
 
-            // L'image a width=100% et height=100% grâce au wrapper en CSS
+            // Images 100% avec les badges superposés !
             card.innerHTML = `
                 <div class="rec-img-wrapper">
-                    <div class="rec-lang">${langue}</div>
+                    <div class="card-lang">${langue}</div>
                     <img src="${rec.image}" alt="${rec.titre}" onerror="this.src='logo/filmsall.png'" width="100%" height="100%">
                     <i class="fas fa-download rec-dl"></i>
-                    <span class="rec-rating">${note}</span>
+                    <span class="card-rating">${note}</span>
                 </div>
                 <h4>${rec.titre}</h4>
             `;
@@ -305,7 +310,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // --- 7. FERMETURE DU MODAL ---
+    // --- 8. FERMETURE DU MODAL ---
     const closeBtn = document.querySelector('.close-modal');
     if(closeBtn) closeBtn.onclick = () => { 
         modal.style.display = 'none'; 
@@ -320,7 +325,7 @@ document.addEventListener("DOMContentLoaded", () => {
         } 
     };
 
-    // --- 8. HERO SECTION (DIAPORAMA ANIMÉ) ---
+    // --- 9. HERO SECTION (DIAPORAMA ANIMÉ) ---
     function loadHeroAnimated(movies) {
         const heroSection = document.getElementById('hero-section');
         const heroTitle = document.getElementById('hero-title');
@@ -351,7 +356,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // --- 9. NOTIFICATIONS (TOAST) ---
+    // --- 10. NOTIFICATIONS (TOAST) ---
     function showToastNotification(item) {
         let oldToast = document.getElementById('app-toast');
         if (oldToast) oldToast.remove();
@@ -379,24 +384,4 @@ document.addEventListener("DOMContentLoaded", () => {
     document.body.addEventListener('click', () => {
         if ("Notification" in window && Notification.permission === "default") Notification.requestPermission();
     }, { once: true });
-
-    // --- 10. BANDEAU INSTALLATION PWA ---
-    let deferredPrompt;
-    const installBanner = document.getElementById('install-banner');
-    if(installBanner) {
-        window.addEventListener('beforeinstallprompt', (e) => { 
-            e.preventDefault(); 
-            deferredPrompt = e; 
-            installBanner.style.display = 'flex'; 
-        });
-        document.getElementById('install-btn').onclick = async () => {
-            if (deferredPrompt) { 
-                deferredPrompt.prompt(); 
-                const { outcome } = await deferredPrompt.userChoice; 
-                if (outcome === 'accepted') installBanner.style.display = 'none'; 
-            }
-        };
-        document.getElementById('close-install').onclick = () => installBanner.style.display = 'none';
-        window.addEventListener('appinstalled', () => installBanner.style.display = 'none');
-    }
 });
