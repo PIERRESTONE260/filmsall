@@ -27,7 +27,8 @@
           "scrollbar-width",
           "scrollbar-width: none",
           "backdrop-filter",
-          "-webkit-line-break"
+          "-webkit-line-break",
+          "-webkit-overflow-scrolling"
         ]
       }
     ],
