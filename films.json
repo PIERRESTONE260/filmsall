@@ -2,28 +2,28 @@
   {
     "id": 1,
     "type": "film",
-    "titre": "Black Panther: Wakanda Forever",
+    "titre": "Black Panther: Wakanda Forever 2",
     "note": 8.8,
     "langue": "V.F.",
     "origine": "USA",
     "categorie": "Action",
     "annee": 2022,
     "image": "films/actions/blackbanther.jpeg",
-    "banner": "films/banner/blackbantherbanner.jpeg",
+    "banner": "films/banner/blackbantherbanner.jpg",
     "driveId": "1mnnc6duIpjlp-AA8unq41AgbGpUpnuDA", 
     "description": "Après le décès du roi T'Challa, la Reine Ramonda, Shuri, M'Baku, Okoye et les Dora Milaje luttent pour protéger le Wakanda des ingérences de puissances mondiales."
   },
   {
     "id": 2,
     "type": "film",
-    "titre": "Vaiana 2",
+    "titre": "Moana 2",
     "note": 8.0,
     "langue": "V.F.",
     "origine": "USA",
     "categorie": "Animé",
     "annee": 2024,
     "image": "films/animes/vaiana2.jpeg",
-    "banner": "films/banner/vaiana2banner.jpg",
+    "banner": "films/banner/moanabanner2.webp",
     "driveId": "1ujaVx7dw0LfOC3JemYdCbu7986DPdoeW",
     "description": "Après avoir entendu un appel mystérieux, Vaiana se lance dans une nouvelle expédition audacieuse vers des mers lointaines et dangereuses."
   },
@@ -81,7 +81,7 @@
     "image": "films/animes/moana.jpeg",
     "banner": "films/banner/moanabanner.jpg",
     "driveId": "",
-    "description": "Moana, une jeune fille de Polynésie, entreprend un voyage audacieux pour sauver son peuple et son île."
+    "description": " Dans l'ancienne Polynésie, la jeune Vaiana, fille du chef de l'île de Motunui, est choisie par l'Océan pour briser une malédiction millénaire. Elle se lance dans une quête audacieuse pour retrouver le demi-dieu Maui, afin de l'aider à restituer le cœur de la déesse Te Fiti et sauver son peuple."
   },
   {
     "id": 7,
@@ -93,7 +93,7 @@
     "categorie": "Animé",
     "annee": 2021,
     "image": "films/animes/encanto.jpeg",
-    "banner": "films/banner/encantobanner.jpg",
+    "banner": "films/banner/encantobanner.jpeg",
     "driveId": "",
     "description": "Dans les montagnes de Colombie, la famille Madrigal possède des pouvoirs magiques uniques... sauf Mirabel."
   },
@@ -107,7 +107,7 @@
     "categorie": "Action",
     "annee": 2020,
     "image": "films/actions/cosmoball.jpg",
-    "banner": "films/banner/cosmoballbanner.jpg",
+    "banner": "films/banner/cosmoballbanner.webp",
     "driveId": "1mCu6zOnqlEDqT2AAeouFVhdbmD_8-MOs",
     "description": "Dans un futur lointain, la Terre est protégée par un immense vaisseau spatial où se déroule un sport spectaculaire appelé Cosmoball."
   },
@@ -335,13 +335,13 @@
     "categorie": "Drame romatique",
     "annee": 2020,
     "image": "films/india/notretempviendra.jpg",
-    "banner": "films/banner/notretempsviendrabanner.jpg",
-    "description": "La série suit le combat de Rani, la fille de Ramadheer, un humble serviteur.",
+    "banner": "films/banner/Notretempsviendrasbanner.jpeg",
+    "description": "La série raconte l'histoire de Rani (Anushka Sen, puis Megha Ray), une jeune femme ambitieuse issue d'un milieu modeste. Son père travaille comme serviteur pour une famille royale à Jaipur. Malgré les barrières sociales et les préjugés, Rani se bat pour réaliser ses rêves, obtenir justice pour son père et prouver que le destin de chacun n'est pas dicté par sa naissance.",
     "saisons": [
       {
         "nom": "Saison 1",
         "episodes": [
-          { "titre": "Rani arrive à Jaipur", "driveId": "" },
+          { "titre": "Rani arrive à Jaipur", "driveId": "1g72GhJOIHe0Dj_eaMBJMNKniRahYJqpR" },
           { "titre": "L'accueil au palais", "driveId": "" }
         ]
       }
@@ -364,14 +364,14 @@
   {
     "id": 24,
     "type": "film",
-    "titre": "Tomb Raider",
+    "titre": "Lara Croft:Tomb Raider",
     "note": 6.8,
     "langue": "V.F.",
     "origine": "Etats-Unis",
     "categorie": "Action",
     "annee": 2018,
     "image": "films/actions/tombraider.png",
-    "banner": "films/banner/tombraiderbanner.jpg",
+    "banner": "films/banner/tombraiderbanner.webp",
     "driveId": "1qQzMIYLPjKDp4Ab9bh4r2b_1wYbVgpfl",
     "description": "Lara Croft, une jeune femme indépendante et courageuse, se lance dans une aventure dangereuse."
   },
@@ -413,7 +413,7 @@
     "categorie": "Action",
     "annee": 2026,
     "image": "films/actions/warmachine.jpg",
-    "banner": "films/banner/warmachinebanner.jpg",
+    "banner": "films/banner/warmachinebanner2.jpg",
     "driveId": "1v-9Hv9t6OSONCTqnwraIGqxAL0gyjK5k",
     "bientot": true,
     "description": "Réalisé par Patrick Hughes et porté par Alan Ritchson (Reacher), le film suit un ingénieur militaire (connu sous le matricule 81) intégrant le camp d'entraînement intensif des US Army Rangers. Lors d'un exercice final en pleine nature, son unité est confrontée à une menace inattendue : une gigantesque et mortelle machine de guerre extraterrestre technologiquement avancée qui les traque sans relâche."
@@ -428,7 +428,7 @@
     "categorie": "Action",
     "annee": 2026,
     "image": "films/actions/mortalkombat2.jpg",
-    "banner": "films/banner/mortalkombatbanner2.jpg",
+    "banner": "films/banner/mortalkombatbanner2.avif",
     "driveId": "1M4tJFT5Fd-Rmk8YM19_aogmY_VlXvNsw",
     "bientot": true,
     "description": "Réalisé par Simon McQuoid, ce second volet se concentre enfin sur le célèbre tournoi Mortal Kombat. L'intrigue suit les champions du Royaume de la Terre, désormais rejoints par la star de cinéma Johnny Cage (interprété par Karl Urban), qui doivent s'affronter dans une bataille ultime pour vaincre le règne sombre de l'empereur Shao Kahn et sauver leur monde de l'invasion."
@@ -443,9 +443,74 @@
     "categorie": "Action",
     "annee": 2026,
     "image": "films/actions/spidermanbrandnewday.jpg",
-    "banner": "films/banner/spidermanbrandnewdaybanner.jpg",
+    "banner": "films/banner/spidermanbrandnewday.jpg",
     "driveId": "1Fe4DV8w7W-1nhqf8YzrDr7fVVD6zlqJf",
     "bientot": true,
     "description": "Quatre ans après les événements de No Way Home, un Peter Parker adulte vit dans l'anonymat total à New York, le monde ayant oublié son existence. Alors qu'il se consacre pleinement à son rôle de Spider-Man, il fait face à une évolution physique imprévue de ses pouvoirs et à l'émergence d'une nouvelle menace criminelle d'envergure. Le film met en vedette Tom Holland, Zendaya, Sadie Sink, Jon Bernthal (le Punisher) et Mark Ruffalo (Bruce Banner)."
+  },
+  {
+    "id": 30,
+    "type": "film",
+    "titre": "Love Called",
+    "note": 7.8,
+    "langue": "V.F.",
+    "origine": "Nigeria",
+    "categorie": "Drame",
+    "annee": 2025,
+    "image": "films/romance/lovecalled.jpeg",
+    "banner": "films/banner/lovecalledbanner.jpg",
+    "driveId": "1xcXzV3fYFJ4ZpnLcSq04iuK0v27uZF96",
+    "description": " Le film met en scène Ray Emodi et Emmanuella Kinikachi. L'intrigue suit une employée, mère célibataire, qui fait face aux frustrations de son employeur en raison de ses retards répétés causés par ses responsabilités parentales. L'histoire évolue vers un drame intense mêlant suspense et émotions. "
+  },
+  {
+    "id": 31,
+    "type": "film",
+    "titre": "Tomb Raider",
+    "note": 7.0,
+    "langue": "V.F.",
+    "origine": "Etats-Unis",
+    "categorie": "Action",
+    "annee": 2018,
+    "image": "films/actions/tombraider.jpeg",
+    "banner": "films/banner/tomberaiderbanner.jpg",
+    "driveId": "",
+    "description": "Sept ans après la disparition de son père, Lara Croft (Alicia Vikander), 21 ans, refuse de reprendre son empire commercial. Elle décide de résoudre le mystère de sa disparition en se rendant sur une île mythique au large du Japon. Armée de son seul courage, elle doit affronter une organisation secrète appelée l'Ordre de la Trinité pour survivre et empêcher une catastrophe mondiale."
+  },
+  {
+    "id": 32,
+    "type": "serie",
+    "titre": "Teen Wolf",
+    "note": 7.5,
+    "langue": "V.F.",
+    "origine": "Etats-Unis",
+    "categorie": "Action & Horreur",
+    "annee": 2011,
+    "image": "films/actions/teenwolf.jpg",
+    "banner": "films/banner/teenwolfbanner.jpg",
+    "description": "La vie de Scott McCall (Tyler Posey), un lycéen ordinaire, bascule lorsqu'il est mordu par un loup-garou. Il doit alors apprendre à maîtriser ses nouveaux pouvoirs tout en protégeant sa ville, Beacon Hills, contre des menaces surnaturelles de plus en plus sombres. Il est aidé par son meilleur ami humain, Stiles Stilinski (Dylan O'Brien), et guidé par le mystérieux Derek Hale (Tyler Hoechlin).",
+    "saisons": [
+      {
+        "nom": "Saison 1",
+        "episodes": [
+          { "titre": "La Morsure", "driveId": "" },
+          { "titre": "Transformation incontrôlée", "driveId": "" },
+          { "titre": "L'Appel de la meute", "driveId": "" }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 33,
+    "type": "film",
+    "titre": "Teen Wolf",
+    "note": 7.7,
+    "langue": "V.F.",
+    "origine": "Etats-Unis",
+    "categorie": "Action & Horreur",
+    "annee": 2023,
+    "image": "films/actions/TeenWolffilms.jpg",
+    "banner": "films/banner/teenwolffilmsbanner.jpg",
+    "driveId": "",
+    "description": "Ce long-métrage fait suite aux six saisons de la série. Scott McCall, désormais adulte, doit réunir sa meute à Beacon Hills pour affronter le retour du Nogitsune."
   }
 ]
