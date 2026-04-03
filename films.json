@@ -512,5 +512,19 @@
     "banner": "films/banner/teenwolffilmsbanner.jpg",
     "driveId": "",
     "description": "Ce long-métrage fait suite aux six saisons de la série. Scott McCall, désormais adulte, doit réunir sa meute à Beacon Hills pour affronter le retour du Nogitsune."
+  },
+  {
+    "id": 34,
+    "type": "film",
+    "titre": "High School Musical 3",
+    "note": 9.8,
+    "langue": "V.F.",
+    "origine": "Etats-Unis",
+    "categorie": "Comedie musicale",
+    "annee": 2008,
+    "image": "films/romance/HIGHSCHOOLMUSICAL3.jpeg",
+    "banner": "films/banner/highschoolmusicalbanner3.webp",
+    "driveId": "1okLEa1oO64W9CnJx-nMsUhiQbHzcmObF",
+    "description": "C'est le dernier volet de la trilogie originale qui suit Troy (Zac Efron), Gabriella (Vanessa Hudgens) et leurs amis durant leur dernière année à East High. Entre la préparation d'une nouvelle comédie musicale et l'angoisse de la remise des diplômes, ils doivent faire face à l'idée d'être séparés par leurs choix d'universités différentes."
   }
 ]
