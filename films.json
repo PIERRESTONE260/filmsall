@@ -342,7 +342,8 @@
         "nom": "Saison 1",
         "episodes": [
           { "titre": "Rani arrive à Jaipur", "driveId": "1g72GhJOIHe0Dj_eaMBJMNKniRahYJqpR" },
-          { "titre": "L'accueil au palais", "driveId": "" }
+          { "titre": "L'accueil au palais", "driveId": "1u-yQJlTxs-sVwygUc77vy_daX61sURTb" },
+          { "titre": "Le sacrifice de Ramadheer", "driveId": "" }
         ]
       }
     ]
@@ -526,5 +527,19 @@
     "banner": "films/banner/highschoolmusicalbanner3.webp",
     "driveId": "1okLEa1oO64W9CnJx-nMsUhiQbHzcmObF",
     "description": "C'est le dernier volet de la trilogie originale qui suit Troy (Zac Efron), Gabriella (Vanessa Hudgens) et leurs amis durant leur dernière année à East High. Entre la préparation d'une nouvelle comédie musicale et l'angoisse de la remise des diplômes, ils doivent faire face à l'idée d'être séparés par leurs choix d'universités différentes."
+  },
+  {
+    "id": 35,
+    "type": "film",
+    "titre": "Spoof Movie",
+    "note": 8.0,
+    "langue": "V.F.",
+    "origine": "Etats-Unis",
+    "categorie": "Comedie parodique",
+    "annee": 1996,
+    "image": "films/actions/spoofmovie.jpg",
+    "banner": "films/banner/spoofmoviebanner.jpg",
+    "driveId": "1m6HOXRiUwR7-8I_jvKUVeZED5hTdyicV",
+    "description": " Écrit et interprété par les frères Shawn et Marlon Wayans, le film suit Cendar (Ashtray), un jeune homme renvoyé chez son père à South Central Los Angeles. Il y retrouve son cousin 'Loc Dog' et plonge dans un univers de gangs et de situations absurdes tournant en ridicule les clichés du cinéma de ghetto des années 90."
   }
 ]
