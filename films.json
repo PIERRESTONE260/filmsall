@@ -334,7 +334,7 @@
     "origine": "Inde",
     "categorie": "Drame romatique",
     "annee": 2020,
-    "image": "films/india/notretempviendra.jpg",
+    "image": "films/india/notretempsviendras.png",
     "banner": "films/banner/Notretempsviendrasbanner.jpeg",
     "description": "La série raconte l'histoire de Rani (Anushka Sen, puis Megha Ray), une jeune femme ambitieuse issue d'un milieu modeste. Son père travaille comme serviteur pour une famille royale à Jaipur. Malgré les barrières sociales et les préjugés, Rani se bat pour réaliser ses rêves, obtenir justice pour son père et prouver que le destin de chacun n'est pas dicté par sa naissance.",
     "saisons": [
@@ -541,5 +541,66 @@
     "banner": "films/banner/spoofmoviebanner.jpg",
     "driveId": "1m6HOXRiUwR7-8I_jvKUVeZED5hTdyicV",
     "description": " Écrit et interprété par les frères Shawn et Marlon Wayans, le film suit Cendar (Ashtray), un jeune homme renvoyé chez son père à South Central Los Angeles. Il y retrouve son cousin 'Loc Dog' et plonge dans un univers de gangs et de situations absurdes tournant en ridicule les clichés du cinéma de ghetto des années 90."
+  },
+  {
+    "id": 36,
+    "type": "film",
+    "titre": "Zoom",
+    "note": 7.0,
+    "langue": "V.F.",
+    "origine": "Etats-Unis",
+    "categorie": "Comédie fantastique",
+    "annee": 2006,
+    "image": "films/actions/zoomacademie.jpg",
+    "banner": "films/banner/zoomacademiebanner.jpg",
+    "driveId": "",
+    "description": "Jack Shepard (Tim Allen), alias 'Captain Zoom', est un ancien super-héros qui a perdu ses pouvoirs après une mission tragique. Contre son gré, il est rappelé par une agence gouvernementale pour entraîner un groupe d'adolescents indisciplinés dotés de pouvoirs extraordinaires : super-force, invisibilité, télékinésie et élasticité. Ensemble, ils doivent former la nouvelle 'Académie des super-héros' pour sauver la Terre d'une menace imminente."
+  },
+  {
+    "id": 37,
+    "type": "serie",
+    "titre": "Ted",
+    "note": 7.5,
+    "langue": "V.F.",
+    "origine": "Etats-Unis",
+    "categorie": "Comédie",
+    "annee": 2024,
+    "image": "films/actions/ted.jpg",
+    "banner": "films/banner/tedbanner.jpg",
+    "description": "Cette série sert de préquelle aux films Ted. L'histoire se déroule en 1993 et suit les années de lycée de John Bennett (Max Burkholder) à Framingham, Massachusetts. Il vit avec son ours en peluche vivant et grossier, Ted (toujours doublé par Seth MacFarlane), ainsi que ses parents et sa cousine. Ensemble, ils naviguent entre les défis de l'adolescence, les premières expériences et les bêtises souvent provoquées par Ted.",
+    "saisons": [
+      {
+        "nom": "Saison 1",
+        "episodes": [
+          { "titre": "Allez, dis oui", "driveId": "" },
+          { "titre": "Mes deux papas", "driveId": "" },
+          { "titre": "Trouble de l'éjection", "driveId": "" }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 38,
+    "type": "serie",
+    "titre": "One Piece - Arc Elbal",
+    "note": 7.5,
+    "langue": "V.F.",
+    "origine": "Japon",
+    "categorie": "Manga",
+    "annee": 2026,
+    "image": "films/animes/onepiecearcelbaf.jpg",
+    "banner": "films/banner/onepiecearcelbafbanner.jpg",
+    "bientot": true,
+    "description": "Après la conclusion de l'arc Egghead fin 2025, l'anime a fait une pause de trois mois pour revenir le 5 avril 2026 avec le très attendu arc Elbaph. Cet arc marque un tournant majeur pour la série, qui adopte désormais un format de production saisonnier pour améliorer la qualité visuelle et le rythme (pacing), avec environ 26 épisodes par an. L'intrigue suit l'équipage au Chapeau de Paille arrivant sur la légendaire île des géants, où ils rencontrent notamment le prince Loki, doublé par le célèbre acteur Yūichi Nakamura.",
+    "saisons": [
+      {
+        "nom": "Saison 1",
+        "episodes": [
+          { "titre": "One Piece - Arc Elbal", "driveId": "" },
+          { "titre": "One Piece - Arc Elbal", "driveId": "" },
+          { "titre": "One Piece - Arc Elbal", "driveId": "" }
+        ]
+      }
+    ]
   }
 ]
