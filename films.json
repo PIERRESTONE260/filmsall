@@ -474,7 +474,7 @@
     "annee": 2018,
     "image": "films/actions/tombraider.jpeg",
     "banner": "films/banner/tomberaiderbanner.jpg",
-    "driveId": "",
+    "driveId": "10Vrh2wXZ3hzm5Tc8F-qi9jxV3RopnGBi",
     "description": "Sept ans après la disparition de son père, Lara Croft (Alicia Vikander), 21 ans, refuse de reprendre son empire commercial. Elle décide de résoudre le mystère de sa disparition en se rendant sur une île mythique au large du Japon. Armée de son seul courage, elle doit affronter une organisation secrète appelée l'Ordre de la Trinité pour survivre et empêcher une catastrophe mondiale."
   },
   {
@@ -621,5 +621,20 @@
     "banner": "films/banner/tedbanner2.jpg",
     "driveId": "1J3COPfvoBPpE0C6cJrV0qqo4suIdRhBQ",
     "description": "Ted, l'ours en peluche vivant, vient de se marier avec Tami-Lynn. Pour pouvoir adopter un enfant et fonder une famille, il doit prouver devant un tribunal qu'il est une personne réelle dotée d'une conscience, et non une simple propriété. Il s'embarque alors dans un combat juridique déjanté avec son meilleur ami John Bennett."
-    }
+  },
+  {
+    "id": 40,
+    "type": "film",
+    "titre": "Tin & Tina",
+    "note": 5.7,
+    "langue": "V.F.",
+    "origine": "Espagne",
+    "categorie": "Horreur psychologique",
+    "annee": 2023,
+    "image": "films/horreur/tintina.jpg",
+    "banner": "films/banner/tintinabanner.jpg",
+    "driveId": "1X8MBhZN02AsGAl3T_Z2Isr0Eq5UPOMfz",
+    "description": "Après une fausse couche traumatisante, Lola et son mari Adolfo adoptent Tin et Tina, des jumeaux albinos élevés dans un couvent. Très vite, le couple découvre que les enfants suivent une interprétation ultra-catholique et littérale de la Bible, transformant leur vie de famille en un cauchemar inquiétant et violent."
+  }
+
 ]
