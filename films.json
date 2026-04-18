@@ -15,12 +15,12 @@
   },
   {
     "id": 2,
-    "type": "film",
+    "type": "anime",
     "titre": "Moana 2",
     "note": 8.0,
     "langue": "V.F.",
     "origine": "USA",
-    "categorie": "Animé",
+    "categorie": "Animation 3D",
     "annee": 2024,
     "image": "films/animes/vaiana2.jpeg",
     "banner": "films/banner/moanabanner2.webp",
@@ -48,7 +48,7 @@
     "note": 7.5,
     "langue": "V.F.",
     "origine": "Nigeria",
-    "categorie": "Drame",
+    "categorie": "Romance",
     "annee": 2020,
     "image": "films/romance/moncoeurbatpourtoi.jpeg",
     "banner": "films/banner/moncoeurbatpourtoibanner.jpg",
@@ -57,12 +57,12 @@
   },
   {
     "id": 5,
-    "type": "film",
+    "type": "anime",
     "titre": "Luca",
     "note": 8.2,
     "langue": "V.F.",
     "origine": "USA",
-    "categorie": "Animé",
+    "categorie": "Animation 3D",
     "annee": 2021,
     "image": "films/animes/luca.jpeg",
     "banner": "films/banner/lucabanner.jpg",
@@ -71,12 +71,12 @@
   },
   {
     "id": 6,
-    "type": "film",
+    "type": "anime",
     "titre": "Moana",
     "note": 8.0,
     "langue": "V.F.",
     "origine": "USA",
-    "categorie": "Animé",
+    "categorie": "Animation 3D",
     "annee": 2016,
     "image": "films/animes/moana.jpeg",
     "banner": "films/banner/moanabanner.jpg",
@@ -85,12 +85,12 @@
   },
   {
     "id": 7,
-    "type": "film",
+    "type": "anime",
     "titre": "Encanto",
     "note": 7.3,
     "langue": "V.F.",
     "origine": "USA",
-    "categorie": "Animé",
+    "categorie": "Animation Musicale",
     "annee": 2021,
     "image": "films/animes/encanto.jpeg",
     "banner": "films/banner/encantobanner.jpeg",
@@ -104,7 +104,7 @@
     "note": 5.4,
     "langue": "V.F.",
     "origine": "Russie",
-    "categorie": "Action",
+    "categorie": "Science-fiction",
     "annee": 2020,
     "image": "films/actions/cosmoball.jpg",
     "banner": "films/banner/cosmoballbanner.webp",
@@ -113,12 +113,12 @@
   },
   {
     "id": 9,
-    "type": "film",
+    "type": "anime",
     "titre": "Raya et le Dernier Dragon",
     "note": 7.4,
     "langue": "V.F.",
     "origine": "USA",
-    "categorie": "Animé",
+    "categorie": "Animation Aventure",
     "annee": 2021,
     "image": "films/animes/raya.jpeg",
     "banner": "films/banner/rayabanner.jpg",
@@ -160,7 +160,7 @@
     "note": 7.8,
     "langue": "V.F.",
     "origine": "Nigeria",
-    "categorie": "Drame",
+    "categorie": "Romance",
     "annee": 2025,
     "image": "films/romance/fromghettowithlove2.jpeg",
     "banner": "films/banner/fromghettowithlove2.jpg",
@@ -174,15 +174,15 @@
     "note": 8.5,
     "langue": "V.F.",
     "origine": "France",
-    "categorie": "Animé",
+    "categorie": "Dessin Animé",
     "annee": 2010,
     "image": "films/animes/kaeloo.jpg",
     "banner": "films/banner/Kaeloobanner.jpg",
     "description": "Kaeloo est une série animée qui suit les aventures de Kaeloo et ses amis au Pays Trop Mignon.",
-    "saisons": [
+    "saisons":[
       {
         "nom": "Saison 1",
-        "episodes": [
+        "episodes":[
           { "titre": "Si on jouait à la Balle au prisonnier", "driveId": "1eRMGo-T2B9O61VO8lYGR7ma0z-ACcZh4" },
           { "titre": "Si on jouait au Docteur", "driveId": "1gmCgIzuZVctSkpNoCT42KCRfaAi3qYpM" }
         ]
@@ -196,7 +196,7 @@
     "note": 7.0,
     "langue": "V.F.",
     "origine": "USA",
-    "categorie": "Comedie musicale",
+    "categorie": "Comédie",
     "annee": 2006,
     "image": "films/romance/highschoolmusical1.jpg",
     "banner": "films/banner/highschoolmusicalbanner1.webp",
@@ -238,7 +238,7 @@
     "note": 7.0,
     "langue": "V.F.",
     "origine": "Nigeria",
-    "categorie": "Drame",
+    "categorie": "Romance",
     "annee": 2024,
     "image": "films/romance/amoureuxdetoi.jpeg",
     "banner": "films/banner/amoureuxdetoibanner.jpeg",
@@ -252,7 +252,7 @@
     "note": 6.9,
     "langue": "V.F.",
     "origine": "Nigeria",
-    "categorie": "Drame",
+    "categorie": "Romance",
     "annee": 2025,
     "image": "films/romance/loveineveryword.jpeg",
     "banner": "films/banner/loveineverywordbanner.jpeg",
@@ -266,15 +266,15 @@
     "note": 7.0,
     "langue": "V.F.",
     "origine": "Inde",
-    "categorie": "Drame romatique",
+    "categorie": "Romance",
     "annee": 2016,
     "image": "films/india/KASAM.jpg",
     "banner": "films/banner/kasambanner.jpeg",
     "description": "Cette série raconte l'histoire d'amour éternelle entre Rishi et Tanu.",
-    "saisons": [
+    "saisons":[
       {
         "nom": "Saison 1",
-        "episodes": [
+        "episodes":[
           { "titre": "Épisode 1", "driveId": "" },
           { "titre": "Épisode 2", "driveId": "" }
         ]
@@ -288,15 +288,15 @@
     "note": 7.5,
     "langue": "V.F.",
     "origine": "Inde",
-    "categorie": "Drame romatique",
+    "categorie": "Romance",
     "annee": 2016,
     "image": "films/india/GENTRAISPARFAIT.jpg",
     "banner": "films/banner/gentraisparfaitbanner.jpeg",
     "description": "La série raconte l'histoire de Siddharth Khurana, un riche hôtelier qui tombe amoureux de Roshni.",
-    "saisons": [
+    "saisons":[
       {
         "nom": "Saison 1",
-        "episodes": [
+        "episodes":[
           { "titre": "Épisode 1", "driveId": "" },
           { "titre": "Épisode 2", "driveId": "" }
         ]
@@ -310,15 +310,15 @@
     "note": 7.8,
     "langue": "V.F.",
     "origine": "Inde",
-    "categorie": "Drame romatique",
+    "categorie": "Romance",
     "annee": 2016,
     "image": "films/india/unamourdesesperer.jpg",
     "banner": "films/banner/unamourdesespererbanner.jpg",
     "description": "Le drame commence lorsque Saraswati, la sœur adorée de Neel, meurt lors d'une opération.",
-    "saisons": [
+    "saisons":[
       {
         "nom": "Saison 1",
-        "episodes": [
+        "episodes":[
           { "titre": "L'arrivée des offrandes", "driveId": "" },
           { "titre": "Méfiance et réseaux sociaux", "driveId": "" }
         ]
@@ -332,15 +332,15 @@
     "note": 8.0,
     "langue": "V.F.",
     "origine": "Inde",
-    "categorie": "Drame romatique",
+    "categorie": "Drame",
     "annee": 2020,
     "image": "films/india/notretempsviendras.png",
     "banner": "films/banner/Notretempsviendrasbanner.jpeg",
-    "description": "La série raconte l'histoire de Rani (Anushka Sen, puis Megha Ray), une jeune femme ambitieuse issue d'un milieu modeste. Son père travaille comme serviteur pour une famille royale à Jaipur. Malgré les barrières sociales et les préjugés, Rani se bat pour réaliser ses rêves, obtenir justice pour son père et prouver que le destin de chacun n'est pas dicté par sa naissance.",
-    "saisons": [
+    "description": "La série raconte l'histoire de Rani, une jeune femme ambitieuse issue d'un milieu modeste.",
+    "saisons":[
       {
         "nom": "Saison 1",
-        "episodes": [
+        "episodes":[
           { "titre": "Rani arrive à Jaipur", "driveId": "1g72GhJOIHe0Dj_eaMBJMNKniRahYJqpR" },
           { "titre": "L'accueil au palais", "driveId": "1u-yQJlTxs-sVwygUc77vy_daX61sURTb" },
           { "titre": "Le sacrifice de Ramadheer", "driveId": "" }
@@ -355,7 +355,7 @@
     "note": 7.4,
     "langue": "V.F.",
     "origine": "USA",
-    "categorie": "Action",
+    "categorie": "Fantastique",
     "annee": 2019,
     "image": "films/actions/SHAZAME.jpeg",
     "banner": "films/banner/shazambanner.jpeg",
@@ -383,12 +383,12 @@
     "note": 7.0,
     "langue": "V.F.",
     "origine": "Etats-Unis",
-    "categorie": "Comedie musicale",
+    "categorie": "Comédie",
     "annee": 2007,
     "image": "films/romance/HIGHSCHOOLMUSICAL2.jpeg",
     "banner": "films/banner/highschoolmusicalbanner2.webp",
     "driveId": "1z9UDT-JPG8SvGEvfC8Yg2nhmlyHLSOXa",
-    "description": "L'école est finie ! Les Wildcats de East High cherchent des petits boulots pour l'été. Ils sont tous engagés au country club de Lava Springs, appartenant aux parents de Sharpay. Celle-ci compte bien en profiter pour séduire Troy et l'éloigner de Gabriella, tout en préparant le concours de talent annuel du club."
+    "description": "L'école est finie ! Les Wildcats de East High cherchent des petits boulots pour l'été."
   },
   {
     "id": 26,
@@ -397,12 +397,12 @@
     "note": 7.1,
     "langue": "V.F.",
     "origine": "Etats-Unis",
-    "categorie": "Comédie surnaturelle",
+    "categorie": "Fantastique",
     "annee": 2022,
     "image": "films/romance/darby.jpg",
     "banner": "films/banner/darbyetlefantomebanner.jpg",
     "driveId": "1eOtIgCOOpo4fWIKM9akcywA5BMcMghO-",
-    "description": "Après une expérience de mort imminente durant son enfance, Darby Harper (jouée par Riele Downs) acquiert la capacité de voir les morts. Devenue une lycéenne introvertie, elle passe son temps à aider les esprits à régler leurs affaires inachevées. Sa vie bascule quand Capri (Auliʻi Cravalho), la fille la plus populaire de son lycée, meurt accidentellement et la harcèle depuis l'au-delà pour que sa fête d'anniversaire soit maintenue."
+    "description": "Après une expérience de mort imminente durant son enfance, Darby Harper acquiert la capacité de voir les morts."
   },
   {
     "id": 27,
@@ -411,13 +411,13 @@
     "note": 6.5,
     "langue": "V.F.",
     "origine": "Etats-Unis",
-    "categorie": "Action",
+    "categorie": "Science-fiction",
     "annee": 2026,
     "image": "films/actions/warmachine.jpg",
     "banner": "films/banner/warmachinebanner2.jpg",
     "driveId": "1v-9Hv9t6OSONCTqnwraIGqxAL0gyjK5k",
     "bientot": true,
-    "description": "Réalisé par Patrick Hughes et porté par Alan Ritchson (Reacher), le film suit un ingénieur militaire (connu sous le matricule 81) intégrant le camp d'entraînement intensif des US Army Rangers. Lors d'un exercice final en pleine nature, son unité est confrontée à une menace inattendue : une gigantesque et mortelle machine de guerre extraterrestre technologiquement avancée qui les traque sans relâche."
+    "description": "Le film suit un ingénieur militaire intégrant le camp d'entraînement intensif des US Army Rangers."
   },
   {
     "id": 28,
@@ -432,7 +432,7 @@
     "banner": "films/banner/mortalkombatbanner2.avif",
     "driveId": "1M4tJFT5Fd-Rmk8YM19_aogmY_VlXvNsw",
     "bientot": true,
-    "description": "Réalisé par Simon McQuoid, ce second volet se concentre enfin sur le célèbre tournoi Mortal Kombat. L'intrigue suit les champions du Royaume de la Terre, désormais rejoints par la star de cinéma Johnny Cage (interprété par Karl Urban), qui doivent s'affronter dans une bataille ultime pour vaincre le règne sombre de l'empereur Shao Kahn et sauver leur monde de l'invasion."
+    "description": "L'intrigue suit les champions du Royaume de la Terre, désormais rejoints par la star de cinéma Johnny Cage."
   },
   {
     "id": 29,
@@ -447,7 +447,7 @@
     "banner": "films/banner/spidermanbrandnewday.jpg",
     "driveId": "1Fe4DV8w7W-1nhqf8YzrDr7fVVD6zlqJf",
     "bientot": true,
-    "description": "Quatre ans après les événements de No Way Home, un Peter Parker adulte vit dans l'anonymat total à New York, le monde ayant oublié son existence. Alors qu'il se consacre pleinement à son rôle de Spider-Man, il fait face à une évolution physique imprévue de ses pouvoirs et à l'émergence d'une nouvelle menace criminelle d'envergure. Le film met en vedette Tom Holland, Zendaya, Sadie Sink, Jon Bernthal (le Punisher) et Mark Ruffalo (Bruce Banner)."
+    "description": "Quatre ans après les événements de No Way Home, un Peter Parker adulte vit dans l'anonymat total à New York."
   },
   {
     "id": 30,
@@ -461,7 +461,7 @@
     "image": "films/romance/lovecalled.jpeg",
     "banner": "films/banner/lovecalledbanner.jpg",
     "driveId": "1xcXzV3fYFJ4ZpnLcSq04iuK0v27uZF96",
-    "description": " Le film met en scène Ray Emodi et Emmanuella Kinikachi. L'intrigue suit une employée, mère célibataire, qui fait face aux frustrations de son employeur en raison de ses retards répétés causés par ses responsabilités parentales. L'histoire évolue vers un drame intense mêlant suspense et émotions. "
+    "description": "L'intrigue suit une employée, mère célibataire, qui fait face aux frustrations de son employeur."
   },
   {
     "id": 31,
@@ -475,7 +475,7 @@
     "image": "films/actions/tombraider.jpeg",
     "banner": "films/banner/tomberaiderbanner.jpg",
     "driveId": "10Vrh2wXZ3hzm5Tc8F-qi9jxV3RopnGBi",
-    "description": "Sept ans après la disparition de son père, Lara Croft (Alicia Vikander), 21 ans, refuse de reprendre son empire commercial. Elle décide de résoudre le mystère de sa disparition en se rendant sur une île mythique au large du Japon. Armée de son seul courage, elle doit affronter une organisation secrète appelée l'Ordre de la Trinité pour survivre et empêcher une catastrophe mondiale."
+    "description": "Sept ans après la disparition de son père, Lara Croft refuse de reprendre son empire commercial."
   },
   {
     "id": 32,
@@ -484,15 +484,15 @@
     "note": 7.5,
     "langue": "V.F.",
     "origine": "Etats-Unis",
-    "categorie": "Action & Horreur",
+    "categorie": "Fantastique",
     "annee": 2011,
     "image": "films/actions/teenwolf.jpg",
     "banner": "films/banner/teenwolfbanner.jpg",
-    "description": "La vie de Scott McCall (Tyler Posey), un lycéen ordinaire, bascule lorsqu'il est mordu par un loup-garou. Il doit alors apprendre à maîtriser ses nouveaux pouvoirs tout en protégeant sa ville, Beacon Hills, contre des menaces surnaturelles de plus en plus sombres. Il est aidé par son meilleur ami humain, Stiles Stilinski (Dylan O'Brien), et guidé par le mystérieux Derek Hale (Tyler Hoechlin).",
-    "saisons": [
+    "description": "La vie de Scott McCall, un lycéen ordinaire, bascule lorsqu'il est mordu par un loup-garou.",
+    "saisons":[
       {
         "nom": "Saison 1",
-        "episodes": [
+        "episodes":[
           { "titre": "La Morsure", "driveId": "" },
           { "titre": "Transformation incontrôlée", "driveId": "" },
           { "titre": "L'Appel de la meute", "driveId": "" }
@@ -507,12 +507,12 @@
     "note": 7.7,
     "langue": "V.F.",
     "origine": "Etats-Unis",
-    "categorie": "Action & Horreur",
+    "categorie": "Fantastique",
     "annee": 2023,
     "image": "films/actions/TeenWolffilms.jpg",
     "banner": "films/banner/teenwolffilmsbanner.jpg",
     "driveId": "1o9Tn8pMvCFyjEDoU30HeDFkBZwpf4KAF",
-    "description": "Ce long-métrage fait suite aux six saisons de la série. Scott McCall, désormais adulte, doit réunir sa meute à Beacon Hills pour affronter le retour du Nogitsune."
+    "description": "Scott McCall, désormais adulte, doit réunir sa meute à Beacon Hills pour affronter le retour du Nogitsune."
   },
   {
     "id": 34,
@@ -521,12 +521,12 @@
     "note": 9.8,
     "langue": "V.F.",
     "origine": "Etats-Unis",
-    "categorie": "Comedie musicale",
+    "categorie": "Comédie",
     "annee": 2008,
     "image": "films/romance/HIGHSCHOOLMUSICAL3.jpeg",
     "banner": "films/banner/highschoolmusicalbanner3.webp",
     "driveId": "1okLEa1oO64W9CnJx-nMsUhiQbHzcmObF",
-    "description": "C'est le dernier volet de la trilogie originale qui suit Troy (Zac Efron), Gabriella (Vanessa Hudgens) et leurs amis durant leur dernière année à East High. Entre la préparation d'une nouvelle comédie musicale et l'angoisse de la remise des diplômes, ils doivent faire face à l'idée d'être séparés par leurs choix d'universités différentes."
+    "description": "C'est le dernier volet de la trilogie originale qui suit Troy, Gabriella et leurs amis."
   },
   {
     "id": 35,
@@ -535,12 +535,12 @@
     "note": 8.0,
     "langue": "V.F.",
     "origine": "Etats-Unis",
-    "categorie": "Comedie parodique",
+    "categorie": "Comédie",
     "annee": 1996,
     "image": "films/actions/spoofmovie.jpg",
     "banner": "films/banner/spoofmoviebanner.jpg",
     "driveId": "1m6HOXRiUwR7-8I_jvKUVeZED5hTdyicV",
-    "description": " Écrit et interprété par les frères Shawn et Marlon Wayans, le film suit Cendar (Ashtray), un jeune homme renvoyé chez son père à South Central Los Angeles. Il y retrouve son cousin 'Loc Dog' et plonge dans un univers de gangs et de situations absurdes tournant en ridicule les clichés du cinéma de ghetto des années 90."
+    "description": "Écrit et interprété par les frères Shawn et Marlon Wayans, plongez dans un univers de gangs."
   },
   {
     "id": 36,
@@ -549,12 +549,12 @@
     "note": 7.0,
     "langue": "V.F.",
     "origine": "Etats-Unis",
-    "categorie": "Comédie fantastique",
+    "categorie": "Fantastique",
     "annee": 2006,
     "image": "films/actions/zoomacademie.jpg",
     "banner": "films/banner/zoomacademiebanner.jpg",
     "driveId": "1gBKbMP7pGpTau6_GADoZckLiwOplRd1d",
-    "description": "Jack Shepard (Tim Allen), alias 'Captain Zoom', est un ancien super-héros qui a perdu ses pouvoirs après une mission tragique. Contre son gré, il est rappelé par une agence gouvernementale pour entraîner un groupe d'adolescents indisciplinés dotés de pouvoirs extraordinaires : super-force, invisibilité, télékinésie et élasticité. Ensemble, ils doivent former la nouvelle 'Académie des super-héros' pour sauver la Terre d'une menace imminente."
+    "description": "Jack Shepard est rappelé par une agence pour entraîner un groupe d'adolescents dotés de pouvoirs."
   },
   {
     "id": 37,
@@ -567,11 +567,11 @@
     "annee": 2024,
     "image": "films/actions/ted.jpg",
     "banner": "films/banner/tedbanner.jpg",
-    "description": "Cette série sert de préquelle aux films Ted. L'histoire se déroule en 1993 et suit les années de lycée de John Bennett (Max Burkholder) à Framingham, Massachusetts. Il vit avec son ours en peluche vivant et grossier, Ted (toujours doublé par Seth MacFarlane), ainsi que ses parents et sa cousine. Ensemble, ils naviguent entre les défis de l'adolescence, les premières expériences et les bêtises souvent provoquées par Ted.",
-    "saisons": [
+    "description": "Cette série sert de préquelle aux films Ted et suit les années de lycée de John Bennett.",
+    "saisons":[
       {
         "nom": "Saison 1",
-        "episodes": [
+        "episodes":[
           { "titre": "Allez, dis oui", "driveId": "172mHFQcz6pWAd5fTLy3dL3KPhRBZ28Gk" },
           { "titre": "Mes deux papas", "driveId": "1y2B_kcgE3YDDfDwm2O2oddfMEUeAheDY" },
           { "titre": "Dysfonction éjection", "driveId": "1nMEEOFeVvbeoiCKm7cKGbIFcTs6ixNu2" },
@@ -586,41 +586,32 @@
   },
   {
     "id": 38,
-    "type": "serie",
-    "titre": "One Piece - Arc Elbal",
+    "type": "manga",
+    "titre": "One Piece - Arc Elbaph",
     "note": 7.5,
     "langue": "V.F.",
     "origine": "Japon",
-    "categorie": "Manga",
+    "categorie": "Manga Shōnen",
     "annee": 2026,
     "image": "films/animes/onepiecearcelbaf.jpg",
     "banner": "films/banner/onepiecearcelbafbanner.jpg",
     "bientot": true,
-    "description": "Après la conclusion de l'arc Egghead fin 2025, l'anime a fait une pause de trois mois pour revenir le 5 avril 2026 avec le très attendu arc Elbaph. Cet arc marque un tournant majeur pour la série, qui adopte désormais un format de production saisonnier pour améliorer la qualité visuelle et le rythme (pacing), avec environ 26 épisodes par an. L'intrigue suit l'équipage au Chapeau de Paille arrivant sur la légendaire île des géants, où ils rencontrent notamment le prince Loki, doublé par le célèbre acteur Yūichi Nakamura.",
-    "saisons": [
-      {
-        "nom": "Saison 1",
-        "episodes": [
-          { "titre": "One Piece - Arc Elbal", "driveId": "" },
-          { "titre": "One Piece - Arc Elbal", "driveId": "" },
-          { "titre": "One Piece - Arc Elbal", "driveId": "" }
-        ]
-      }
-    ]
+    "driveId": "",
+    "description": "Cet arc marque un tournant majeur pour la série sur la légendaire île des géants."
   },
- {
+  {
     "id": 39,
     "type": "film",
     "titre": "Ted 2",
     "note": 9.5,
     "langue": "V.F.",
     "origine": "Etats-Unis",
-    "categorie": "Comédie fantastique",
+    "categorie": "Comédie",
     "annee": 2015,
     "image": "films/actions/ted2.jpg",
     "banner": "films/banner/tedbanner2.jpg",
     "driveId": "1J3COPfvoBPpE0C6cJrV0qqo4suIdRhBQ",
-    "description": "Ted, l'ours en peluche vivant, vient de se marier avec Tami-Lynn. Pour pouvoir adopter un enfant et fonder une famille, il doit prouver devant un tribunal qu'il est une personne réelle dotée d'une conscience, et non une simple propriété. Il s'embarque alors dans un combat juridique déjanté avec son meilleur ami John Bennett."
+    "description": "Ted s'embarque dans un combat juridique déjanté avec son meilleur ami John Bennett."
   },
   {
     "id": 40,
@@ -629,12 +620,53 @@
     "note": 5.7,
     "langue": "V.F.",
     "origine": "Espagne",
-    "categorie": "Horreur psychologique",
+    "categorie": "Horreur",
     "annee": 2023,
     "image": "films/horreur/tintina.jpg",
     "banner": "films/banner/tintinabanner.jpg",
     "driveId": "1X8MBhZN02AsGAl3T_Z2Isr0Eq5UPOMfz",
-    "description": "Après une fausse couche traumatisante, Lola et son mari Adolfo adoptent Tin et Tina, des jumeaux albinos élevés dans un couvent. Très vite, le couple découvre que les enfants suivent une interprétation ultra-catholique et littérale de la Bible, transformant leur vie de famille en un cauchemar inquiétant et violent."
+    "description": "Après une fausse couche traumatisante, Lola et son mari Adolfo adoptent Tin et Tina, des jumeaux albinos."
+  },
+  {
+    "id": 41,
+    "type": "anime",
+    "titre": "Avatar: De Feu et de Cendres",
+    "note": 3.5,
+    "langue": "V.F.",
+    "origine": "Etats-Unis",
+    "categorie": "Animation Action",
+    "annee": 2025,
+    "image": "films/animes/avatars.jpg",
+    "banner": "films/banner/avatarbanner.jpg",
+    "driveId": "",
+    "description": "Ce troisième volet de la saga suit Jake Sully face au Peuple des Cendres."
+  },
+  {
+    "id": 42,
+    "type": "anime",
+    "titre": "Les Cinq Légendes",
+    "note": 1.9,
+    "langue": "V.F.",
+    "origine": "Etats-Unis",
+    "categorie": "Animation Fantastique",
+    "annee": 2012,
+    "image": "films/animes/rise.jpeg",
+    "banner": "films/banner/Risebanner.jpg",
+    "driveId": "",
+    "description": "Jack Frost est recruté par les Gardiens pour protéger les espoirs des enfants du monde entier."
+  },
+  {
+    "id": 43,
+    "type": "anime",
+    "titre": "Coco",
+    "note": 2.0,
+    "langue": "V.F.",
+    "origine": "Etats-Unis",
+    "categorie": "Animation Musicale",
+    "annee": 2017,
+    "image": "films/animes/mamancoco.jpeg",
+    "banner": "films/banner/cocobanner.jpg",
+    "driveId": "",
+    "description": "Miguel se retrouve accidentellement transporté dans le Pays des Morts."
   }
-
 ]

@@ -1,6 +1,3 @@
-/* =========================================
-   1. SERVICE WORKER (PWA INSTALLATION)
-   ========================================= */
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
         navigator.serviceWorker.register('./sw.js')
@@ -10,54 +7,44 @@ if ('serviceWorker' in navigator) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-    
-    // --- VARIABLES GLOBALES ---
     let allData =[];
 
-    // --- 2. CHARGEMENT INTELLIGENT ET NOTIFICATIONS ---
-    const jsonFile = window.isMusicPage ? 'musique.json' : 'films.json';
+    const urlsToFetch =[];
+    if (window.isMusicPage) urlsToFetch.push('musique.json');
+    else if (window.isGalleryPage || window.isAnnoncesPage) urlsToFetch.push('films.json');
+    else urlsToFetch.push('films.json', 'musique.json');
 
-    fetch(jsonFile + '?t=' + Date.now()) 
-        .then(res => res.json())
-        .then(data => {
-            allData = data;
+    Promise.all(urlsToFetch.map(u => fetch(u + '?t=' + Date.now()).then(r => r.json()).catch(() =>[])))
+        .then(results => {
+            allData = results.flat();
             
-            // A. Filtrer l'affichage selon la page
             if (window.isGalleryPage) {
-                displayGrid(data, 'gallery-container');
+                displayGrid(allData, 'gallery-container');
             } else if (window.isAnnoncesPage) {
-                const annonces = data.filter(i => i.bientot === true || i.annee >= 2026);
+                const annonces = allData.filter(i => i.bientot === true || i.annee >= 2026);
                 displayGrid(annonces, 'annonces-container');
             } else if (window.isMusicPage) {
-                displayGrid(data, 'music-container');
+                displayGrid(allData.filter(i => i.type === 'musique'), 'music-container');
             } else {
-                const movies = data.filter(i => i.type !== 'musique' && i.bientot !== true);
-                loadHeroAnimated(movies); 
-                displayCategories(movies);
+                applyFilter('tout');
             }
             
-            // B. Cacher le Loader
             const loader = document.getElementById('loader');
             if(loader) loader.style.display = 'none';
 
-            // C. Système de Notifications Locales
             const dataType = window.isMusicPage ? 'musique' : 'films';
             const storageKey = `filmsall_last_count_${dataType}`;
-            const previousCount = parseInt(localStorage.getItem(storageKey)) || data.length;
+            const previousCount = parseInt(localStorage.getItem(storageKey)) || allData.length;
 
-            if (data.length > previousCount) {
-                const newItem = data[data.length - 1]; 
+            if (allData.length > previousCount) {
+                const newItem = allData[allData.length - 1]; 
                 if ("Notification" in window && Notification.permission === "granted") {
-                    new Notification("Nouveauté sur FILMSall 🍿", {
-                        body: `Nouveau : ${newItem.titre}`,
-                        icon: "logo/filmsall.png"
-                    });
+                    new Notification("Nouveauté sur FILMSall 🍿", { body: `Nouveau : ${newItem.titre}`, icon: "logo/filmsall.png" });
                 }
                 showToastNotification(newItem);
             }
-            localStorage.setItem(storageKey, data.length);
+            localStorage.setItem(storageKey, allData.length);
 
-            // D. Redirection depuis la Galerie
             const urlParams = new URLSearchParams(window.location.search);
             const movieId = urlParams.get('id');
             if (movieId) {
@@ -68,10 +55,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     window.history.replaceState({}, document.title, window.location.pathname);
                 }
             }
-        })
-        .catch(err => console.error("Erreur chargement JSON:", err));
+        });
 
-    // --- 3. NAVBAR & MENU MOBILE ---
     const navbar = document.getElementById('navbar');
     if(navbar) {
         window.onscroll = () => { 
@@ -79,41 +64,59 @@ document.addEventListener("DOMContentLoaded", () => {
             else navbar.classList.remove('scrolled'); 
         };
     }
-    const hamburger = document.getElementById('hamburger');
-    if (hamburger) {
-        hamburger.addEventListener('click', () => { 
-            document.getElementById('nav-links').classList.toggle('active'); 
-        });
-    }
 
-    // --- 4. MOTEUR DE RECHERCHE ---
     const searchInput = document.getElementById('search-input');
-    const searchBtn = document.getElementById('search-btn');
-
     if(searchInput) {
-        const performSearch = (e) => {
-            const val = searchInput.value.toLowerCase();
+        searchInput.addEventListener('input', (e) => {
+            const val = e.target.value.toLowerCase();
             const activeMain = document.getElementById('main-container') || document.getElementById('gallery-container') || document.getElementById('music-container') || document.getElementById('annonces-container');
             if(!activeMain) return;
 
             if(val === "") {
                 if(document.getElementById('hero-section')) document.getElementById('hero-section').style.display = 'flex';
                 if(window.isGalleryPage || window.isMusicPage || window.isAnnoncesPage) displayGrid(allData, activeMain.id);
-                else displayCategories(allData.filter(i => i.type !== 'musique' && i.bientot !== true));
+                else {
+                    const activeTab = document.querySelector('.filter-tab.active');
+                    if(activeTab) applyFilter(activeTab.getAttribute('data-filter'));
+                }
             } else {
                 if(document.getElementById('hero-section')) document.getElementById('hero-section').style.display = 'none';
-                activeMain.innerHTML = `<h3 class="category-title" style="margin-left:4%;">Résultats de recherche</h3><div class="gallery-grid" id="search-results"></div>`;
+                activeMain.innerHTML = `<h3 class="category-title" style="margin-left:4%;">Résultats</h3><div class="gallery-grid" id="search-results"></div>`;
                 const results = allData.filter(m => m.titre.toLowerCase().includes(val));
                 const row = document.getElementById('search-results');
                 if(results.length === 0) row.innerHTML = "<p style='color:gray; padding-left:4%;'>Aucun résultat trouvé.</p>";
                 results.forEach(item => row.appendChild(createCard(item, true)));
             }
-        };
-        searchInput.addEventListener('input', performSearch);
-        if(searchBtn) searchBtn.addEventListener('click', performSearch);
+        });
     }
 
-    // --- 5. FONCTIONS D'AFFICHAGE ---
+    const filterTabs = document.querySelectorAll('.filter-tab');
+    if (filterTabs.length > 0) {
+        filterTabs.forEach(tab => {
+            tab.addEventListener('click', (e) => {
+                filterTabs.forEach(t => t.classList.remove('active'));
+                e.target.classList.add('active');
+                applyFilter(e.target.getAttribute('data-filter'));
+            });
+        });
+    }
+
+    window.applyFilter = function(filterType) {
+        let filtered =[];
+        if (filterType === 'tout') filtered = allData.filter(i => i.type !== 'musique' && i.bientot !== true);
+        else if (filterType === 'film') filtered = allData.filter(i => i.type === 'film' && i.bientot !== true);
+        else if (filterType === 'serie') filtered = allData.filter(i => i.type === 'serie' && i.bientot !== true);
+        else if (filterType === 'animation') filtered = allData.filter(i => i.type === 'anime' && i.bientot !== true);
+        else if (filterType === 'manga') filtered = allData.filter(i => i.type === 'manga' && i.bientot !== true);
+        else if (filterType === 'musique') filtered = allData.filter(i => i.type === 'musique');
+
+        const mainContainer = document.getElementById('main-container');
+        if(mainContainer) {
+            loadHeroAnimated(filtered);
+            displayCategories(filtered);
+        }
+    }
+
     function displayCategories(list) {
         const container = document.getElementById('main-container');
         if(!container) return;
@@ -137,7 +140,6 @@ document.addEventListener("DOMContentLoaded", () => {
         list.forEach(item => container.appendChild(createCard(item, true)));
     }
 
-    // CRÉATION DES CARTES (Sans Vues, Sans Likes, Avec Langue et Note)
     function createCard(item, isGrid) {
         const div = document.createElement('div');
         div.className = isGrid ? 'gallery-card' : 'movie-card';
@@ -163,7 +165,6 @@ document.addEventListener("DOMContentLoaded", () => {
         return div;
     }
 
-    // --- 6. MODAL LECTEUR (LE CERVEAU) ---
     const modal = document.getElementById('video-modal');
     
     function openModal(data) {
@@ -187,7 +188,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if(actionGrid) actionGrid.innerHTML = "";
 
-        // FONCTION LECTURE & MODE CINÉMA
         const playMedia = () => {
             if (!data.driveId) { alert("⚠️ Ce contenu sera bientôt disponible sur FILMSall !"); return; }
             document.body.classList.add('cinema-mode'); 
@@ -198,7 +198,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 <div class="video-overlay-fix"></div> 
                 <iframe src="https://drive.google.com/file/d/${data.driveId}/preview" allow="autoplay; fullscreen" style="width:100%; height:100%; border:none;"></iframe>
             `;
-            document.querySelector('.modal-info').scrollTop = 0; 
         };
 
         if(document.getElementById('center-play-btn')) {
@@ -206,7 +205,6 @@ document.addEventListener("DOMContentLoaded", () => {
             document.getElementById('center-play-btn').style.display = 'block';
         }
 
-        // GESTION DES SÉRIES
         if (data.type === 'serie' && seriesArea) {
             if(actionGrid) actionGrid.style.display = 'none';
             seriesArea.style.display = 'block';
@@ -233,7 +231,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 window.launchEp = (id) => { if(id && id !== 'undefined' && id !== "") { data.driveId = id; playMedia(); } else alert("Épisode bientôt disponible !"); };
             }
         } 
-        // GESTION FILMS ET MUSIQUE
         else if (actionGrid) {
             if(seriesArea) seriesArea.style.display = 'none';
             actionGrid.style.display = 'grid';
@@ -258,13 +255,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 dlBtn.innerHTML = '<i class="fas fa-download"></i> TÉLÉCHARGER';
                 actionGrid.appendChild(dlBtn);
             }
-
             actionGrid.innerHTML += `<a href="https://wa.me/?text=Regarde *${encodeURIComponent(data.titre)}* sur FILMSall ! C'est gratuit ici : ${window.location.href.split('?')[0]}" class="btn-action whatsapp" target="_blank"><i class="fab fa-whatsapp"></i> PARTAGER</a>`;
         }
 
-        // ========================================================
-        // 7. RECOMMANDATIONS (SANS L'ICÔNE TÉLÉCHARGER)
-        // ========================================================
         let recArea = document.getElementById('recommendations-area');
         if (recArea) recArea.remove(); 
 
@@ -278,9 +271,9 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById('modal-info').appendChild(recArea);
         const recGrid = document.getElementById('rec-grid');
         
-        let mixedContent = allData.filter(item => item.id !== data.id);
+        let mixedContent = allData.filter(item => item.id !== data.id && item.bientot !== true);
         mixedContent.sort(() => Math.random() - 0.5);
-        let suggestions = mixedContent.slice(0, 8); // LIMITÉ À 6
+        let suggestions = mixedContent.slice(0, 6); 
 
         suggestions.forEach(rec => {
             const card = document.createElement('div');
@@ -289,7 +282,6 @@ document.addEventListener("DOMContentLoaded", () => {
             let langue = rec.langue || "V.F.";
             let note = rec.note ? rec.note : (Math.random() * (9.5 - 6.0) + 6.0).toFixed(1);
 
-            // PLUS D'ICÔNE TÉLÉCHARGER ! JUSTE LANGUE ET NOTE
             card.innerHTML = `
                 <div class="rec-img-wrapper">
                     <div class="card-lang">${langue}</div>
@@ -297,31 +289,15 @@ document.addEventListener("DOMContentLoaded", () => {
                     <span class="card-rating">${note}</span>
                 </div>
             `;
-            
-            card.onclick = () => {
-                document.querySelector('.modal-info').scrollTop = 0; 
-                openModal(rec); 
-            };
+            card.onclick = () => { document.querySelector('.modal-info').scrollTop = 0; openModal(rec); };
             recGrid.appendChild(card);
         });
     }
 
-    // --- 8. FERMETURE DU MODAL ---
     const closeBtn = document.querySelector('.close-modal');
-    if(closeBtn) closeBtn.onclick = () => { 
-        modal.style.display = 'none'; 
-        if(videoWrapper) videoWrapper.innerHTML = ""; 
-        document.body.classList.remove('cinema-mode'); 
-    };
-    window.onclick = (e) => { 
-        if(e.target == modal) { 
-            modal.style.display = 'none'; 
-            if(videoWrapper) videoWrapper.innerHTML = ""; 
-            document.body.classList.remove('cinema-mode'); 
-        } 
-    };
+    if(closeBtn) closeBtn.onclick = () => { modal.style.display = 'none'; if(videoWrapper) videoWrapper.innerHTML = ""; document.body.classList.remove('cinema-mode'); };
+    window.onclick = (e) => { if(e.target == modal) { modal.style.display = 'none'; if(videoWrapper) videoWrapper.innerHTML = ""; document.body.classList.remove('cinema-mode'); } };
 
-    // --- 9. HERO SECTION (DIAPORAMA ANIMÉ) ---
     function loadHeroAnimated(movies) {
         const heroSection = document.getElementById('hero-section');
         const heroTitle = document.getElementById('hero-title');
@@ -329,7 +305,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const heroPlay = document.getElementById('hero-play');
 
         if(movies.length > 0 && heroSection) {
-            let featuredMovies = movies.filter(m => m.bientot);
+            let featuredMovies = movies.filter(m => m.bientot !== true);
             if(featuredMovies.length === 0) featuredMovies = movies; 
             
             featuredMovies.sort(() => Math.random() - 0.5);
@@ -352,7 +328,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // --- 10. NOTIFICATIONS (TOAST) ---
     function showToastNotification(item) {
         let oldToast = document.getElementById('app-toast');
         if (oldToast) oldToast.remove();
@@ -360,7 +335,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const toast = document.createElement('div');
         toast.id = 'app-toast';
         toast.className = 'toast-notification';
-        let typeText = item.type === 'musique' ? 'Nouveau Son' : (item.type === 'serie' ? 'Nouvelle Série' : 'Nouveau Film');
+        let typeText = item.type === 'musique' ? 'Nouveau Son' : (item.type === 'serie' ? 'Nouvelle Série' : (item.type === 'anime' ? 'Nouvel Animé' : 'Nouveau Film'));
 
         toast.innerHTML = `
             <img src="${item.image}" onerror="this.src='logo/filmsall.png'">
@@ -381,7 +356,6 @@ document.addEventListener("DOMContentLoaded", () => {
         if ("Notification" in window && Notification.permission === "default") Notification.requestPermission();
     }, { once: true });
 
-    // --- 11. BANDEAU INSTALLATION PWA ---
     let deferredPrompt;
     const installBanner = document.getElementById('install-banner');
     if(installBanner) {
