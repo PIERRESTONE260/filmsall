@@ -7,7 +7,6 @@
     "origine": "Franco-Congolais",
     "categorie": "Pop-Urbain, R&B, Afrobeat",
     "annee": 2022,
-    "likes": 10420,
     "image": "music/dadju/ima.jpg",
     "banner": "music/banner/imabanner.jpg",
     "driveId": "12RMZhdehaAhqK7q5NYgwxVOud6JROubz",
@@ -25,7 +24,6 @@
     "origine": "Franco-Congolais & Franco-Italienne",
     "categorie": "Pop, Hip-Hop mélodique",
     "annee": 2021,
-    "likes": 3200,
     "image": "music/dadju/gims&vitaa.webp",
     "banner": "music/banner/prendsmamainsbanner.jpg",
     "driveId": "1bsvrfyadvhfpiH5zI386-6gZ79LfGoNe",
@@ -43,7 +41,6 @@
     "origine": "RDC",
     "categorie": "Rumba-Congolaise, Pop-Urbain, R&B",
     "annee": 2022,
-    "likes": 8900,
     "image": "music/dadju/fally&dadju.jpg",
     "banner": "music/banner/uncoupbanner.jpg",
     "driveId": "17qF9w2roVHoYBKJD-Eb_nhVL51psdv4z",
@@ -61,7 +58,6 @@
     "origine": "Franco-congolais",
     "categorie": "R&B, Soul, Pop-Urbain",
     "annee": 2024,
-    "likes": 6500,
     "image": "music/dadju/jeadyjay.jpg",
     "banner": "music/banner/mawomanbanner.jpg",
     "driveId": "1C4OiGl_nvdrZicb9ebJ7vByvXIoVM3nc",
@@ -70,5 +66,175 @@
       "audio": "1931i_gRk9IRczSqW0nKoOp1EBXXE8e7L"
     },
     "description": "C'est une chanson d'amour et d'engagement. L'artiste y exprime un coup de foudre ('Tu m'as fait craquer dès le premier rendez-vous') et sa volonté de s'engager durablement, demandant même la main de sa compagne à genoux. Les paroles mêlent le français et des expressions en lingala."
+  },
+  {
+    "id": 1005,
+    "type": "musique",
+    "titre": "Mama",
+    "artiste": "Ps johh",
+    "origine": "Congolais",
+    "categorie": "Rap, urbain, hip-hop",
+    "annee": 2026,
+    "image": "",
+    "banner": "",
+    "driveId": "",
+    "downloads": {
+      "video": "",
+      "audio": "1ZBH6RHfPIQv-DjfkM4EhwptrbEAaC00n"
+    },
+    "description": "cette chanson raconte l'histoire d'une mère et la force d'une mère..."
+  },
+  {
+    "id": 1006,
+    "type": "musique",
+    "titre": "Coeur Vrai",
+    "artiste": "Ps johh",
+    "origine": "Congolais",
+    "categorie": "Rap, pop-urbain, gospel moderne",
+    "annee": 2026,
+    "image": "",
+    "banner": "",
+    "driveId": "",
+    "downloads": {
+      "video": "",
+      "audio": "15daG9qXz2ihZ1rQyxvNa5LqyB5GFVlOz"
+    },
+    "description": "cette chanson raconte l'histoire des jeunes femmes et hommes qui font semblant d'être des bon chrestien devant les autres mais pourtant ils oublié que celle Dieu vois leur hybocrisie..."
+  },
+  {
+    "id": 1007,
+    "type": "musique",
+    "titre": "Putain Con",
+    "artiste": "DJ LUDO",
+    "origine": "",
+    "categorie": "",
+    "annee": 2026,
+    "image": "",
+    "banner": "",
+    "driveId": "",
+    "downloads": {
+      "video": "",
+      "audio": ""
+    },
+    "description": ""
+  },
+   {
+    "id": 1008,
+    "type": "musique",
+    "titre": "Rien Te Devoir",
+    "artiste": "Druid's Music",
+    "origine": "",
+    "categorie": "",
+    "annee": 2026,
+    "image": "",
+    "banner": "",
+    "driveId": "",
+    "downloads": {
+      "video": "",
+      "audio": ""
+    },
+    "description": ""
+  },
+   {
+    "id": 1009,
+    "type": "musique",
+    "titre": "L'ombre du reflet",
+    "artiste": "Les larmes de noel...",
+    "origine": "",
+    "categorie": "",
+    "annee": 2026,
+    "image": "",
+    "banner": "",
+    "driveId": "",
+    "downloads": {
+      "video": "",
+      "audio": ""
+    },
+    "description": ""
+  },
+   {
+    "id": 1010,
+    "type": "musique",
+    "titre": "La paradoxe des pizzas",
+    "artiste": "DJ LUDO",
+    "origine": "",
+    "categorie": "",
+    "annee": 2026,
+    "image": "",
+    "banner": "",
+    "driveId": "",
+    "downloads": {
+      "video": "",
+      "audio": ""
+    },
+    "description": ""
+  },
+   {
+    "id": 1011,
+    "type": "musique",
+    "titre": "Une chanson peut sauver le monde",
+    "artiste": "Noel Lagoia",
+    "origine": "",
+    "categorie": "",
+    "annee": 2026,
+    "image": "",
+    "banner": "",
+    "driveId": "",
+    "downloads": {
+      "video": "",
+      "audio": ""
+    },
+    "description": ""
+  },
+   {
+    "id": 1012,
+    "type": "musique",
+    "titre": "Mots de trop",
+    "artiste": "Gwave",
+    "origine": "",
+    "categorie": "",
+    "annee": 2026,
+    "image": "",
+    "banner": "",
+    "driveId": "",
+    "downloads": {
+      "video": "",
+      "audio": ""
+    },
+    "description": ""
+  },
+   {
+    "id": 1013,
+    "type": "musique",
+    "titre": "Je voudrais te dire",
+    "artiste": "Alex",
+    "origine": "francophone",
+    "categorie": "Pop / Variété",
+    "annee": 2026,
+    "image": "music/dadju/jevoudraistedire.jpg",
+    "banner": "music/banner/jevoudraistedirebanner.jpg",
+    "driveId": "",
+    "downloads": {
+      "video": "",
+      "audio": ""
+    },
+    "description": "La chanson explore les thèmes des émotions enfouies et des choses que l'on n'ose pas exprimer à ses proches. Le morceau se distingue par sa sobriété, mettant en avant une voix juste et sans artifices."
+  },
+   {
+    "id": 1014,
+    "type": "musique",
+    "titre": "Dans toutes les langues",
+    "artiste": "Axel Merry",
+    "origine": "Bénin 🇧🇯",
+    "categorie": "Afro-pop / Variété ",
+    "annee": 2026,
+    "image": "music/dadju/axelmerry.jpg",
+    "banner": "music/banner/danstoutesleslanuesbanner.jpg",
+    "driveId": "1qCwj7O_NBSlRiEjSCf5WIBmObT0fjipO",
+    "downloads": {
+      "video": "1qCwj7O_NBSlRiEjSCf5WIBmObT0fjipO",
+      "audio": "1gWJCtW5l9ODqftrasFa4I2Ug4b4aPyHB"
+    },
+    "description": "Dans ce titre romantique, Axel Merryl déclare sa flamme en déclinant le verbe « aimer » dans une multitude de langues (français, arabe, allemand, italien, etc.). La chanson s'inscrit dans sa lignée de morceaux 'Love' à succès, misant sur une mélodie douce et un texte universel destiné à séduire un public international."
   }
 ]

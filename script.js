@@ -7,7 +7,7 @@ if ('serviceWorker' in navigator) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-    let allData =[];
+    let allData = [];
 
     const urlsToFetch =[];
     if (window.isMusicPage) urlsToFetch.push('musique.json');
@@ -35,15 +35,27 @@ document.addEventListener("DOMContentLoaded", () => {
             const dataType = window.isMusicPage ? 'musique' : 'films';
             const storageKey = `filmsall_last_count_${dataType}`;
             const previousCount = parseInt(localStorage.getItem(storageKey)) || allData.length;
+            const unreadCount = allData.length - previousCount;
 
-            if (allData.length > previousCount) {
+            if (window.isAnnoncesPage) {
+                localStorage.setItem(storageKey, allData.length);
+                if ('clearAppBadge' in navigator) navigator.clearAppBadge();
+            } else if (unreadCount > 0) {
                 const newItem = allData[allData.length - 1]; 
                 if ("Notification" in window && Notification.permission === "granted") {
                     new Notification("Nouveauté sur FILMSall 🍿", { body: `Nouveau : ${newItem.titre}`, icon: "logo/filmsall.png" });
                 }
                 showToastNotification(newItem);
+                if ('setAppBadge' in navigator) navigator.setAppBadge(unreadCount).catch(err => console.log('Badge API erreur:', err));
+                
+                const bellIcons = document.querySelectorAll('.fa-bell');
+                bellIcons.forEach(bell => {
+                    const navItem = bell.parentElement;
+                    if(!navItem.querySelector('.app-badge')) {
+                        navItem.innerHTML += `<span class="app-badge">${unreadCount}</span>`;
+                    }
+                });
             }
-            localStorage.setItem(storageKey, allData.length);
 
             const urlParams = new URLSearchParams(window.location.search);
             const movieId = urlParams.get('id');
@@ -106,7 +118,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (filterType === 'tout') filtered = allData.filter(i => i.type !== 'musique' && i.bientot !== true);
         else if (filterType === 'film') filtered = allData.filter(i => i.type === 'film' && i.bientot !== true);
         else if (filterType === 'serie') filtered = allData.filter(i => i.type === 'serie' && i.bientot !== true);
-        else if (filterType === 'animation') filtered = allData.filter(i => i.type === 'anime' && i.bientot !== true);
+        else if (filterType === 'anime') filtered = allData.filter(i => i.type === 'anime' && i.bientot !== true);
         else if (filterType === 'manga') filtered = allData.filter(i => i.type === 'manga' && i.bientot !== true);
         else if (filterType === 'musique') filtered = allData.filter(i => i.type === 'musique');
 
@@ -121,7 +133,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const container = document.getElementById('main-container');
         if(!container) return;
         container.innerHTML = "";
-        const categories =[...new Set(list.map(m => m.categorie))];
+        const categories = [...new Set(list.map(m => m.categorie))];
         categories.forEach(cat => {
             const section = document.createElement('div');
             section.className = 'category-section';
@@ -216,19 +228,47 @@ document.addEventListener("DOMContentLoaded", () => {
             
             if (data.saisons) {
                 data.saisons.forEach((s, idx) => seasonSelect.innerHTML += `<option value="${idx}">${s.nom}</option>`);
-                const renderEp = (idx) => {
-                    episodesList.innerHTML = "";
-                    data.saisons[idx].episodes.forEach(ep => {
-                        episodesList.innerHTML += `
-                            <div class="episode-item" onclick="launchEp('${ep.driveId}')">
-                                <div class="episode-title"><i class="fas fa-play-circle"></i> ${ep.titre}</div>
-                                <a href="${ep.driveId ? `https://drive.google.com/uc?export=download&id=${ep.driveId}` : '#'}" class="episode-download" target="_blank" onclick="event.stopPropagation()"><i class="fas fa-download"></i></a>
-                            </div>`;
+                
+                let displayedEpisodes = 0;
+                const EPISODES_PER_PAGE = 3; 
+
+                const renderEp = (idx, append = false) => {
+                    const currentSeason = data.saisons[idx];
+                    if (!append) {
+                        episodesList.innerHTML = "";
+                        displayedEpisodes = 0;
+                    }
+
+                    const episodesToRender = currentSeason.episodes.slice(displayedEpisodes, displayedEpisodes + EPISODES_PER_PAGE);
+
+                    episodesToRender.forEach(ep => {
+                        const item = document.createElement('div');
+                        item.className = 'episode-item';
+                        item.innerHTML = `
+                            <div class="episode-title"><i class="fas fa-play-circle"></i> ${ep.titre}</div>
+                            <a href="${ep.driveId ? `https://drive.google.com/uc?export=download&id=${ep.driveId}` : '#'}" class="episode-download" target="_blank" onclick="event.stopPropagation()"><i class="fas fa-download"></i></a>
+                        `;
+                        item.onclick = () => { if(ep.driveId && ep.driveId !== "") { data.driveId = ep.driveId; playMedia(); } else alert("Épisode bientôt disponible !"); };
+                        episodesList.appendChild(item);
                     });
+
+                    displayedEpisodes += episodesToRender.length;
+
+                    const oldBtn = document.getElementById('btn-load-more');
+                    if (oldBtn) oldBtn.remove();
+
+                    if (displayedEpisodes < currentSeason.episodes.length) {
+                        const btn = document.createElement('button');
+                        btn.id = 'btn-load-more';
+                        btn.className = 'btn-load-more';
+                        btn.innerHTML = 'Épisodes suivants <i class="fas fa-chevron-down"></i>';
+                        btn.onclick = () => renderEp(idx, true);
+                        episodesList.appendChild(btn);
+                    }
                 };
+
                 renderEp(0);
-                seasonSelect.onchange = (e) => renderEp(e.target.value);
-                window.launchEp = (id) => { if(id && id !== 'undefined' && id !== "") { data.driveId = id; playMedia(); } else alert("Épisode bientôt disponible !"); };
+                seasonSelect.onchange = (e) => renderEp(e.target.value, false);
             }
         } 
         else if (actionGrid) {
@@ -289,6 +329,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     <span class="card-rating">${note}</span>
                 </div>
             `;
+            
             card.onclick = () => { document.querySelector('.modal-info').scrollTop = 0; openModal(rec); };
             recGrid.appendChild(card);
         });

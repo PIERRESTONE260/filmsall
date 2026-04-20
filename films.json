@@ -228,7 +228,7 @@
     "annee": 2024,
     "image": "films/romance/alfredthemischiefs.jpeg",
     "banner": "films/banner/alfredthemischiefsbanner.jpg",
-    "driveId": "",
+    "driveId": "1e_roCBGFfioRGOxNIbcNxsY4APxfSbfy",
     "description": "Le film raconte l'histoire d'Alfred, un jeune homme qui tente de se faire un nom."
   },
   {
@@ -343,7 +343,34 @@
         "episodes":[
           { "titre": "Rani arrive à Jaipur", "driveId": "1g72GhJOIHe0Dj_eaMBJMNKniRahYJqpR" },
           { "titre": "L'accueil au palais", "driveId": "1u-yQJlTxs-sVwygUc77vy_daX61sURTb" },
-          { "titre": "Le sacrifice de Ramadheer", "driveId": "" }
+          { "titre": "Le sacrifice de Ramadheer", "driveId": "1nWZDwL1pEIsIs9ieZss5FVJVmhI-_3U0" },
+          { "titre": "Ramadheer arrêté pour un crime grave", "driveId": "1BYw0p3huFUxB2Kr-P8X2GCSj801cXjT9" },
+          { "titre": "Rani demande la vérité à Ramadheer", "driveId": "1BYw0p3huFUxB2Kr-P8X2GCSj801cXjT9" },
+          { "titre": "Rani refuse de quitter le manoir", "driveId": "1bqYqqHyDB72OUZxFLme5aCuju8eoqW-D" },
+          { "titre": "Rani commence son travail de servante", "driveId": "1f9C1LPpQCvhFlUZF0EeNDcg66-qCQ-JP" },
+          { "titre": "Rani fait face aux exigences de Rani Sa", "driveId": "1CVrp6eiew6Zoo22bh9pakTXx8p5-2UXX" },
+          { "titre": "Rani tente de voir son père en prison", "driveId": "1atQMrFWhyMyCw9WmrGILzyn3HOD0KIzN" },
+          { "titre": "Rani sauve l'honneur de la famille Rajawat", "driveId": "1EuKHYc7YDZAoOGc2KVqQy-ZDC-W76Slo" },
+          { "titre": "Rani impressionne Veer par sa détermination", "driveId": "1s47g4jSE7WeLTY6-pg1hKSJ6lVZBkd4r" },
+          { "titre": "Rani affronte les épreuves de Rani Sa", "driveId": "101AIEB_-27BkG0r24L1A82AF8y1cozSD" },
+          { "titre": "Rani découvre de nouveaux indices sur l'accident", "driveId": "1oapF6T5FXpXt0zPqQeYZAE_kcWxa2T6C" },
+          { "titre": "Rani et Veer se disputent à propos de Ramadheer", "driveId": "14oZuKfhYpxzSM274MZEgMrxeedAEDXv2" },
+          { "titre": "Rani Sa punit Rani pour son audace", "driveId": "1eUN39fKz4Nh4lgal6FcjCUQIpXs-71o7" },
+          { "titre": "Rani lutte pour payer la caution de son père", "driveId": "" },
+          { "titre": "Rani trouve un allié inattendu", "driveId": "" },
+          { "titre": " Rani sauve la fête des Rajawat", "driveId": "" },
+          { "titre": "Rani Sa met Rani au défi", "driveId": "" },
+          { "titre": "", "driveId": "" },
+          { "titre": "", "driveId": "" },
+          { "titre": "", "driveId": "" },
+          { "titre": "", "driveId": "" },
+          { "titre": "", "driveId": "" },
+          { "titre": "", "driveId": "" },
+          { "titre": "", "driveId": "" },
+          { "titre": "", "driveId": "" },
+          { "titre": "", "driveId": "" },
+          { "titre": "", "driveId": "" },
+          { "titre": "", "driveId": "" }
         ]
       }
     ]
@@ -668,5 +695,19 @@
     "banner": "films/banner/cocobanner.jpg",
     "driveId": "",
     "description": "Miguel se retrouve accidentellement transporté dans le Pays des Morts."
+  },
+  {
+    "id": 44,
+    "type": "film",
+    "titre": "Agents presque secrets",
+    "note": 2.7,
+    "langue": "V.F.",
+    "origine": "Etats-Unis",
+    "categorie": "Comédie d'action",
+    "annee": 2016,
+    "image": "films/actions/agentspresquesecrets.jpg",
+    "banner": "films/banner/agentspresquesecretsbanner.jpg",
+    "driveId": "",
+    "description": "Bob Stone (Dwayne Johnson), un ancien geek devenu un agent d'élite de la CIA, recrute son ancien camarade de lycée Calvin Joyner (Kevin Hart), autrefois la star de l'école devenu un simple comptable, pour l'aider à déjouer un complot de terrorisme international. Le duo se retrouve alors plongé dans une aventure explosive où l'humour naît du décalage entre les deux personnalités."
   }
 ]
