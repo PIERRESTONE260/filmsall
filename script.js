@@ -1,8 +1,6 @@
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js')
-            .then(reg => console.log('Service Worker OK'))
-            .catch(err => console.log('Erreur SW:', err));
+        navigator.serviceWorker.register('./sw.js').catch(err => console.log(err));
     });
 }
 
@@ -43,16 +41,16 @@ document.addEventListener("DOMContentLoaded", () => {
             } else if (unreadCount > 0) {
                 const newItem = allData[allData.length - 1]; 
                 if ("Notification" in window && Notification.permission === "granted") {
-                    new Notification("Nouveauté sur FILMSall 🍿", { body: `Nouveau : ${newItem.titre}`, icon: "logo/filmsall.png" });
+                    new Notification("Nouveauté sur FILMSall", { body: `Nouveau : ${newItem.titre}`, icon: "logo/filmsall.png" });
                 }
                 showToastNotification(newItem);
-                if ('setAppBadge' in navigator) navigator.setAppBadge(unreadCount).catch(err => console.log('Badge API erreur:', err));
+                if ('setAppBadge' in navigator) navigator.setAppBadge(unreadCount).catch(err => console.log(err));
                 
                 const bellIcons = document.querySelectorAll('.fa-bell');
                 bellIcons.forEach(bell => {
                     const navItem = bell.parentElement;
-                    if(!navItem.querySelector('.app-badge')) {
-                        navItem.innerHTML += `<span class="app-badge">${unreadCount}</span>`;
+                    if(!navItem.querySelector('.notification-badge')) {
+                        navItem.innerHTML += `<span class="notification-badge">${unreadCount}</span>`;
                     }
                 });
             }
@@ -133,7 +131,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const container = document.getElementById('main-container');
         if(!container) return;
         container.innerHTML = "";
-        const categories = [...new Set(list.map(m => m.categorie))];
+        const categories =[...new Set(list.map(m => m.categorie))];
         categories.forEach(cat => {
             const section = document.createElement('div');
             section.className = 'category-section';
@@ -201,15 +199,15 @@ document.addEventListener("DOMContentLoaded", () => {
         if(actionGrid) actionGrid.innerHTML = "";
 
         const playMedia = () => {
-            if (!data.driveId) { alert("⚠️ Ce contenu sera bientôt disponible sur FILMSall !"); return; }
+            if (!data.driveId) { alert("Bientôt disponible !"); return; }
             document.body.classList.add('cinema-mode'); 
             modalCover.style.display = 'none';
             videoWrapper.style.display = 'block';
-            
             videoWrapper.innerHTML = `
                 <div class="video-overlay-fix"></div> 
                 <iframe src="https://drive.google.com/file/d/${data.driveId}/preview" allow="autoplay; fullscreen" style="width:100%; height:100%; border:none;"></iframe>
             `;
+            document.querySelector('.modal-info').scrollTop = 0; 
         };
 
         if(document.getElementById('center-play-btn')) {
@@ -229,46 +227,32 @@ document.addEventListener("DOMContentLoaded", () => {
             if (data.saisons) {
                 data.saisons.forEach((s, idx) => seasonSelect.innerHTML += `<option value="${idx}">${s.nom}</option>`);
                 
-                let displayedEpisodes = 0;
-                const EPISODES_PER_PAGE = 3; 
-
-                const renderEp = (idx, append = false) => {
+                const renderEp = (idx) => {
+                    episodesList.innerHTML = "";
                     const currentSeason = data.saisons[idx];
-                    if (!append) {
-                        episodesList.innerHTML = "";
-                        displayedEpisodes = 0;
-                    }
 
-                    const episodesToRender = currentSeason.episodes.slice(displayedEpisodes, displayedEpisodes + EPISODES_PER_PAGE);
-
-                    episodesToRender.forEach(ep => {
+                    currentSeason.episodes.forEach((ep, i) => {
+                        const sNum = (idx + 1).toString().padStart(2, '0');
+                        const eNum = (i + 1).toString().padStart(2, '0');
+                        
                         const item = document.createElement('div');
                         item.className = 'episode-item';
                         item.innerHTML = `
-                            <div class="episode-title"><i class="fas fa-play-circle"></i> ${ep.titre}</div>
-                            <a href="${ep.driveId ? `https://drive.google.com/uc?export=download&id=${ep.driveId}` : '#'}" class="episode-download" target="_blank" onclick="event.stopPropagation()"><i class="fas fa-download"></i></a>
+                            <div class="episode-title">
+                                <i class="fas fa-play-circle"></i> S${sNum} EP${eNum}
+                            </div>
+                            <div class="episode-meta">${ep.titre}</div>
+                            <a href="${ep.driveId ? `https://drive.google.com/uc?export=download&id=${ep.driveId}` : '#'}" class="episode-download" target="_blank" onclick="event.stopPropagation()">
+                                <i class="fas fa-download"></i>
+                            </a>
                         `;
                         item.onclick = () => { if(ep.driveId && ep.driveId !== "") { data.driveId = ep.driveId; playMedia(); } else alert("Épisode bientôt disponible !"); };
                         episodesList.appendChild(item);
                     });
-
-                    displayedEpisodes += episodesToRender.length;
-
-                    const oldBtn = document.getElementById('btn-load-more');
-                    if (oldBtn) oldBtn.remove();
-
-                    if (displayedEpisodes < currentSeason.episodes.length) {
-                        const btn = document.createElement('button');
-                        btn.id = 'btn-load-more';
-                        btn.className = 'btn-load-more';
-                        btn.innerHTML = 'Épisodes suivants <i class="fas fa-chevron-down"></i>';
-                        btn.onclick = () => renderEp(idx, true);
-                        episodesList.appendChild(btn);
-                    }
                 };
 
                 renderEp(0);
-                seasonSelect.onchange = (e) => renderEp(e.target.value, false);
+                seasonSelect.onchange = (e) => renderEp(parseInt(e.target.value));
             }
         } 
         else if (actionGrid) {
@@ -290,7 +274,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 const dlBtn = document.createElement('a');
                 dlBtn.className = 'btn-action';
                 if(data.driveId) dlBtn.href = `https://drive.google.com/uc?export=download&id=${data.driveId}`;
-                else { dlBtn.href = '#'; dlBtn.onclick = (e)=>{e.preventDefault(); alert("Bientôt disponible au téléchargement !");} }
+                else { dlBtn.href = '#'; dlBtn.onclick = (e)=>{e.preventDefault(); alert("Bientôt disponible !");} }
                 dlBtn.target = "_blank";
                 dlBtn.innerHTML = '<i class="fas fa-download"></i> TÉLÉCHARGER';
                 actionGrid.appendChild(dlBtn);
@@ -329,7 +313,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     <span class="card-rating">${note}</span>
                 </div>
             `;
-            
             card.onclick = () => { document.querySelector('.modal-info').scrollTop = 0; openModal(rec); };
             recGrid.appendChild(card);
         });
