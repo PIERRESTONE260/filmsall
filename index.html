@@ -53,6 +53,21 @@
                 <div class="modal-meta"><span id="modal-year"></span> • <span id="modal-cat" style="color:var(--primary);"></span></div>
                 <p id="modal-desc" style="color:#ccc; font-size:13px;"></p>
                 <div id="action-grid" class="action-grid"></div>
+                
+                <!-- NOUVEAU : BARRE DE TÉLÉCHARGEMENT INTÉGRÉE -->
+                <div id="download-progress-area" class="download-progress-container">
+                    <div class="download-info-row">
+                        <span id="dl-filename" style="color:white; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:60%;">Film.mp4</span>
+                        <span id="dl-percentage" class="download-percentage">0%</span>
+                    </div>
+                    <div class="progress-bar-bg">
+                        <div id="dl-progress-bar" class="progress-bar-fill"></div>
+                    </div>
+                    <div class="download-info-row">
+                        <span id="dl-loaded">0 MB</span>
+                        <span id="dl-total">Calcul...</span>
+                    </div>
+                </div>
                 <div id="series-area" style="display:none;"><select id="season-select" class="season-select"></select><div id="episodes-list" class="episodes-list"></div></div>
             </div>
         </div>

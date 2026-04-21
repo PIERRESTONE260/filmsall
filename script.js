@@ -116,7 +116,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (filterType === 'tout') filtered = allData.filter(i => i.type !== 'musique' && i.bientot !== true);
         else if (filterType === 'film') filtered = allData.filter(i => i.type === 'film' && i.bientot !== true);
         else if (filterType === 'serie') filtered = allData.filter(i => i.type === 'serie' && i.bientot !== true);
-        else if (filterType === 'anime') filtered = allData.filter(i => i.categorie === 'Animation' && i.bientot !== true);
+        else if (filterType === 'animation') filtered = allData.filter(i => i.categorie.includes('Animation') && i.bientot !== true);
         else if (filterType === 'manga') filtered = allData.filter(i => i.type === 'manga' && i.bientot !== true);
         else if (filterType === 'musique') filtered = allData.filter(i => i.type === 'musique');
 
@@ -198,6 +198,70 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if(actionGrid) actionGrid.innerHTML = "";
 
+        const startDownload = (fileUrl, fileName) => {
+            if(!fileUrl) { alert("Lien indisponible !"); return; }
+            
+            const progressDiv = document.createElement('div');
+            progressDiv.className = 'dl-progress-container';
+            progressDiv.innerHTML = `
+                <div class="dl-info">
+                    <span style="color:white; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:60%;">${fileName}</span>
+                    <span class="dl-percent" style="color:white; font-weight:bold;">0%</span>
+                </div>
+                <div class="dl-bar-bg" style="width:100%; height:6px; background:#000; border-radius:3px; margin-top:5px; overflow:hidden;">
+                    <div class="dl-fill" style="height:100%; background:var(--whatsapp); width:0%; transition:width 0.2s;"></div>
+                </div>
+            `;
+            actionGrid.appendChild(progressDiv);
+            progressDiv.style.display = 'flex';
+            
+            const percentTxt = progressDiv.querySelector('.dl-percent');
+            const fillBar = progressDiv.querySelector('.dl-fill');
+
+            const xhr = new XMLHttpRequest();
+            xhr.open('GET', fileUrl, true);
+            xhr.responseType = 'blob'; 
+
+            xhr.onprogress = (event) => {
+                if (event.lengthComputable) {
+                    const percentComplete = Math.round((event.loaded / event.total) * 100);
+                    percentTxt.innerText = percentComplete + '%';
+                    fillBar.style.width = percentComplete + '%';
+                } else {
+                    percentTxt.innerText = 'En cours...';
+                    fillBar.style.width = '50%';
+                }
+            };
+
+            xhr.onload = () => {
+                if (xhr.status === 200) {
+                    percentTxt.innerText = 'Terminé';
+                    fillBar.style.width = '100%';
+                    
+                    const blob = xhr.response;
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.style.display = 'none';
+                    a.href = url;
+                    a.download = fileName;
+                    document.body.appendChild(a);
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+                    setTimeout(() => progressDiv.remove(), 3000);
+                } else {
+                    percentTxt.innerText = 'Erreur';
+                    fillBar.style.background = 'red';
+                    setTimeout(() => { window.open(fileUrl, '_blank'); progressDiv.remove(); }, 2000);
+                }
+            };
+
+            xhr.onerror = () => {
+                percentTxt.innerText = 'Redirection...';
+                setTimeout(() => { window.open(fileUrl, '_blank'); progressDiv.remove(); }, 1000);
+            };
+            xhr.send();
+        };
+
         const playMedia = () => {
             if (!data.driveId) { alert("Bientôt disponible !"); return; }
             document.body.classList.add('cinema-mode'); 
@@ -207,7 +271,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 <div class="video-overlay-fix"></div> 
                 <iframe src="https://drive.google.com/file/d/${data.driveId}/preview" allow="autoplay; fullscreen" style="width:100%; height:100%; border:none;"></iframe>
             `;
-            document.querySelector('.modal-info').scrollTop = 0; 
         };
 
         if(document.getElementById('center-play-btn')) {
@@ -227,42 +290,50 @@ document.addEventListener("DOMContentLoaded", () => {
             if (data.saisons) {
                 data.saisons.forEach((s, idx) => seasonSelect.innerHTML += `<option value="${idx}">${s.nom}</option>`);
                 
-                let displayedEpisodes = 0;
-                const EPISODES_PER_PAGE = 1; 
-
-                const renderEp = (idx, isAppending = false) => {
+                const renderEp = (idx, showAll = false) => {
+                    episodesList.innerHTML = "";
                     const currentSeason = data.saisons[idx];
-                    
-                    if (!isAppending) {
-                        episodesList.innerHTML = "";
-                        displayedEpisodes = 0;
-                    }
+                    const totalEps = currentSeason.episodes.length;
+                    const limit = showAll ? totalEps : 3; // On affiche 3 par défaut !
 
-                    const oldBtn = document.getElementById('btn-load-more');
-                    if (oldBtn) oldBtn.remove();
+                    const epsToShow = currentSeason.episodes.slice(0, limit);
 
-                    const episodesToRender = currentSeason.episodes.slice(displayedEpisodes, displayedEpisodes + EPISODES_PER_PAGE);
-
-                    episodesToRender.forEach((ep, index) => {
+                    epsToShow.forEach((ep, i) => {
+                        const sNum = (idx + 1).toString().padStart(2, '0');
+                        const eNum = (i + 1).toString().padStart(2, '0');
+                        
                         const item = document.createElement('div');
                         item.className = 'episode-item';
                         item.innerHTML = `
-                            <div class="episode-title"><i class="fas fa-play-circle"></i> ${ep.titre}</div>
-                            <a href="${ep.driveId ? `https://drive.google.com/uc?export=download&id=${ep.driveId}` : '#'}" class="episode-download" target="_blank" onclick="event.stopPropagation()"><i class="fas fa-download"></i></a>
+                            <div class="episode-title">
+                                <span>S${sNum} EP${eNum}</span>
+                            </div>
+                            <div class="episode-meta">${ep.titre}</div>
+                            <a href="#" class="episode-download" onclick="event.stopPropagation()">
+                                <i class="fas fa-download"></i>
+                            </a>
                         `;
                         item.onclick = () => { if(ep.driveId && ep.driveId !== "") { data.driveId = ep.driveId; playMedia(); } else alert("Épisode bientôt disponible !"); };
+                        
+                        const dlLink = item.querySelector('.episode-download');
+                        dlLink.onclick = (e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            if(ep.driveId) {
+                                const dlUrl = `https://drive.usercontent.google.com/download?id=${ep.driveId}&export=download&confirm=t`;
+                                startDownload(dlUrl, `${data.titre}_S${sNum}E${eNum}.mp4`);
+                            } else alert("Bientôt !");
+                        };
+
                         episodesList.appendChild(item);
                     });
 
-                    displayedEpisodes += episodesToRender.length;
-
-                    if (displayedEpisodes < currentSeason.episodes.length) {
-                        const btn = document.createElement('button');
-                        btn.id = 'btn-load-more';
-                        btn.className = 'btn-load-more';
-                        btn.innerHTML = 'Épisodes suivants <i class="fas fa-chevron-down"></i>';
-                        btn.onclick = () => renderEp(idx, true);
-                        episodesList.appendChild(btn);
+                    if (!showAll && totalEps > 3) {
+                        const moreBtn = document.createElement('div');
+                        moreBtn.className = 'episode-more';
+                        moreBtn.innerHTML = 'Tous les épisodes';
+                        moreBtn.onclick = () => renderEp(idx, true);
+                        episodesList.appendChild(moreBtn);
                     }
                 };
 
@@ -283,15 +354,32 @@ document.addEventListener("DOMContentLoaded", () => {
             actionGrid.appendChild(playBtn);
 
             if (data.downloads) {
-                if(data.downloads.video) actionGrid.innerHTML += `<a href="${data.downloads.video}" class="btn-action" target="_blank"><i class="fas fa-video"></i> MP4</a>`;
-                if(data.downloads.audio) actionGrid.innerHTML += `<a href="${data.downloads.audio}" class="btn-action" target="_blank"><i class="fas fa-music"></i> MP3</a>`;
+                if(data.downloads.video) {
+                    const btnVid = document.createElement('button');
+                    btnVid.className = 'btn-action';
+                    btnVid.innerHTML = '<i class="fas fa-video"></i> MP4';
+                    btnVid.onclick = () => startDownload(data.downloads.video, `${data.titre}.mp4`);
+                    actionGrid.appendChild(btnVid);
+                }
+                if(data.downloads.audio) {
+                    const btnAud = document.createElement('button');
+                    btnAud.className = 'btn-action';
+                    btnAud.innerHTML = '<i class="fas fa-music"></i> MP3';
+                    btnAud.onclick = () => startDownload(data.downloads.audio, `${data.titre}.mp3`);
+                    actionGrid.appendChild(btnAud);
+                }
             } else {
-                const dlBtn = document.createElement('a');
+                const dlBtn = document.createElement('button');
                 dlBtn.className = 'btn-action';
-                if(data.driveId) dlBtn.href = `https://drive.google.com/uc?export=download&id=${data.driveId}`;
-                else { dlBtn.href = '#'; dlBtn.onclick = (e)=>{e.preventDefault(); alert("Bientôt disponible !");} }
-                dlBtn.target = "_blank";
-                dlBtn.innerHTML = '<i class="fas fa-download"></i> TÉLÉCHARGER';
+                if(data.driveId) {
+                    const driveDlLink = `https://drive.usercontent.google.com/download?id=${data.driveId}&export=download&confirm=t`;
+                    dlBtn.onclick = () => startDownload(driveDlLink, `${data.titre}.mp4`);
+                    dlBtn.innerHTML = '<i class="fas fa-download"></i> TÉLÉCHARGER';
+                } else { 
+                    dlBtn.onclick = (e)=>{e.preventDefault(); alert("Bientôt !");} 
+                    dlBtn.innerHTML = '<i class="fas fa-clock"></i> BIENTÔT';
+                    dlBtn.style.opacity = "0.5";
+                }
                 actionGrid.appendChild(dlBtn);
             }
             actionGrid.innerHTML += `<a href="https://wa.me/?text=Regarde *${encodeURIComponent(data.titre)}* sur FILMSall ! C'est gratuit ici : ${window.location.href.split('?')[0]}" class="btn-action whatsapp" target="_blank"><i class="fab fa-whatsapp"></i> PARTAGER</a>`;
