@@ -116,7 +116,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (filterType === 'tout') filtered = allData.filter(i => i.type !== 'musique' && i.bientot !== true);
         else if (filterType === 'film') filtered = allData.filter(i => i.type === 'film' && i.bientot !== true);
         else if (filterType === 'serie') filtered = allData.filter(i => i.type === 'serie' && i.bientot !== true);
-        else if (filterType === 'anime') filtered = allData.filter(i => i.type === 'anime' && i.bientot !== true);
+        else if (filterType === 'anime') filtered = allData.filter(i => i.categorie === 'Animation' && i.bientot !== true);
         else if (filterType === 'manga') filtered = allData.filter(i => i.type === 'manga' && i.bientot !== true);
         else if (filterType === 'musique') filtered = allData.filter(i => i.type === 'musique');
 
@@ -227,32 +227,47 @@ document.addEventListener("DOMContentLoaded", () => {
             if (data.saisons) {
                 data.saisons.forEach((s, idx) => seasonSelect.innerHTML += `<option value="${idx}">${s.nom}</option>`);
                 
-                const renderEp = (idx) => {
-                    episodesList.innerHTML = "";
-                    const currentSeason = data.saisons[idx];
+                let displayedEpisodes = 0;
+                const EPISODES_PER_PAGE = 1; 
 
-                    currentSeason.episodes.forEach((ep, i) => {
-                        const sNum = (idx + 1).toString().padStart(2, '0');
-                        const eNum = (i + 1).toString().padStart(2, '0');
-                        
+                const renderEp = (idx, isAppending = false) => {
+                    const currentSeason = data.saisons[idx];
+                    
+                    if (!isAppending) {
+                        episodesList.innerHTML = "";
+                        displayedEpisodes = 0;
+                    }
+
+                    const oldBtn = document.getElementById('btn-load-more');
+                    if (oldBtn) oldBtn.remove();
+
+                    const episodesToRender = currentSeason.episodes.slice(displayedEpisodes, displayedEpisodes + EPISODES_PER_PAGE);
+
+                    episodesToRender.forEach((ep, index) => {
                         const item = document.createElement('div');
                         item.className = 'episode-item';
                         item.innerHTML = `
-                            <div class="episode-title">
-                                <i class="fas fa-play-circle"></i> S${sNum} EP${eNum}
-                            </div>
-                            <div class="episode-meta">${ep.titre}</div>
-                            <a href="${ep.driveId ? `https://drive.google.com/uc?export=download&id=${ep.driveId}` : '#'}" class="episode-download" target="_blank" onclick="event.stopPropagation()">
-                                <i class="fas fa-download"></i>
-                            </a>
+                            <div class="episode-title"><i class="fas fa-play-circle"></i> ${ep.titre}</div>
+                            <a href="${ep.driveId ? `https://drive.google.com/uc?export=download&id=${ep.driveId}` : '#'}" class="episode-download" target="_blank" onclick="event.stopPropagation()"><i class="fas fa-download"></i></a>
                         `;
                         item.onclick = () => { if(ep.driveId && ep.driveId !== "") { data.driveId = ep.driveId; playMedia(); } else alert("Épisode bientôt disponible !"); };
                         episodesList.appendChild(item);
                     });
+
+                    displayedEpisodes += episodesToRender.length;
+
+                    if (displayedEpisodes < currentSeason.episodes.length) {
+                        const btn = document.createElement('button');
+                        btn.id = 'btn-load-more';
+                        btn.className = 'btn-load-more';
+                        btn.innerHTML = 'Épisodes suivants <i class="fas fa-chevron-down"></i>';
+                        btn.onclick = () => renderEp(idx, true);
+                        episodesList.appendChild(btn);
+                    }
                 };
 
                 renderEp(0);
-                seasonSelect.onchange = (e) => renderEp(parseInt(e.target.value));
+                seasonSelect.onchange = (e) => renderEp(parseInt(e.target.value), false);
             }
         } 
         else if (actionGrid) {
