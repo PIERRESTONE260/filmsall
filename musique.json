@@ -236,5 +236,226 @@
       "audio": "1gWJCtW5l9ODqftrasFa4I2Ug4b4aPyHB"
     },
     "description": "Dans ce titre romantique, Axel Merryl déclare sa flamme en déclinant le verbe « aimer » dans une multitude de langues (français, arabe, allemand, italien, etc.). La chanson s'inscrit dans sa lignée de morceaux 'Love' à succès, misant sur une mélodie douce et un texte universel destiné à séduire un public international."
+  },
+  {
+    "id": 1015,
+    "type": "musique",
+    "titre": "PARISIENNE",
+    "artiste": "GIMS & La Mano",
+    "origine": "francophone",
+    "categorie": "Pop-Urbaine/ Hip-hop/ Rap",
+    "annee": 2025,
+    "image": "music/dadju/parisienne.jpg",
+    "banner": "music/banner/parisiennebanner.jpg",
+    "driveId": "",
+    "downloads": {
+      "video": "",
+      "audio": ""
+    },
+    "description": "La chanson dresse le portrait d'une 'Parisienne' authentique qui vit la ville au quotidien loin des clichés touristiques. Les paroles emblématiques — 'Moi, je veux une Parisienne qui traverse au feu vert, qui s'en fout d'la Tour Eiffel' — soulignent ce contraste entre le mythe de Paris et la réalité du bitume."
+  },
+  {
+    "id": 1016,
+    "type": "musique",
+    "titre": "VIENS ON ESSAIE",
+    "artiste": "VITAA & JULIEN DORE",
+    "origine": "franco-italienne & Italienne",
+    "categorie": "",
+    "annee": 2025,
+    "image": "music/dadju/vitaa&julien.jpg",
+    "banner": "music/banner/viensonessaiebanner.jpg",
+    "driveId": "",
+    "downloads": {
+      "video": "",
+      "audio": ""
+    },
+    "description": "La chanson évoque la naissance d'une histoire d'amour, l'hésitation et le désir de se lancer simplement pour 'essayer'. Le clip se distingue par son minimalisme, montrant les deux artistes assis l'un à côté de l'autre devant une caravane."
+  },
+  {
+    "id": 1017,
+    "type": "musique",
+    "titre": "Appelle-moi",
+    "artiste": "PHIFI1",
+    "origine": "",
+    "categorie": "",
+    "annee": 2026,
+    "image": "",
+    "banner": "",
+    "driveId": "",
+    "downloads": {
+      "video": "",
+      "audio": ""
+    },
+    "description": ""
+  },
+  {
+    "id": 1018,
+    "type": "musique",
+    "titre": "Je n'oublie pas",
+    "artiste": "VITAA",
+    "origine": "",
+    "categorie": "",
+    "annee": 2026,
+    "image": "",
+    "banner": "",
+    "driveId": "",
+    "downloads": {
+      "video": "",
+      "audio": ""
+    },
+    "description": ""
+  },
+  {
+    "id": 1019,
+    "type": "musique",
+    "titre": "Le feu",
+    "artiste": "Kendji Girac ft @vianneymusique",
+    "origine": "",
+    "categorie": "",
+    "annee": 2026,
+    "image": "",
+    "banner": "",
+    "driveId": "",
+    "downloads": {
+      "video": "",
+      "audio": ""
+    },
+    "description": ""
+  },
+  {
+    "id": 1020,
+    "type": "musique",
+    "titre": "Je pense que tu es fou",
+    "artiste": "PHIFI1",
+    "origine": "",
+    "categorie": "",
+    "annee": 2026,
+    "image": "",
+    "banner": "",
+    "driveId": "",
+    "downloads": {
+      "video": "",
+      "audio": ""
+    },
+    "description": ""
+  },
+  {
+    "id": 1021,
+    "type": "musique",
+    "titre": "HORIZON",
+    "artiste": "GIMS",
+    "origine": "",
+    "categorie": "",
+    "annee": 2026,
+    "image": "",
+    "banner": "",
+    "driveId": "",
+    "downloads": {
+      "video": "",
+      "audio": ""
+    },
+    "description": ""
+  },
+  {
+    "id": 1022,
+    "type": "musique",
+    "titre": "Les choses qu'on fait",
+    "artiste": "VITAA",
+    "origine": "",
+    "categorie": "",
+    "annee": 2026,
+    "image": "",
+    "banner": "",
+    "driveId": "",
+    "downloads": {
+      "video": "",
+      "audio": ""
+    },
+    "description": ""
+  },
+  {
+    "id": 1023,
+    "type": "musique",
+    "titre": "Tu mentais",
+    "artiste": "Keen'V ft DJ Kawest",
+    "origine": "",
+    "categorie": "",
+    "annee": 2026,
+    "image": "",
+    "banner": "",
+    "driveId": "",
+    "downloads": {
+      "video": "",
+      "audio": ""
+    },
+    "description": ""
+  },
+  {
+    "id": 1024,
+    "type": "musique",
+    "titre": "Verre de trop",
+    "artiste": "DADJU",
+    "origine": "",
+    "categorie": "",
+    "annee": 2026,
+    "image": "",
+    "banner": "",
+    "driveId": "",
+    "downloads": {
+      "video": "",
+      "audio": ""
+    },
+    "description": ""
+  },
+  {
+    "id": 1025,
+    "type": "musique",
+    "titre": "Tout Casser",
+    "artiste": "PHIFI1",
+    "origine": "",
+    "categorie": "",
+    "annee": 2026,
+    "image": "",
+    "banner": "",
+    "driveId": "",
+    "downloads": {
+      "video": "",
+      "audio": ""
+    },
+    "description": ""
+  },
+  {
+    "id": 1026,
+    "type": "musique",
+    "titre": "La concierge",
+    "artiste": "PHIFI1",
+    "origine": "",
+    "categorie": "",
+    "annee": 2026,
+    "image": "",
+    "banner": "",
+    "driveId": "",
+    "downloads": {
+      "video": "",
+      "audio": ""
+    },
+    "description": ""
+  },
+  {
+    "id": 1027,
+    "type": "musique",
+    "titre": "Daddy",
+    "artiste": "Aya Nakamura ft SDM",
+    "origine": "",
+    "categorie": "",
+    "annee": 2026,
+    "image": "",
+    "banner": "",
+    "driveId": "",
+    "downloads": {
+      "video": "",
+      "audio": ""
+    },
+    "description": ""
   }
 ]
