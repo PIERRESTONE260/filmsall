@@ -29,19 +29,45 @@ img {
 }
 
 /* =========================================
-   2. LOADER
+   2. LOADER (ÉCRAN DE CHARGEMENT)
    ========================================= */
-#loader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg); z-index: 99999; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: opacity 0.5s; }
-.spinner { border: 4px solid #1f2937; border-top: 4px solid var(--primary); border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; margin-bottom: 20px; }
+#loader { 
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+    background: var(--bg); z-index: 99999; 
+    display: flex; flex-direction: column; justify-content: center; align-items: center; 
+    transition: opacity 0.5s; 
+}
+.spinner { 
+    border: 4px solid #1f2937; border-top: 4px solid var(--primary); 
+    border-radius: 50%; width: 50px; height: 50px; 
+    animation: spin 1s linear infinite; margin-bottom: 20px; 
+}
 @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
 /* =========================================
-   3. NAVBAR (HAUT)
+   3. NAVBAR (HAUT) & RECHERCHE
    ========================================= */
-.navbar { display: flex; justify-content: space-between; align-items: center; padding: 12px 4%; position: fixed; width: 100%; top: 0; z-index: 5000; background-color: rgba(11, 15, 25, 0.95); backdrop-filter: blur(10px); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); height: 70px; transition: 0.3s; }
-.logo-img { height: 35px; width: auto; object-fit: contain; transition: transform 0.3s; }
+.navbar { 
+    display: flex; justify-content: space-between; align-items: center; 
+    padding: 12px 4%; position: fixed; width: 100%; top: 0; z-index: 5000; 
+    background-color: rgba(11, 15, 25, 0.95); 
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); 
+    height: 70px;
+    transition: 0.3s; 
+}
+
+.logo-img { 
+    height: 35px; width: auto; object-fit: contain; 
+    transition: transform 0.3s; 
+}
 .logo-img:hover { transform: scale(1.05); }
-.search-box { display: flex; background: var(--surface); border-radius: 25px; padding: 10px 20px; width: 100%; max-width: 350px; border: 1px solid #1f2937; box-shadow: inset 0 2px 5px rgba(0,0,0,0.2);}
+
+.search-box { 
+    display: flex; background: var(--surface); border-radius: 25px; 
+    padding: 10px 20px; width: 100%; max-width: 350px; 
+    border: 1px solid #1f2937; box-shadow: inset 0 2px 5px rgba(0,0,0,0.2);
+}
 .search-box input { background: transparent; border: none; color: white; width: 100%; font-size: 15px; }
 .search-box input::placeholder { color: #5c6b7a; }
 .search-box button { background: transparent; border: none; color: var(--gray); cursor: pointer; font-size: 16px;}
@@ -50,46 +76,84 @@ img {
 .nav-links a { text-decoration: none; color: var(--gray); font-size: 15px; font-weight: 600; transition: 0.3s; white-space: nowrap; }
 .nav-links a:hover, .nav-links a.active { color: white; }
 
-.filter-tabs { display: flex; gap: 25px; overflow-x: auto; padding: 15px 4%; background: var(--bg); position: fixed; top: 70px; left: 0; width: 100%; z-index: 4500; scrollbar-width: none; border-bottom: 1px solid #1f2937; }
+/* =========================================
+   4. FILTRES HORIZONTAUX
+   ========================================= */
+.filter-tabs { 
+    display: flex; gap: 25px; overflow-x: auto; 
+    padding: 15px 4%; background: var(--bg); 
+    position: fixed; top: 70px; left: 0; width: 100%; 
+    z-index: 4500; scrollbar-width: none; 
+    border-bottom: 1px solid #1f2937; 
+}
 .filter-tabs::-webkit-scrollbar { display: none; }
-.filter-tab { background: transparent; color: var(--gray); border: none; font-size: 16px; font-weight: 700; white-space: nowrap; cursor: pointer; padding-bottom: 5px; transition: 0.3s; }
+.filter-tab { 
+    background: transparent; color: var(--gray); border: none; 
+    font-size: 16px; font-weight: 700; white-space: nowrap; 
+    cursor: pointer; padding-bottom: 5px; transition: 0.3s; 
+}
 .filter-tab.active { color: white; border-bottom: 2px solid white; }
 
 /* =========================================
-   4. BARRE DU BAS (MOBILE)
+   5. BARRE DU BAS (MOBILE NAVIGATION)
    ========================================= */
-.bottom-nav { display: none; position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(17, 24, 39, 0.95); backdrop-filter: blur(10px); border-top: 1px solid #1f2937; z-index: 9000; justify-content: space-around; align-items: center; padding: 12px 0; padding-bottom: calc(12px + env(safe-area-inset-bottom)); }
-.bottom-nav-item { position: relative; display: flex; flex-direction: column; align-items: center; color: #5c6b7a; text-decoration: none; font-size: 11px; gap: 5px; transition: 0.3s; font-weight: 600;}
+.bottom-nav { 
+    display: none; position: fixed; bottom: 0; left: 0; width: 100%; 
+    background: rgba(17, 24, 39, 0.95); backdrop-filter: blur(10px);
+    border-top: 1px solid #1f2937; z-index: 9000; 
+    justify-content: space-around; align-items: center; 
+    padding: 12px 0; padding-bottom: calc(12px + env(safe-area-inset-bottom)); 
+}
+.bottom-nav-item { 
+    position: relative; display: flex; flex-direction: column; align-items: center; 
+    color: #5c6b7a; text-decoration: none; font-size: 11px; gap: 5px; 
+    transition: 0.3s; font-weight: 600;
+}
 .bottom-nav-item i { font-size: 22px; transition: transform 0.2s;}
 .bottom-nav-item.active { color: var(--light); }
 .bottom-nav-item.active i { color: var(--primary); transform: scale(1.15); }
 
-.notification-badge { position: absolute; top: -5px; right: 5px; background: var(--primary); color: white; font-size: 10px; font-weight: 800; width: 18px; height: 18px; border-radius: 50%; display: flex; justify-content: center; align-items: center; border: 2px solid #111827; z-index: 10; animation: pulseBadge 2s infinite; }
+.notification-badge { 
+    position: absolute; top: -5px; right: 5px; background: var(--primary); color: white; 
+    font-size: 10px; font-weight: 800; width: 18px; height: 18px; border-radius: 50%; 
+    display: flex; justify-content: center; align-items: center; border: 2px solid #111827; 
+    z-index: 10; animation: pulseBadge 2s infinite; 
+}
 @keyframes pulseBadge { 0% { box-shadow: 0 0 0 0 rgba(229, 9, 20, 0.7); } 70% { box-shadow: 0 0 0 6px rgba(229, 9, 20, 0); } 100% { box-shadow: 0 0 0 0 rgba(229, 9, 20, 0); } }
 
 /* =========================================
-   5. HERO BANNER
+   6. HERO BANNER (CAROUSEL ANIMÉ)
    ========================================= */
-.hero { height: 45vh; margin: 130px 4% 30px 4%; border-radius: 20px; position: relative; display: flex; align-items: flex-end; padding: 40px; background-size: cover; background-position: center top; box-shadow: 0 15px 35px rgba(0,0,0,0.6); overflow: hidden; transition: background-image 1.5s ease-in-out; }
+.hero { 
+    height: 45vh; margin: 130px 4% 30px 4%; border-radius: 20px; 
+    position: relative; display: flex; align-items: flex-end; 
+    padding: 40px; background-size: cover; background-position: center top; 
+    box-shadow: 0 15px 35px rgba(0,0,0,0.6); overflow: hidden; transition: background-image 1.5s ease-in-out; 
+}
 .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to top, rgba(11,15,25,1) 0%, rgba(11,15,25,0.4) 50%, transparent 100%); }
 .hero-content { position: relative; z-index: 2; max-width: 600px; width: 100%; }
 .hero h1 { font-size: 2.8rem; margin: 5px 0 10px 0; text-shadow: 2px 2px 6px black; font-weight: 800; line-height: 1.1;}
-.hero-desc { color: #d1d5db; font-size: 15px; margin-bottom: 20px; line-height: 1.5; text-shadow: 1px 1px 3px black; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; line-clamp: 2; }
+.hero-desc { color: #d1d5db; font-size: 15px; margin-bottom: 20px; line-height: 1.5; text-shadow: 1px 1px 3px black; display: -webkit-box; -webkit-line-clamp: 2; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+
 .btn { padding: 12px 25px; border-radius: 30px; border: none; font-weight: 700; cursor: pointer; margin-right: 15px; font-size: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.3); transition: 0.2s; display: inline-flex; align-items: center; gap: 8px; }
 .btn:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.5); }
 .btn-white { background: white; color: black; }
 
 /* =========================================
-   6. SECTIONS FILMS, AFFICHES
+   7. SECTIONS FILMS, AFFICHES
    ========================================= */
-#main-container, #gallery-container, #music-container, #annonces-container { padding: 0 4%; }
+#main-container, #gallery-container, #music-container, #annonces-container, .dl-page-container { padding: 0 4%; }
 .category-section { margin-bottom: 35px; }
 .category-title { font-size: 1.3rem; margin-bottom: 15px; color: var(--light); font-weight: 700; border-left: 4px solid var(--primary); padding-left: 10px; line-height: 1; }
 
 .movie-row { display: flex; flex-wrap: nowrap; gap: 15px; overflow-x: auto; padding-bottom: 15px; scrollbar-width: none; scroll-behavior: smooth; -webkit-overflow-scrolling: touch; }
 .movie-row::-webkit-scrollbar { display: none; }
 
-.movie-card, .gallery-card { flex: 0 0 auto; min-width: 130px; max-width: 130px; height: 195px; border-radius: 10px; overflow: hidden; cursor: pointer; position: relative; box-shadow: 0 6px 12px rgba(0,0,0,0.4); transition: transform 0.3s, box-shadow 0.3s; background-color: #1f2937; }
+.movie-card, .gallery-card { 
+    flex: 0 0 auto; min-width: 130px; max-width: 130px; height: 195px; 
+    border-radius: 10px; overflow: hidden; cursor: pointer; position: relative; 
+    box-shadow: 0 6px 12px rgba(0,0,0,0.4); transition: transform 0.3s, box-shadow 0.3s; background-color: #1f2937; 
+}
 .movie-card img, .gallery-card img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .movie-card:hover, .gallery-card:hover { transform: scale(1.05); z-index: 5; box-shadow: 0 10px 20px rgba(0,0,0,0.6); }
 .movie-card::after, .gallery-card::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 50%; background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); pointer-events: none; }
@@ -101,7 +165,7 @@ img {
 .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 15px; padding-top: 10px;}
 
 /* =========================================
-   7. MODAL LECTEUR (STICKY)
+   8. MODAL LECTEUR (STICKY PLAYER)
    ========================================= */
 .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg); z-index: 9999; flex-direction: column; overflow-y: auto; scroll-behavior: smooth; }
 .modal-content { background: var(--bg); width: 100%; height: 100%; display: flex; flex-direction: column; position: relative; overflow: hidden; }
@@ -131,27 +195,29 @@ img {
 .btn-action.play { background: var(--primary); color: white; grid-column: span 2; flex-direction: row; justify-content: center; border:none; box-shadow: 0 4px 15px rgba(229,9,20,0.4); font-size: 15px;}
 .btn-action.whatsapp { background: var(--whatsapp); border:none; grid-column: span 2; flex-direction: row; justify-content: center; box-shadow: 0 4px 15px rgba(37,211,102,0.3); font-size: 15px;}
 
-/* SÉRIES */
+/* SÉRIES ET ÉPISODES */
 .season-select { width: 100%; padding: 15px; background: var(--surface); color: white; border: 1px solid #1f2937; border-radius: 10px; margin: 20px 0; font-weight: 700; font-size: 16px; outline: none; appearance: none;}
-.episodes-list { display: flex; flex-direction: row; flex-wrap: nowrap; gap: 15px; overflow-x: auto; padding-bottom: 15px; scrollbar-width: none; scroll-behavior: smooth; -webkit-overflow-scrolling: touch; }
-.episodes-list::-webkit-scrollbar { display: none; }
-.episode-item { flex: 0 0 auto; min-width: 220px; max-width: 220px; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; padding: 15px; background: var(--surface); border-radius: 10px; border: 1px solid #1f2937; cursor: pointer; transition: 0.2s; position: relative; min-height: 90px;}
+.episodes-list { display: flex; flex-direction: column; gap: 10px;}
+.episode-item { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; background: var(--surface); border-radius: 10px; border: 1px solid #1f2937; cursor: pointer; transition: 0.2s; position: relative; min-height: 80px;}
 .episode-item:hover { background: #1f2937; border-color: var(--primary); }
-.episode-title { color: white; font-size: 14px; display: flex; align-items: center; gap: 8px; font-weight: bold; margin-bottom: 5px; width: 80%;}
-.episode-title i { color: var(--primary); font-size: 18px; }
-.episode-meta { color: var(--gray); font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 85%; }
-.episode-download { position: absolute; bottom: 15px; right: 15px; color: var(--whatsapp); font-size: 18px; text-decoration:none; transition: 0.2s;}
-.episode-download:hover { transform: scale(1.2); }
+.episode-title { color: white; font-size: 15px; display: flex; align-items: center; gap: 12px; font-weight: 600;}
+.episode-title i { color: var(--primary); font-size: 20px; }
+.episode-download { color: var(--gray); font-size: 20px; padding: 5px; text-decoration:none; transition: 0.2s;}
+.episode-download:hover { color: white; transform: scale(1.1); }
 .btn-load-more { width: 100%; background: transparent; color: var(--primary); border: 1px solid var(--primary); padding: 12px; border-radius: 8px; margin-top: 10px; font-size: 14px; font-weight: bold; cursor: pointer; transition: 0.3s; display: flex; justify-content: center; align-items: center; gap: 8px; }
 .btn-load-more:hover { background: var(--primary); color: white; }
 
-/* BARRE DE TELECHARGEMENT */
+/* =========================================
+   9. BARRE DE TÉLÉCHARGEMENT
+   ========================================= */
 .dl-progress-container { width: 100%; margin-top: 10px; background: #111827; border-radius: 8px; padding: 10px; border: 1px solid #1f2937; display: none; flex-direction: column; gap: 8px; grid-column: span 2; }
 .dl-info { display: flex; justify-content: space-between; font-size: 12px; color: var(--gray); font-weight: bold; }
 .dl-bar-bg { width: 100%; height: 6px; background: #000; border-radius: 3px; overflow: hidden; }
 .dl-bar-fill { height: 100%; background: var(--whatsapp); width: 0%; transition: width 0.2s ease; box-shadow: 0 0 8px rgba(37, 211, 102, 0.5); }
 
-/* RECOMMANDATIONS */
+/* =========================================
+   10. RECOMMANDATIONS FIXES
+   ========================================= */
 .rec-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 12px; margin-top: 15px; width: 100%;}
 .rec-card { width: 100%; display: flex; flex-direction: column; align-items: flex-start; gap: 6px; background: transparent; cursor: pointer; transition: transform 0.2s ease;}
 .rec-card:hover { transform: scale(1.05); }
@@ -165,7 +231,7 @@ body.cinema-mode .bottom-nav { display: none !important; }
 body.cinema-mode .modal-content { background-color: #000 !important; }
 
 /* =========================================
-   8. NOTIFICATIONS TOAST
+   11. NOTIFICATIONS TOAST
    ========================================= */
 .toast-notification { position: fixed; top: -100px; left: 50%; transform: translateX(-50%); background: rgba(229, 9, 20, 0.95); color: white; padding: 12px 20px; border-radius: 30px; display: flex; align-items: center; gap: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.6); z-index: 100000; transition: top 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55); backdrop-filter: blur(5px); width: 90%; max-width: 400px; cursor: pointer;}
 .toast-notification.show { top: 20px; }
@@ -175,7 +241,7 @@ body.cinema-mode .modal-content { background-color: #000 !important; }
 .toast-title { font-size: 14px; font-weight: bold; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 250px; }
 
 /* =========================================
-   9. BANDEAU INSTALLATION PWA
+   12. BANDEAU INSTALLATION PWA
    ========================================= */
 .install-banner { position: fixed; bottom: 85px; left: 10px; right: 10px; background: rgba(21, 26, 40, 0.95); backdrop-filter: blur(10px); border-radius: 16px; display: flex; justify-content: space-between; align-items: center; padding: 15px; z-index: 9999; box-shadow: 0 10px 25px rgba(0,0,0,0.8); border: 1px solid rgba(255,255,255,0.1); }
 .install-logo { width: 45px; height: 45px; border-radius: 10px; background: black; padding: 6px; filter: invert(1); }
@@ -184,7 +250,29 @@ body.cinema-mode .modal-content { background-color: #000 !important; }
 .btn-close { background: transparent; border: none; color: #999; font-size: 22px; margin-left: 12px; cursor: pointer;}
 
 /* =========================================
-   10. RESPONSIVE MOBILE
+   13. PAGES TÉLÉCHARGEMENT (LOCAL)
+   ========================================= */
+.dl-page-container { padding: 90px 4% 100px 4%; max-width: 800px; margin: 0 auto; }
+.dl-header { text-align: center; margin-bottom: 30px; }
+.dl-header h1 { color: white; font-size: 24px; }
+.dl-tabs { display: flex; background: #0b0f19; border: 1px solid #1f2937; border-radius: 12px; padding: 5px; margin-bottom: 20px; }
+.dl-tab { flex: 1; padding: 12px; background: transparent; border: none; color: var(--gray); font-size: 14px; font-weight: bold; border-radius: 8px; cursor: pointer; transition: 0.3s; }
+.dl-tab.active { background: var(--surface); color: white; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+.dl-tab-content { display: none; }
+.dl-tab-content.active { display: block; animation: fadeIn 0.3s ease; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+.dl-tools { display: flex; gap: 10px; margin-bottom: 20px; }
+.btn-local { flex: 1; background: var(--surface); border: 1px solid #1f2937; color: white; padding: 15px; border-radius: 12px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; transition: 0.3s; }
+.btn-local:hover { background: #1f2937; border-color: var(--primary); }
+.btn-clear { background: rgba(229,9,20,0.1); border: 1px solid rgba(229,9,20,0.3); color: var(--primary); padding: 15px; border-radius: 12px; cursor: pointer; transition: 0.3s; }
+.dl-history-box { background: var(--surface); border-radius: 16px; border: 1px solid #1f2937; padding: 20px; display: flex; flex-direction: column; gap: 12px; }
+.dl-item { display: flex; justify-content: space-between; align-items: center; padding: 15px; background: #0b0f19; border-radius: 10px; border-left: 4px solid var(--whatsapp); }
+.dl-item-info { display: flex; flex-direction: column; width: 75%; }
+.dl-item-title { color: white; font-size: 14px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 4px;}
+.dl-empty { color: var(--gray); font-size: 14px; text-align: center; padding: 30px 0; }
+
+/* =========================================
+   14. RESPONSIVE MOBILE
    ========================================= */
 @media (max-width: 768px) {
     .navbar { padding: 10px 15px; height: 60px; }
@@ -212,11 +300,11 @@ body.cinema-mode .modal-content { background-color: #000 !important; }
 }
 
 /* =========================================
-   11. OPTIMISATION ORDINATEUR (DESKTOP)
+   15. OPTIMISATION ORDINATEUR (DESKTOP)
    ========================================= */
 @media (min-width: 769px) {
     body { display: flex; flex-direction: column; align-items: center; background-color: #05070c; }
-    .navbar, .hero, #main-container, #gallery-container, #music-container, #annonces-container, .profile-header-app, .profile-menu, .filter-tabs { width: 100%; max-width: 1400px; margin-left: auto; margin-right: auto; }
+    .navbar, .hero, #main-container, #gallery-container, #music-container, #annonces-container, .profile-header-app, .profile-menu, .filter-tabs, .dl-page-container { width: 100%; max-width: 1400px; margin-left: auto; margin-right: auto; }
     .navbar { left: 50%; transform: translateX(-50%); border-bottom: 1px solid rgba(255,255,255,0.05); }
     .filter-tabs { left: 50%; transform: translateX(-50%); border-bottom: 1px solid rgba(255,255,255,0.05); }
     ::-webkit-scrollbar { width: 10px; height: 10px; }
@@ -232,7 +320,7 @@ body.cinema-mode .modal-content { background-color: #000 !important; }
 }
 
 /* =========================================
-   12. PAGES PROFIL & DEMANDE
+   16. PAGES PROFIL & DEMANDE
    ========================================= */
 .profile-header-app { text-align: center; padding: 90px 20px 30px 20px; background: linear-gradient(to bottom, #151a28, var(--bg)); }
 .profile-avatar { width: 100px; height: 100px; border-radius: 50%; background: var(--primary); color: white; font-size: 45px; display: flex; justify-content: center; align-items: center; margin: 0 auto 15px auto; border: 4px solid #1f2937; box-shadow: 0 8px 20px rgba(229,9,20,0.3);}

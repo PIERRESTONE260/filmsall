@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Téléchargements - FILMSall</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/png" href="logo/filmsall.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <a href="index.html" class="logo-container" style="text-decoration: none;">
+            <img src="logo/filmsall.png" alt="FILMSall" class="logo-img">
+        </a>
+        <div class="search-box" style="visibility: hidden;">
+            <input type="text">
+        </div>
+    </nav>
+
+    <div class="dl-page-container">
+        <div class="dl-header">
+            <h1>Mes Fichiers</h1>
+        </div>
+
+        <div class="dl-tabs">
+            <button class="dl-tab active" data-target="history">FILMSall</button>
+            <button class="dl-tab" data-target="local">Local</button>
+        </div>
+
+        <div id="tab-history" class="dl-tab-content active">
+            <div class="dl-tools">
+                <button id="btn-clear-history" class="btn-clear" title="Vider l'historique">
+                    <i class="fas fa-trash-alt"></i> Vider l'historique
+                </button>
+            </div>
+            <div id="full-download-history" class="dl-history-box"></div>
+        </div>
+
+        <div id="tab-local" class="dl-tab-content">
+            <div class="dl-tools">
+                <input type="file" id="local-file-input" accept="video/*,audio/*" multiple style="display:none;">
+                <button id="btn-import-local" class="btn-local">
+                    <i class="fas fa-folder-plus"></i> Afficher les fichiers du téléphone
+                </button>
+            </div>
+            <div id="local-files-list" class="episodes-list">
+                <div class="dl-empty">Appuyez sur le bouton pour synchroniser vos médias locaux.</div>
+            </div>
+        </div>
+    </div>
+
+    <div id="video-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal"><i class="fas fa-times"></i></span>
+            <div id="video-wrapper" class="video-container"></div>
+            <div id="modal-cover" class="modal-cover"><button id="center-play-btn" class="center-play"><i class="fas fa-play"></i></button></div>
+            <div id="modal-info" class="modal-info">
+                <div class="modal-title-row"><h2 id="modal-title">Lecteur Local</h2></div>
+                <p id="modal-desc" style="color:#ccc; font-size:13px;"></p>
+            </div>
+        </div>
+    </div>
+
+    <nav class="bottom-nav">
+        <a href="index.html" class="bottom-nav-item"><i class="fas fa-home"></i><span>Accueil</span></a>
+        <a href="images.html" class="bottom-nav-item"><i class="fas fa-th-large"></i><span>Galerie</span></a>
+        <a href="annonces.html" class="bottom-nav-item"><i class="fas fa-bell"></i><span>Annonces</span></a>
+        <a href="musique.html" class="bottom-nav-item"><i class="fas fa-music"></i><span>Musique</span></a>
+        <a href="telechargement.html" class="bottom-nav-item active"><i class="fas fa-download"></i><span>Téléchargements</span></a>
+        <a href="apropos.html" class="bottom-nav-item"><i class="fas fa-user-circle"></i><span>Profil</span></a>
+    </nav>
+
+    <script src="script.js"></script>
+</body>
+</html>

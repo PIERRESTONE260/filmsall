@@ -276,153 +276,153 @@
     "type": "musique",
     "titre": "Appelle-moi",
     "artiste": "PHIFI1",
-    "origine": "",
-    "categorie": "",
+    "origine": "Français",
+    "categorie": "Pop Urbaine / Afro-Pop",
     "annee": 2026,
-    "image": "",
-    "banner": "",
+    "image": "music/dadju/PHIFI1.jpg",
+    "banner": "music/banner/appelle-moibanner.jpg",
     "driveId": "",
     "downloads": {
       "video": "",
       "audio": ""
     },
-    "description": ""
+    "description": "Un titre personnel et entraînant où l'artiste PHIFI1 invite à la communication et à la proximité. Le morceau se distingue par une mélodie efficace et des textes qui parlent directement au cœur, marquant une nouvelle étape dans ton parcours artistique."
   },
   {
     "id": 1018,
     "type": "musique",
     "titre": "Je n'oublie pas",
     "artiste": "VITAA",
-    "origine": "",
-    "categorie": "",
+    "origine": "Franco-italienne",
+    "categorie": "Variété française / Pop mélancolique",
     "annee": 2026,
-    "image": "",
-    "banner": "",
+    "image": "music/dadju/vitaa.jpg",
+    "banner": "music/banner/jen'oubliepasbanner.jpg",
     "driveId": "",
     "downloads": {
       "video": "",
       "audio": ""
     },
-    "description": ""
+    "description": "Un titre empreint de nostalgie où l'artiste revient sur ses 20 ans de carrière, ses rencontres et le lien indéfectible avec son public. C'est une chanson de remerciement, sincère et puissante, qui rappelle l'émotion de ses débuts."
   },
   {
     "id": 1019,
     "type": "musique",
     "titre": "Le feu",
-    "artiste": "Kendji Girac ft @vianneymusique",
-    "origine": "",
-    "categorie": "",
-    "annee": 2026,
-    "image": "",
-    "banner": "",
+    "artiste": "Kendji Girac feat. Vianney",
+    "origine": "Gitane catalaine & Français",
+    "categorie": "Pop française",
+    "annee": 2022,
+    "image": "music/dadju/Kendjivainney.jpg",
+    "banner": "music/banner/lefeu.jpg",
     "driveId": "",
     "downloads": {
       "video": "",
       "audio": ""
     },
-    "description": ""
+    "description": "Écrit et composé par Vianney, ce morceau symbolise la joie de vivre et la transmission. Les paroles célèbrent la force de l'espoir à travers la métaphore des flammes qui réchauffent. Le clip, tourné sur les plages de Normandie (Deauville), met en scène la complicité entre les deux artistes et la jeune comédienne Andréa Cano."
   },
   {
     "id": 1020,
     "type": "musique",
     "titre": "Je pense que tu es fou",
     "artiste": "PHIFI1",
-    "origine": "",
-    "categorie": "",
+    "origine": "Francais",
+    "categorie": "Pop Alternative / Electro-Pop",
     "annee": 2026,
-    "image": "",
-    "banner": "",
+    "image": "music/dadju/PHIFI10.jpg",
+    "banner": "music/banner/Jepensequetuesfoubanner.jpg",
     "driveId": "",
     "downloads": {
       "video": "",
       "audio": ""
     },
-    "description": ""
+    "description": "Un morceau audacieux qui joue sur l'autodérision et la folie douce. Le texte explore l'idée que l'originalité est souvent perçue comme de la folie par ceux qui n'osent pas. Rythmé par des synthétiseurs modernes, c'est un hymne à la liberté d'esprit."
   },
   {
     "id": 1021,
     "type": "musique",
     "titre": "HORIZON",
     "artiste": "GIMS",
-    "origine": "",
-    "categorie": "",
-    "annee": 2026,
-    "image": "",
-    "banner": "",
+    "origine": "Franco-Congolais",
+    "categorie": "Pop / Variété française",
+    "annee": 2024,
+    "image": "music/dadju/gims1.jpg",
+    "banner": "music/banner/horizon.jpg",
     "driveId": "",
     "downloads": {
       "video": "",
       "audio": ""
     },
-    "description": ""
+    "description": " C'est une chanson d'espoir et de résilience. Gims y chante la recherche d'un avenir meilleur et la volonté de ne jamais baisser les bras malgré les épreuves. Le clip, tourné dans des paysages grandioses (souvent désertiques ou montagneux), renforce cette idée de grandeur et de liberté."
   },
   {
     "id": 1022,
     "type": "musique",
     "titre": "Les choses qu'on fait",
     "artiste": "VITAA",
-    "origine": "",
-    "categorie": "",
-    "annee": 2026,
-    "image": "",
-    "banner": "",
+    "origine": "Franco-italienne",
+    "categorie": "Variété Pop / Italo-Disco moderne",
+    "annee": 2024,
+    "image": "music/dadju/vitaa1.jpg",
+    "banner": "music/banner/leschosesquonfaitbanner.jpg",
     "driveId": "",
     "downloads": {
       "video": "",
       "audio": ""
     },
-    "description": ""
+    "description": "Dans ce titre, Vitaa explore avec franchise les compromis, les erreurs et les sacrifices inhérents aux relations humaines. C'est un morceau rythmé mais profond, qui analyse la complexité des choix que l'on fait par amour ou par devoir. La production souligne son attachement à ses origines avec une touche d'élégance méditerranéenne."
   },
   {
     "id": 1023,
     "type": "musique",
     "titre": "Tu mentais",
     "artiste": "Keen'V ft DJ Kawest",
-    "origine": "",
-    "categorie": "",
-    "annee": 2026,
-    "image": "",
-    "banner": "",
+    "origine": "Normandie & guadeloupéenne",
+    "categorie": "Ragga-Dancehall / Pop Urbaine",
+    "annee": 2024,
+    "image": "music/dadju/keen'Vftdjkawest.jpg",
+    "banner": "music/banner/tumentaisbanner.jpg",
     "driveId": "",
     "downloads": {
       "video": "",
       "audio": ""
     },
-    "description": ""
+    "description": "Sur un rythme entraînant et ensoleillé, Keen'V aborde avec humour et légèreté le thème de la trahison amoureuse et des faux-semblants. La touche de DJ Kawest apporte une énergie irrésistible qui invite immédiatement à la danse. C'est le morceau parfait pour oublier les soucis et 'bouger' sur la piste."
   },
   {
     "id": 1024,
     "type": "musique",
     "titre": "Verre de trop",
     "artiste": "DADJU",
-    "origine": "",
-    "categorie": "",
-    "annee": 2026,
-    "image": "",
-    "banner": "",
+    "origine": "Franco-Congolais",
+    "categorie": "R&B / Afro-Chill",
+    "annee": 2024,
+    "image": "music/dadju/Verredetrop.jpg",
+    "banner": "music/banner/Verredetropbanner.jpg",
     "driveId": "",
     "downloads": {
       "video": "",
       "audio": ""
     },
-    "description": ""
+    "description": " Dans ce morceau, Dadju explore la vulnérabilité et les regrets qui remontent à la surface lors d'une fin de soirée solitaire. Le 'verre de trop' devient le déclencheur d'un appel ou d'un message qu'il ne devrait pas envoyer à son ex. C'est un titre introspectif qui met en avant son timbre de voix suave et sa capacité à raconter des histoires de cœur complexes."
   },
   {
     "id": 1025,
     "type": "musique",
     "titre": "Tout Casser",
     "artiste": "PHIFI1",
-    "origine": "",
-    "categorie": "",
+    "origine": "Francais",
+    "categorie": " Hip-Hop / Trap Mélodique",
     "annee": 2026,
-    "image": "",
-    "banner": "",
+    "image": "music/dadju/toutcasser.jpg",
+    "banner": "music/banner/toutcasserbanner.jpg",
     "driveId": "",
     "downloads": {
       "video": "",
       "audio": ""
     },
-    "description": ""
+    "description": " Comme son nom l'indique, ce morceau est un 'banger' destiné à marquer les esprits. PHIFI1 y déploie un flow rapide et déterminé, exprimant une soif de réussite et l'envie de bousculer les codes de l'industrie musicale. C'est le titre parfait pour monter le volume et se motiver."
   },
   {
     "id": 1026,
