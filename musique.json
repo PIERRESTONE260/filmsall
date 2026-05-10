@@ -106,34 +106,34 @@
     "type": "musique",
     "titre": "Putain Con",
     "artiste": "DJ LUDO",
-    "origine": "",
-    "categorie": "",
-    "annee": 2026,
-    "image": "",
-    "banner": "",
+    "origine": "Francais",
+    "categorie": "Électro / Dance / Club",
+    "annee": 2024,
+    "image": "music/dadju/PutainCon.jpg",
+    "banner": "music/banner/PutainConbanner.jpg",
     "driveId": "",
     "downloads": {
       "video": "",
       "audio": ""
     },
-    "description": ""
+    "description": " Un morceau explosif et plein d'énergie qui joue sur l'expression célèbre du Sud pour créer un gimmick entêtant. DJ LUDO propose ici une production percutante avec un drop puissant, idéal pour faire monter l'ambiance sur le dancefloor. C'est un titre festif qui ne se prend pas au sérieux."
   },
    {
     "id": 1008,
     "type": "musique",
     "titre": "Rien Te Devoir",
     "artiste": "Druid's Music",
-    "origine": "",
-    "categorie": "",
-    "annee": 2026,
-    "image": "",
-    "banner": "",
+    "origine": "francophone",
+    "categorie": "Hip-Hop / Rap Conscient",
+    "annee": 2024,
+    "image": "music/dadju/druids.jpg",
+    "banner": "music/banner/rientedevoirbanner.jpg",
     "driveId": "",
     "downloads": {
       "video": "",
       "audio": ""
     },
-    "description": ""
+    "description": "Un titre puissant qui traite de l'indépendance, de la fierté et du refus de se soumettre aux attentes des autres ou du système. Druid's Music livre ici un morceau introspectif où le message est clair : réussir par soi-même sans avoir de comptes à rendre à personne. L'ambiance est à la fois sombre et déterminée."
   },
    {
     "id": 1009,
@@ -429,33 +429,33 @@
     "type": "musique",
     "titre": "La concierge",
     "artiste": "PHIFI1",
-    "origine": "",
-    "categorie": "",
+    "origine": "Francais",
+    "categorie": "Afro-Pop Narrative",
     "annee": 2026,
-    "image": "",
-    "banner": "",
+    "image": "music/dadju/Laconcierge.jpg",
+    "banner": "music/banner/Laconciergebanner.jpg",
     "driveId": "",
     "downloads": {
       "video": "",
       "audio": ""
     },
-    "description": ""
+    "description": "Un titre piquant et entraînant où PHIFI1 dépeint avec ironie le personnage de la 'concierge' du quartier, celle qui sait tout sur tout le monde avant même que les intéressés ne soient au courant. Le refrain est entêtant et joue sur les potins et les rumeurs avec beaucoup de second degré."
   },
   {
     "id": 1027,
     "type": "musique",
     "titre": "Daddy",
     "artiste": "Aya Nakamura ft SDM",
-    "origine": "",
-    "categorie": "",
-    "annee": 2026,
-    "image": "",
-    "banner": "",
+    "origine": "francophone & kino-congolaise",
+    "categorie": "Zouk / Pop Urbaine",
+    "annee": 2023,
+    "image": "music/dadju/daddy.jpg",
+    "banner": "music/banner/daddybanner.jpg",
     "driveId": "",
     "downloads": {
       "video": "",
       "audio": ""
     },
-    "description": ""
+    "description": " Ce duo réunit la reine de la pop francophone et le rappeur de Clamart, SDM. La chanson explore une dynamique de séduction et de 'charisme' entre deux fortes personnalités. Le contraste entre la voix suave d'Aya et le timbre plus grave et brut de SDM crée une alchimie parfaite qui a fait de ce titre l'un des favoris des clubs et des radios."
   }
 ]
