@@ -28,6 +28,15 @@ document.addEventListener("DOMContentLoaded", () => {
         .then(results => {
             allData = results.flat();
             
+            const pendingDl = localStorage.getItem('pending_download');
+            if (window.location.pathname.includes('telechargement.html') && pendingDl) {
+                const dlInfo = JSON.parse(pendingDl);
+                localStorage.removeItem('pending_download');
+                const localTab = document.querySelector('[data-target="local"]');
+                if(localTab) localTab.click();
+                startActiveDownload(dlInfo.url, dlInfo.name);
+            }
+
             if (window.isGalleryPage) displayGrid(allData, 'gallery-container');
             else if (window.isAnnoncesPage) displayGrid(allData.filter(i => i.bientot === true || i.annee >= 2026), 'annonces-container');
             else if (window.isMusicPage) displayGrid(allData.filter(i => i.type === 'musique'), 'music-container');
@@ -63,7 +72,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const urlParams = new URLSearchParams(window.location.search);
             const movieId = urlParams.get('id');
-            if (movieId) {
+            if (movieId && !pendingDl) {
                 const filmATrouver = allData.find(m => m.id == movieId);
                 if (filmATrouver) {
                     openModal(filmATrouver);
@@ -100,7 +109,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 activeMain.innerHTML = `<h3 class="category-title" style="margin-left:4%;">Résultats</h3><div class="gallery-grid" id="search-results"></div>`;
                 const results = allData.filter(m => m.titre.toLowerCase().includes(val));
                 const row = document.getElementById('search-results');
-                if(results.length === 0) row.innerHTML = "<p style='color:gray; padding-left:4%;'>Aucun résultat.</p>";
+                if(results.length === 0) row.innerHTML = "<p style='color:gray; padding-left:4%;'>Aucun résultat trouvé.</p>";
                 results.forEach(item => row.appendChild(createCard(item, true)));
             }
         });
@@ -192,7 +201,74 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    const localFileInput = document.getElementById('local-file-input');
+    function startActiveDownload(fileUrl, fileName) {
+        const localList = document.getElementById('local-files-list');
+        if(!localList) return;
+
+        const emptyMsg = localList.querySelector('.dl-empty');
+        if(emptyMsg) emptyMsg.remove();
+
+        const progressDiv = document.createElement('div');
+        progressDiv.className = 'dl-progress-container';
+        progressDiv.style.display = 'flex';
+        progressDiv.innerHTML = `
+            <div class="dl-info">
+                <span style="color:white; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:60%;">${fileName}</span>
+                <span class="dl-percent" style="color:white; font-weight:bold;">0%</span>
+            </div>
+            <div class="dl-bar-bg">
+                <div class="dl-fill"></div>
+            </div>
+        `;
+        localList.insertBefore(progressDiv, localList.firstChild);
+
+        const percentTxt = progressDiv.querySelector('.dl-percent');
+        const fillBar = progressDiv.querySelector('.dl-fill');
+
+        const xhr = new XMLHttpRequest();
+        xhr.open('GET', fileUrl, true);
+        xhr.responseType = 'blob'; 
+
+        xhr.onprogress = (event) => {
+            if (event.lengthComputable) {
+                const percentComplete = Math.round((event.loaded / event.total) * 100);
+                percentTxt.innerText = percentComplete + '%';
+                fillBar.style.width = percentComplete + '%';
+            } else {
+                percentTxt.innerText = 'En cours...';
+                fillBar.style.width = '50%';
+            }
+        };
+
+        xhr.onload = () => {
+            if (xhr.status === 200) {
+                percentTxt.innerText = 'Terminé';
+                fillBar.style.width = '100%';
+                saveDownloadHistory(fileName);
+                
+                const blob = xhr.response;
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.style.display = 'none';
+                a.href = url;
+                a.download = fileName;
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(url);
+                setTimeout(() => progressDiv.remove(), 3000);
+            } else {
+                percentTxt.innerText = 'Erreur';
+                fillBar.style.background = 'red';
+                setTimeout(() => { window.open(fileUrl, '_blank'); progressDiv.remove(); }, 2000);
+            }
+        };
+        xhr.onerror = () => {
+            percentTxt.innerText = 'Redirection...';
+            setTimeout(() => { window.open(fileUrl, '_blank'); progressDiv.remove(); }, 1000);
+        };
+        xhr.send();
+    }
+
     const btnImportLocal = document.getElementById('btn-import-local');
     const localFilesList = document.getElementById('local-files-list');
 
@@ -211,7 +287,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 const icon = isAudio ? 'fa-music' : 'fa-video';
                 
                 item.innerHTML = `
-                    <div class="episode-title"><i class="fas ${icon}"></i> ${file.name}</div>
+                    <div class="episode-title"><i class="fas ${icon}"></i> <span style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:180px;">${file.name}</span></div>
                     <i class="fas fa-play-circle" style="color:var(--primary); font-size:24px;"></i>
                 `;
                 
@@ -241,7 +317,7 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         };
     }
-    
+
     function openModal(data) {
         if(!modal) return;
         modal.style.display = 'flex';
@@ -266,66 +342,10 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         if(actionGrid) actionGrid.innerHTML = "";
 
-        const startDownload = (fileUrl, fileName) => {
+        const handleDownloadRedirection = (fileUrl, fileName) => {
             if(!fileUrl) { alert("Lien indisponible !"); return; }
-            
-            const progressDiv = document.createElement('div');
-            progressDiv.className = 'dl-progress-container';
-            progressDiv.innerHTML = `
-                <div class="dl-info">
-                    <span style="color:white; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:60%;">${fileName}</span>
-                    <span class="dl-percent" style="color:white; font-weight:bold;">0%</span>
-                </div>
-                <div class="dl-bar-bg"><div class="dl-fill" style="height:100%; background:var(--whatsapp); width:0%; transition:width 0.2s;"></div></div>
-            `;
-            actionGrid.appendChild(progressDiv);
-            progressDiv.style.display = 'flex';
-            
-            const percentTxt = progressDiv.querySelector('.dl-percent');
-            const fillBar = progressDiv.querySelector('.dl-fill');
-
-            const xhr = new XMLHttpRequest();
-            xhr.open('GET', fileUrl, true);
-            xhr.responseType = 'blob'; 
-
-            xhr.onprogress = (event) => {
-                if (event.lengthComputable) {
-                    const percentComplete = Math.round((event.loaded / event.total) * 100);
-                    percentTxt.innerText = percentComplete + '%';
-                    fillBar.style.width = percentComplete + '%';
-                } else {
-                    percentTxt.innerText = 'En cours...';
-                    fillBar.style.width = '50%';
-                }
-            };
-
-            xhr.onload = () => {
-                if (xhr.status === 200) {
-                    percentTxt.innerText = 'Terminé';
-                    fillBar.style.width = '100%';
-                    saveDownloadHistory(fileName);
-                    
-                    const blob = xhr.response;
-                    const url = window.URL.createObjectURL(blob);
-                    const a = document.createElement('a');
-                    a.style.display = 'none';
-                    a.href = url;
-                    a.download = fileName;
-                    document.body.appendChild(a);
-                    a.click();
-                    window.URL.revokeObjectURL(url);
-                    setTimeout(() => progressDiv.remove(), 3000);
-                } else {
-                    percentTxt.innerText = 'Erreur';
-                    fillBar.style.background = 'red';
-                    setTimeout(() => { window.open(fileUrl, '_blank'); progressDiv.remove(); }, 2000);
-                }
-            };
-            xhr.onerror = () => {
-                percentTxt.innerText = 'Redirection...';
-                setTimeout(() => { window.open(fileUrl, '_blank'); progressDiv.remove(); }, 1000);
-            };
-            xhr.send();
+            localStorage.setItem('pending_download', JSON.stringify({ url: fileUrl, name: fileName }));
+            window.location.href = 'telechargement.html';
         };
 
         const playMedia = () => {
@@ -358,50 +378,47 @@ document.addEventListener("DOMContentLoaded", () => {
             if (data.saisons) {
                 data.saisons.forEach((s, idx) => seasonSelect.innerHTML += `<option value="${idx}">${s.nom}</option>`);
                 
-                let displayedEpisodes = 0;
-                const EPISODES_PER_PAGE = 3; 
-
-                const renderEp = (idx, isAppending = false) => {
+                const renderEp = (idx, showAll = false) => {
+                    episodesList.innerHTML = "";
                     const currentSeason = data.saisons[idx];
                     
-                    if (!isAppending) {
-                        episodesList.innerHTML = "";
-                        displayedEpisodes = 0;
-                    }
-
                     const oldBtn = document.getElementById('btn-load-more');
                     if (oldBtn) oldBtn.remove();
 
-                    const episodesToRender = currentSeason.episodes.slice(displayedEpisodes, displayedEpisodes + EPISODES_PER_PAGE);
+                    const epsToShow = showAll ? currentSeason.episodes : currentSeason.episodes.slice(0, 3);
 
-                    episodesToRender.forEach((ep, index) => {
+                    epsToShow.forEach((ep, i) => {
+                        const sNum = (idx + 1).toString().padStart(2, '0');
+                        const eNum = (i + 1).toString().padStart(2, '0');
+                        
                         const item = document.createElement('div');
                         item.className = 'episode-item';
                         item.innerHTML = `
-                            <div class="episode-title"><i class="fas fa-play-circle"></i> ${ep.titre}</div>
+                            <div class="episode-title"><i class="fas fa-play-circle"></i> S${sNum} EP${eNum}</div>
+                            <div class="episode-meta">${ep.titre}</div>
                             <a href="#" class="episode-download" onclick="event.stopPropagation()"><i class="fas fa-download"></i></a>
                         `;
                         item.onclick = () => { if(ep.driveId && ep.driveId !== "") { data.driveId = ep.driveId; playMedia(); } else alert("Épisode bientôt disponible !"); };
                         
-                        const dlBtn = item.querySelector('.episode-download');
-                        dlBtn.onclick = (e) => {
+                        const dlLink = item.querySelector('.episode-download');
+                        dlLink.onclick = (e) => {
                             e.preventDefault(); e.stopPropagation();
-                            if(ep.driveId) startDownload(`https://drive.usercontent.google.com/download?id=${ep.driveId}&export=download&confirm=t`, `${data.titre}_${ep.titre}.mp4`);
+                            if(ep.driveId) {
+                                const dlUrl = `https://drive.usercontent.google.com/download?id=${ep.driveId}&export=download&confirm=t`;
+                                handleDownloadRedirection(dlUrl, `${data.titre}_S${sNum}E${eNum}.mp4`);
+                            }
                             else alert("Bientôt !");
                         }
                         
                         episodesList.appendChild(item);
                     });
 
-                    displayedEpisodes += episodesToRender.length;
-
-                    if (displayedEpisodes < currentSeason.episodes.length) {
-                        const btn = document.createElement('button');
-                        btn.id = 'btn-load-more';
-                        btn.className = 'btn-load-more';
-                        btn.innerHTML = 'Épisodes suivants <i class="fas fa-chevron-down"></i>';
-                        btn.onclick = () => renderEp(idx, true);
-                        episodesList.appendChild(btn);
+                    if (!showAll && currentSeason.episodes.length > 3) {
+                        const moreBtn = document.createElement('div');
+                        moreBtn.className = 'episode-more';
+                        moreBtn.innerHTML = 'Tous les épisodes';
+                        moreBtn.onclick = () => renderEp(idx, true);
+                        episodesList.appendChild(moreBtn);
                     }
                 };
 
@@ -426,14 +443,14 @@ document.addEventListener("DOMContentLoaded", () => {
                     const btnVid = document.createElement('button');
                     btnVid.className = 'btn-action';
                     btnVid.innerHTML = '<i class="fas fa-video"></i> MP4';
-                    btnVid.onclick = () => startDownload(data.downloads.video, `${data.titre}.mp4`);
+                    btnVid.onclick = () => handleDownloadRedirection(data.downloads.video, `${data.titre}.mp4`);
                     actionGrid.appendChild(btnVid);
                 }
                 if(data.downloads.audio) {
                     const btnAud = document.createElement('button');
                     btnAud.className = 'btn-action';
                     btnAud.innerHTML = '<i class="fas fa-music"></i> MP3';
-                    btnAud.onclick = () => startDownload(data.downloads.audio, `${data.titre}.mp3`);
+                    btnAud.onclick = () => handleDownloadRedirection(data.downloads.audio, `${data.titre}.mp3`);
                     actionGrid.appendChild(btnAud);
                 }
             } else {
@@ -441,7 +458,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 dlBtn.className = 'btn-action';
                 if(data.driveId) {
                     const driveDlLink = `https://drive.usercontent.google.com/download?id=${data.driveId}&export=download&confirm=t`;
-                    dlBtn.onclick = () => startDownload(driveDlLink, `${data.titre}.mp4`);
+                    dlBtn.onclick = () => handleDownloadRedirection(driveDlLink, `${data.titre}.mp4`);
                     dlBtn.innerHTML = '<i class="fas fa-download"></i> TÉLÉCHARGER';
                 } else { 
                     dlBtn.onclick = (e)=>{e.preventDefault(); alert("Bientôt !");} 
@@ -474,7 +491,6 @@ document.addEventListener("DOMContentLoaded", () => {
         suggestions.forEach(rec => {
             const card = document.createElement('div');
             card.className = 'rec-card';
-            
             let langue = rec.langue || "V.F.";
             let note = rec.note ? rec.note : (Math.random() * (9.5 - 6.0) + 6.0).toFixed(1);
 
