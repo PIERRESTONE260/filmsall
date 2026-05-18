@@ -196,9 +196,7 @@ document.addEventListener("DOMContentLoaded", () => {
         let dlHistory = JSON.parse(localStorage.getItem('filmsall_downloads')) || [];
         dlHistory.unshift({ title: fileName, date: new Date().toLocaleDateString() });
         localStorage.setItem('filmsall_downloads', JSON.stringify(dlHistory));
-        if (typeof renderFullHistory === "function") {
-            renderFullHistory();
-        }
+        if (typeof renderFullHistory === "function") renderFullHistory();
     }
 
     function startActiveDownload(fileUrl, fileName) {
@@ -216,9 +214,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 <span style="color:white; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:60%;">${fileName}</span>
                 <span class="dl-percent" style="color:white; font-weight:bold;">0%</span>
             </div>
-            <div class="dl-bar-bg">
-                <div class="dl-fill"></div>
-            </div>
+            <div class="dl-bar-bg"><div class="dl-fill" style="height:100%; background:var(--whatsapp); width:0%; transition:width 0.2s;"></div></div>
         `;
         localList.insertBefore(progressDiv, localList.firstChild);
 
@@ -272,12 +268,70 @@ document.addEventListener("DOMContentLoaded", () => {
     const btnImportLocal = document.getElementById('btn-import-local');
     const localFilesList = document.getElementById('local-files-list');
 
-    if (btnImportLocal && localFileInput) {
-        btnImportLocal.onclick = () => localFileInput.click();
+    if (btnImportLocal) {
+        btnImportLocal.onclick = async () => {
+            try {
+                const directoryHandle = await window.showDirectoryPicker();
+                if(localFilesList) localFilesList.innerHTML = ""; 
+                
+                let foundFiles = false;
+                for await (const entry of directoryHandle.values()) {
+                    if (entry.kind === 'file') {
+                        const file = await entry.getFile();
+                        if (file.type.startsWith('video/') || file.type.startsWith('audio/') || file.name.endsWith('.mp4') || file.name.endsWith('.mp3')) {
+                            foundFiles = true;
+                            const item = document.createElement('div');
+                            item.className = 'episode-item';
+                            const isAudio = file.type.startsWith('audio') || file.name.endsWith('.mp3');
+                            const icon = isAudio ? 'fa-music' : 'fa-video';
+                            
+                            item.innerHTML = `
+                                <div class="episode-title"><i class="fas ${icon}"></i> <span style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:180px;">${file.name}</span></div>
+                                <i class="fas fa-play-circle" style="color:var(--primary); font-size:24px;"></i>
+                            `;
+                            
+                            item.onclick = () => {
+                                const fileURL = URL.createObjectURL(file);
+                                if(modal) {
+                                    modal.style.display = 'flex';
+                                    document.getElementById('modal-title').innerText = file.name;
+                                    const modalCover = document.getElementById('modal-cover');
+                                    const videoWrapper = document.getElementById('video-wrapper');
+                                    const modalInfo = document.getElementById('modal-info');
+                                    
+                                    if(modalCover) modalCover.style.display = 'none';
+                                    if(modalInfo) modalInfo.style.display = 'block';
+                                    videoWrapper.style.display = 'block';
+                                    document.body.classList.add('cinema-mode');
+                                    
+                                    let mediaTag = isAudio ? 'audio' : 'video';
+                                    videoWrapper.innerHTML = `
+                                        <${mediaTag} controls autoplay style="width:100%; height:100%; object-fit:contain; background:black;">
+                                            <source src="${fileURL}" type="${file.type}">
+                                        </${mediaTag}>
+                                    `;
+                                }
+                            };
+                            if(localFilesList) localFilesList.appendChild(item);
+                        }
+                    }
+                }
+                if(!foundFiles) {
+                    if(localFilesList) localFilesList.innerHTML = `<div class="dl-empty">Aucun fichier audio/vidéo trouvé dans ce dossier.</div>`;
+                }
+            } catch (error) {
+                console.log('API non supportée ou refusée, fallback file input');
+                const fallbackInput = document.getElementById('local-file-input');
+                if(fallbackInput) fallbackInput.click();
+            }
+        };
+    }
+
+    const localFileInput = document.getElementById('local-file-input');
+    if (localFileInput) {
         localFileInput.onchange = (e) => {
             const files = Array.from(e.target.files);
             if (files.length === 0) return;
-            
             if(localFilesList) localFilesList.innerHTML = ""; 
             
             files.forEach(file => {
@@ -354,10 +408,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if(modalCover) modalCover.style.display = 'none';
             if(videoWrapper) {
                 videoWrapper.style.display = 'block';
-                videoWrapper.innerHTML = `
-                    <div class="video-overlay-fix"></div> 
-                    <iframe src="https://drive.google.com/file/d/${data.driveId}/preview" allow="autoplay; fullscreen" style="width:100%; height:100%; border:none;"></iframe>
-                `;
+                videoWrapper.innerHTML = `<div class="video-overlay-fix"></div><iframe src="https://drive.google.com/file/d/${data.driveId}/preview" allow="autoplay; fullscreen" style="width:100%; height:100%; border:none;"></iframe>`;
             }
         };
 
@@ -378,18 +429,25 @@ document.addEventListener("DOMContentLoaded", () => {
             if (data.saisons) {
                 data.saisons.forEach((s, idx) => seasonSelect.innerHTML += `<option value="${idx}">${s.nom}</option>`);
                 
-                const renderEp = (idx, showAll = false) => {
-                    episodesList.innerHTML = "";
+                let displayedEpisodes = 0;
+                const EPISODES_PER_PAGE = 3; 
+
+                const renderEp = (idx, isAppending = false) => {
                     const currentSeason = data.saisons[idx];
                     
+                    if (!isAppending) {
+                        episodesList.innerHTML = "";
+                        displayedEpisodes = 0;
+                    }
+
                     const oldBtn = document.getElementById('btn-load-more');
                     if (oldBtn) oldBtn.remove();
 
-                    const epsToShow = showAll ? currentSeason.episodes : currentSeason.episodes.slice(0, 3);
+                    const episodesToRender = currentSeason.episodes.slice(displayedEpisodes, displayedEpisodes + EPISODES_PER_PAGE);
 
-                    epsToShow.forEach((ep, i) => {
+                    episodesToRender.forEach((ep, index) => {
                         const sNum = (idx + 1).toString().padStart(2, '0');
-                        const eNum = (i + 1).toString().padStart(2, '0');
+                        const eNum = (displayedEpisodes + index + 1).toString().padStart(2, '0');
                         
                         const item = document.createElement('div');
                         item.className = 'episode-item';
@@ -413,12 +471,15 @@ document.addEventListener("DOMContentLoaded", () => {
                         episodesList.appendChild(item);
                     });
 
-                    if (!showAll && currentSeason.episodes.length > 3) {
-                        const moreBtn = document.createElement('div');
-                        moreBtn.className = 'episode-more';
-                        moreBtn.innerHTML = 'Tous les épisodes';
-                        moreBtn.onclick = () => renderEp(idx, true);
-                        episodesList.appendChild(moreBtn);
+                    displayedEpisodes += episodesToRender.length;
+
+                    if (displayedEpisodes < currentSeason.episodes.length) {
+                        const btn = document.createElement('button');
+                        btn.id = 'btn-load-more';
+                        btn.className = 'btn-load-more';
+                        btn.innerHTML = 'Épisodes suivants <i class="fas fa-chevron-down"></i>';
+                        btn.onclick = () => renderEp(idx, true);
+                        episodesList.appendChild(btn);
                     }
                 };
 

@@ -138,70 +138,70 @@
    {
     "id": 1009,
     "type": "musique",
-    "titre": "L'ombre du reflet",
-    "artiste": "Les larmes de noel...",
-    "origine": "",
-    "categorie": "",
-    "annee": 2026,
-    "image": "",
-    "banner": "",
+    "titre": "Lionne",
+    "artiste": "Dadju",
+    "origine": "francophone",
+    "categorie": "R&B / Pop Urbaine / afro-pop",
+    "annee": 2017,
+    "image": "music/dadju/lionne.jpg",
+    "banner": "music/banner/lionnebanner.jpg",
     "driveId": "",
     "downloads": {
       "video": "",
       "audio": ""
     },
-    "description": ""
+    "description": "C'est un véritable hymne féministe et un hommage vibrant à la force des femmes, en particulier aux mères célibataires et indépendantes qui se battent au quotidien pour leurs enfants. Dadju y compare ces femmes courageuses à des 'lionnes', saluant leur dignité et leur résilience sur une mélodie à la fois douce et entraînante."
   },
    {
     "id": 1010,
     "type": "musique",
     "titre": "La paradoxe des pizzas",
     "artiste": "DJ LUDO",
-    "origine": "",
-    "categorie": "",
-    "annee": 2026,
-    "image": "",
-    "banner": "",
+    "origine": "francophone",
+    "categorie": "Tech-House / Électro-Comedy",
+    "annee": 2024,
+    "image": "music/dadju/pizzas.jpg",
+    "banner": "music/banner/pizzas.jpg",
     "driveId": "",
     "downloads": {
       "video": "",
       "audio": ""
     },
-    "description": ""
+    "description": "Un titre totalement décalé où DJ LUDO pose une question existentielle sur un rythme électronique ultra-efficace. Le morceau joue sur le fameux paradoxe de la pizza : 'Pourquoi la boîte est carrée, la pizza est ronde, et les parts sont des triangles ?'. Avec ses basses lourdes et son gimmick entêtant, c'est le genre de morceau insolite qui cartonne sur TikTok et embrase les pistes de danse de manière inattendue."
   },
    {
     "id": 1011,
     "type": "musique",
     "titre": "Une chanson peut sauver le monde",
     "artiste": "Noel Lagoia",
-    "origine": "",
-    "categorie": "",
-    "annee": 2026,
-    "image": "",
-    "banner": "",
+    "origine": "francophone",
+    "categorie": "Variété Pop / Chanson à texte",
+    "annee": 2025,
+    "image": "music/dadju/noel.jpg",
+    "banner": "music/banner/noelbanner.jpg",
     "driveId": "",
     "downloads": {
       "video": "",
       "audio": ""
     },
-    "description": ""
+    "description": "Un morceau profondément poétique et touchant. Noel Lagoia explore ici le pouvoir invisible mais immense de la musique sur les âmes. À travers ses paroles, il rappelle qu'une simple mélodie partagée peut panser les blessures, rapprocher les peuples et, le temps d'un refrain, suspendre les conflits de notre époque. Une œuvre pleine de douceur et d'espoir."
   },
    {
     "id": 1012,
     "type": "musique",
-    "titre": "Mots de trop",
-    "artiste": "Gwave",
-    "origine": "",
-    "categorie": "",
-    "annee": 2026,
-    "image": "",
-    "banner": "",
+    "titre": "Mon beau-frère",
+    "artiste": "Black M",
+    "origine": "francophone",
+    "categorie": "Pop urbaine / Comédie pop",
+    "annee": 2019,
+    "image": "music/dadju/monbeaufrere.jpg",
+    "banner": "music/banner/monbeaufrerebanner.jpg",
     "driveId": "",
     "downloads": {
       "video": "",
       "audio": ""
     },
-    "description": ""
+    "description": "Une chanson humoristique et rythmée racontant les épreuves comiques qu'un nouveau venu doit endurer pour se faire accepter par la famille de sa compagne. Le clip officiel met en scène l'acteur Issa Doumbia dans le rôle du beau-frère malmené. C'est un morceau léger et divertissant qui a su trouver son public grâce à son ton décalé et ses paroles pleines de second degré."
   },
    {
     "id": 1013,
