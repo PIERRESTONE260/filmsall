@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Administration - FILMSall</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="logo/filmsall.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .admin-container { max-width: 800px; margin: 90px auto 50px auto; padding: 20px; }
+        .admin-header { text-align: center; margin-bottom: 30px; }
+        .admin-header h1 { color: white; font-size: 24px; font-weight: 800; display: flex; align-items: center; justify-content: center; gap: 10px;}
+        .admin-header i { color: var(--primary); }
+        
+        /* Protection par mot de passe */
+        #login-section { background: var(--surface); padding: 40px; border-radius: 16px; border: 1px solid #1f2937; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        #login-section input { width: 100%; max-width: 300px; padding: 15px; margin: 20px 0; background: #0b0f19; border: 1px solid #1f2937; color: white; border-radius: 10px; text-align: center; letter-spacing: 5px; font-size: 18px;}
+        
+        /* Formulaire */
+        #admin-form-section { display: none; background: var(--surface); padding: 30px; border-radius: 16px; border: 1px solid #1f2937; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        @media (max-width: 768px) { .form-grid { grid-template-columns: 1fr; } }
+        
+        .input-group { display: flex; flex-direction: column; gap: 5px; }
+        .input-group label { color: var(--gray); font-size: 13px; font-weight: bold; }
+        .input-group input, .input-group select, .input-group textarea { padding: 12px; background: #0b0f19; border: 1px solid #1f2937; color: white; border-radius: 8px; transition: 0.3s; }
+        .input-group input:focus, .input-group select:focus, .input-group textarea:focus { border-color: var(--primary); }
+        
+        .full-width { grid-column: 1 / -1; }
+        
+        .btn-generate { width: 100%; background: var(--primary); color: white; border: none; padding: 15px; border-radius: 8px; font-weight: bold; font-size: 16px; cursor: pointer; margin-top: 20px; transition: 0.3s; display: flex; justify-content: center; align-items: center; gap: 10px;}
+        .btn-generate:hover { background: #ff0a16; transform: translateY(-2px); }
+
+        /* Résultat JSON */
+        #result-section { display: none; margin-top: 30px; background: #0b0f19; border: 1px solid #1f2937; border-radius: 12px; padding: 20px; position: relative;}
+        #json-output { width: 100%; height: 250px; background: transparent; color: #25D366; border: none; font-family: monospace; font-size: 13px; resize: none; }
+        .btn-copy { position: absolute; top: 10px; right: 10px; background: var(--surface); border: 1px solid var(--gray); color: white; padding: 5px 15px; border-radius: 5px; cursor: pointer; font-size: 12px; transition: 0.2s;}
+        .btn-copy:hover { background: white; color: black; }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <a href="apropos.html" class="logo-container" style="text-decoration: none;">
+            <img src="logo/filmsall.png" alt="FILMSall" class="logo-img">
+        </a>
+        <ul class="nav-links" style="display:flex;">
+            <li><a href="apropos.html"><i class="fas fa-arrow-left"></i> Quitter</a></li>
+        </ul>
+    </nav>
+
+    <div class="admin-container">
+        <div class="admin-header">
+            <h1><i class="fas fa-user-shield"></i> Espace Créateur</h1>
+            <p>Générateur de base de données (JSON)</p>
+        </div>
+
+        <!-- 1. SÉCURITÉ (Mot de passe) -->
+        <div id="login-section">
+            <i class="fas fa-lock" style="font-size: 40px; color: var(--gray); margin-bottom: 15px;"></i>
+            <h3 style="color: white;">Accès Restreint</h3>
+            <input type="password" id="admin-pass" placeholder="••••">
+            <button class="btn btn-generate" onclick="checkPass()" style="max-width: 300px; margin: auto;">Déverrouiller</button>
+        </div>
+
+        <!-- 2. LE FORMULAIRE -->
+        <div id="admin-form-section">
+            <form id="creator-form">
+                <div class="form-grid">
+                    <div class="input-group">
+                        <label>Base de données cible</label>
+                        <select id="target-db" onchange="toggleFields()">
+                            <option value="film">Film / Animé / Manga (films.json)</option>
+                            <option value="serie">Série (films.json)</option>
+                            <option value="musique">Musique (musique.json)</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label>ID (Chiffre unique)</label>
+                        <input type="number" id="f-id" placeholder="Ex: 45" required>
+                    </div>
+
+                    <div class="input-group" id="wrap-type">
+                        <label>Type exact</label>
+                        <select id="f-type">
+                            <option value="film">film</option>
+                            <option value="anime">anime</option>
+                            <option value="manga">manga</option>
+                            <option value="serie">serie</option>
+                            <option value="musique">musique</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label>Titre</label>
+                        <input type="text" id="f-titre" placeholder="Ex: Spider-Man" required>
+                    </div>
+
+                    <div class="input-group" id="wrap-note">
+                        <label>Note (ex: 8.5)</label>
+                        <input type="text" id="f-note" placeholder="8.5">
+                    </div>
+                    <div class="input-group" id="wrap-langue">
+                        <label>Langue</label>
+                        <input type="text" id="f-langue" placeholder="V.F." value="V.F.">
+                    </div>
+
+                    <div class="input-group">
+                        <label>Origine (Pays)</label>
+                        <input type="text" id="f-origine" placeholder="Ex: USA, Nigeria...">
+                    </div>
+                    <div class="input-group">
+                        <label>Catégorie</label>
+                        <input type="text" id="f-cat" placeholder="Ex: Action, Romance...">
+                    </div>
+
+                    <div class="input-group">
+                        <label>Année</label>
+                        <input type="number" id="f-annee" placeholder="Ex: 2024">
+                    </div>
+                    <div class="input-group" id="wrap-artiste" style="display:none;">
+                        <label>Artiste (Musique uniquement)</label>
+                        <input type="text" id="f-artiste" placeholder="Ex: Fally Ipupa">
+                    </div>
+
+                    <div class="input-group full-width">
+                        <label>Chemin de l'image (Affiche)</label>
+                        <input type="text" id="f-image" placeholder="films/actions/nom.jpg" required>
+                    </div>
+                    <div class="input-group full-width">
+                        <label>Chemin de la bannière (Arrière-plan)</label>
+                        <input type="text" id="f-banner" placeholder="films/banner/nom.jpg">
+                    </div>
+
+                    <div class="input-group full-width" id="wrap-drive">
+                        <label>ID Google Drive (Le code bizarre du lien)</label>
+                        <input type="text" id="f-drive" placeholder="Ex: 1mnnc6duIpjlp-AA8un...">
+                    </div>
+
+                    <!-- Options pour Musique -->
+                    <div class="input-group full-width" id="wrap-music-dl" style="display:none; border:1px dashed #333; padding:10px; border-radius:8px;">
+                        <label style="color:var(--primary);">Téléchargements Musique (ID Drive)</label>
+                        <input type="text" id="f-dl-video" placeholder="ID Drive pour le MP4 (Vidéo)" style="margin-bottom:10px;">
+                        <input type="text" id="f-dl-audio" placeholder="ID Drive pour le MP3 (Audio)">
+                    </div>
+
+                    <!-- Options pour Séries -->
+                    <div class="input-group full-width" id="wrap-serie" style="display:none; border:1px dashed #333; padding:10px; border-radius:8px;">
+                        <label style="color:var(--primary);">⚠️ Pour les séries, générez d'abord l'objet, vous ajouterez les épisodes manuellement dans le fichier JSON pour plus de sécurité.</label>
+                    </div>
+
+                    <div class="input-group full-width">
+                        <label>Description / Synopsis</label>
+                        <textarea id="f-desc" rows="3" placeholder="Résumé du film..."></textarea>
+                    </div>
+                </div>
+
+                <button type="button" class="btn-generate" onclick="genererJSON()">
+                    <i class="fas fa-code"></i> Générer le code JSON
+                </button>
+            </form>
+        </div>
+
+        <!-- 3. RÉSULTAT -->
+        <div id="result-section">
+            <button class="btn-copy" onclick="copierCode()"><i class="fas fa-copy"></i> Copier</button>
+            <textarea id="json-output" readonly></textarea>
+            <p style="color:var(--gray); font-size:12px; margin-top:10px; text-align:center;">
+                Copiez ce code et collez-le à la fin de votre fichier <strong id="file-hint">films.json</strong> (avant le dernier `]`). N'oubliez pas la virgule `,` avant !
+            </p>
+        </div>
+
+    </div>
+
+    <!-- SCRIPT DE L'ADMINISTRATION -->
+    <script>
+        // Le faux mot de passe pour protéger la page (Change-le si tu veux)
+        const MOT_DE_PASSE = "2005"; 
+
+        function checkPass() {
+            const val = document.getElementById('admin-pass').value;
+            if (val === MOT_DE_PASSE) {
+                document.getElementById('login-section').style.display = 'none';
+                document.getElementById('admin-form-section').style.display = 'block';
+            } else {
+                alert("Mot de passe incorrect.");
+            }
+        }
+
+        // Cache/Montre les champs selon si c'est Film, Série ou Musique
+        function toggleFields() {
+            const target = document.getElementById('target-db').value;
+            const tType = document.getElementById('f-type');
+            
+            document.getElementById('wrap-note').style.display = (target==='musique') ? 'none' : 'flex';
+            document.getElementById('wrap-langue').style.display = (target==='musique') ? 'none' : 'flex';
+            document.getElementById('wrap-artiste').style.display = (target==='musique') ? 'flex' : 'none';
+            document.getElementById('wrap-music-dl').style.display = (target==='musique') ? 'block' : 'none';
+            
+            document.getElementById('wrap-drive').style.display = (target==='serie') ? 'none' : 'flex';
+            document.getElementById('wrap-serie').style.display = (target==='serie') ? 'block' : 'none';
+
+            if (target === 'film') tType.value = 'film';
+            if (target === 'serie') tType.value = 'serie';
+            if (target === 'musique') tType.value = 'musique';
+            
+            document.getElementById('file-hint').innerText = (target==='musique') ? 'musique.json' : 'films.json';
+        }
+
+        // Le Cerveau : Génère l'objet
+        function genererJSON() {
+            const target = document.getElementById('target-db').value;
+            
+            let obj = {
+                id: parseInt(document.getElementById('f-id').value) || Date.now(),
+                type: document.getElementById('f-type').value,
+                titre: document.getElementById('f-titre').value
+            };
+
+            if (target === 'musique') {
+                obj.artiste = document.getElementById('f-artiste').value;
+            } else {
+                obj.note = parseFloat(document.getElementById('f-note').value) || 7.0;
+                obj.langue = document.getElementById('f-langue').value || "V.F.";
+            }
+
+            obj.origine = document.getElementById('f-origine').value;
+            obj.categorie = document.getElementById('f-cat').value;
+            obj.annee = parseInt(document.getElementById('f-annee').value) || 2024;
+            obj.image = document.getElementById('f-image').value;
+            obj.banner = document.getElementById('f-banner').value;
+
+            if (target !== 'serie') {
+                obj.driveId = document.getElementById('f-drive').value;
+            }
+
+            if (target === 'musique') {
+                obj.downloads = {
+                    video: document.getElementById('f-dl-video').value ? `https://drive.google.com/uc?export=download&id=${document.getElementById('f-dl-video').value}` : "",
+                    audio: document.getElementById('f-dl-audio').value ? `https://drive.google.com/uc?export=download&id=${document.getElementById('f-dl-audio').value}` : ""
+                };
+            }
+
+            obj.description = document.getElementById('f-desc').value;
+
+            if (target === 'serie') {
+                obj.saisons = [
+                    {
+                        nom: "Saison 1",
+                        episodes: [
+                            { titre: "Épisode 1", driveId: "" }
+                        ]
+                    }
+                ];
+            }
+
+            // Transforme l'objet Javascript en beau texte JSON
+            const jsonString = JSON.stringify(obj, null, 2);
+            
+            document.getElementById('result-section').style.display = 'block';
+            document.getElementById('json-output').value = ",\n" + jsonString; // Ajoute la virgule au début pour faciliter le collage
+            
+            // Scroll vers le bas pour voir le résultat
+            window.scrollTo(0, document.body.scrollHeight);
+        }
+
+        function copierCode() {
+            const output = document.getElementById('json-output');
+            output.select();
+            document.execCommand('copy');
+            alert("Code copié ! Ouvrez votre fichier films.json ou musique.json et collez-le à la fin.");
+        }
+    </script>
+</body>
+</html>

@@ -196,7 +196,9 @@ document.addEventListener("DOMContentLoaded", () => {
         let dlHistory = JSON.parse(localStorage.getItem('filmsall_downloads')) || [];
         dlHistory.unshift({ title: fileName, date: new Date().toLocaleDateString() });
         localStorage.setItem('filmsall_downloads', JSON.stringify(dlHistory));
-        if (typeof renderFullHistory === "function") renderFullHistory();
+        if (typeof renderFullHistory === "function") {
+            renderFullHistory();
+        }
     }
 
     function startActiveDownload(fileUrl, fileName) {
@@ -214,7 +216,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 <span style="color:white; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:60%;">${fileName}</span>
                 <span class="dl-percent" style="color:white; font-weight:bold;">0%</span>
             </div>
-            <div class="dl-bar-bg"><div class="dl-fill" style="height:100%; background:var(--whatsapp); width:0%; transition:width 0.2s;"></div></div>
+            <div class="dl-bar-bg">
+                <div class="dl-fill"></div>
+            </div>
         `;
         localList.insertBefore(progressDiv, localList.firstChild);
 
@@ -429,25 +433,18 @@ document.addEventListener("DOMContentLoaded", () => {
             if (data.saisons) {
                 data.saisons.forEach((s, idx) => seasonSelect.innerHTML += `<option value="${idx}">${s.nom}</option>`);
                 
-                let displayedEpisodes = 0;
-                const EPISODES_PER_PAGE = 3; 
-
-                const renderEp = (idx, isAppending = false) => {
+                const renderEp = (idx, showAll = false) => {
+                    episodesList.innerHTML = "";
                     const currentSeason = data.saisons[idx];
                     
-                    if (!isAppending) {
-                        episodesList.innerHTML = "";
-                        displayedEpisodes = 0;
-                    }
-
                     const oldBtn = document.getElementById('btn-load-more');
                     if (oldBtn) oldBtn.remove();
 
-                    const episodesToRender = currentSeason.episodes.slice(displayedEpisodes, displayedEpisodes + EPISODES_PER_PAGE);
+                    const epsToShow = showAll ? currentSeason.episodes : currentSeason.episodes.slice(0, 3);
 
-                    episodesToRender.forEach((ep, index) => {
+                    epsToShow.forEach((ep, i) => {
                         const sNum = (idx + 1).toString().padStart(2, '0');
-                        const eNum = (displayedEpisodes + index + 1).toString().padStart(2, '0');
+                        const eNum = (i + 1).toString().padStart(2, '0');
                         
                         const item = document.createElement('div');
                         item.className = 'episode-item';
@@ -471,15 +468,12 @@ document.addEventListener("DOMContentLoaded", () => {
                         episodesList.appendChild(item);
                     });
 
-                    displayedEpisodes += episodesToRender.length;
-
-                    if (displayedEpisodes < currentSeason.episodes.length) {
-                        const btn = document.createElement('button');
-                        btn.id = 'btn-load-more';
-                        btn.className = 'btn-load-more';
-                        btn.innerHTML = 'Épisodes suivants <i class="fas fa-chevron-down"></i>';
-                        btn.onclick = () => renderEp(idx, true);
-                        episodesList.appendChild(btn);
+                    if (!showAll && currentSeason.episodes.length > 3) {
+                        const moreBtn = document.createElement('div');
+                        moreBtn.className = 'episode-more';
+                        moreBtn.innerHTML = 'Tous les épisodes';
+                        moreBtn.onclick = () => renderEp(idx, true);
+                        episodesList.appendChild(moreBtn);
                     }
                 };
 
@@ -568,8 +562,22 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     const closeBtn = document.querySelector('.close-modal');
-    if(closeBtn) closeBtn.onclick = () => { modal.style.display = 'none'; const videoWrapper = document.getElementById('video-wrapper'); if(videoWrapper) videoWrapper.innerHTML = ""; document.body.classList.remove('cinema-mode'); };
-    window.onclick = (e) => { if(e.target == modal) { modal.style.display = 'none'; const videoWrapper = document.getElementById('video-wrapper'); if(videoWrapper) videoWrapper.innerHTML = ""; document.body.classList.remove('cinema-mode'); } };
+    if(closeBtn) closeBtn.onclick = () => { 
+        modal.style.display = 'none'; 
+        if(videoWrapper) videoWrapper.innerHTML = ""; 
+        document.body.classList.remove('cinema-mode'); 
+        const modalInfo = document.getElementById('modal-info');
+        if(modalInfo) modalInfo.style.display = 'block';
+    };
+    window.onclick = (e) => { 
+        if(e.target == modal) { 
+            modal.style.display = 'none'; 
+            if(videoWrapper) videoWrapper.innerHTML = ""; 
+            document.body.classList.remove('cinema-mode'); 
+            const modalInfo = document.getElementById('modal-info');
+            if(modalInfo) modalInfo.style.display = 'block';
+        } 
+    };
 
     function loadHeroAnimated(movies) {
         const heroSection = document.getElementById('hero-section');
