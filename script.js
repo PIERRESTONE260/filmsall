@@ -216,9 +216,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 <span style="color:white; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:60%;">${fileName}</span>
                 <span class="dl-percent" style="color:white; font-weight:bold;">0%</span>
             </div>
-            <div class="dl-bar-bg">
-                <div class="dl-fill"></div>
-            </div>
+            <div class="dl-bar-bg"><div class="dl-fill" style="height:100%; background:var(--whatsapp); width:0%; transition:width 0.2s;"></div></div>
         `;
         localList.insertBefore(progressDiv, localList.firstChild);
 
@@ -310,10 +308,32 @@ document.addEventListener("DOMContentLoaded", () => {
                                     
                                     let mediaTag = isAudio ? 'audio' : 'video';
                                     videoWrapper.innerHTML = `
-                                        <${mediaTag} controls autoplay style="width:100%; height:100%; object-fit:contain; background:black;">
-                                            <source src="${fileURL}" type="${file.type}">
-                                        </${mediaTag}>
+                                        <div class="premium-player-wrapper paused" id="premium-player">
+                                            <${mediaTag} id="main-video" class="premium-video" src="${fileURL}" playsinline></${mediaTag}>
+                                            <div id="skip-indicator" class="skip-indicator"><i class="fas fa-forward"></i> 10s</div>
+                                            <div class="player-ui-overlay" id="player-ui">
+                                                <div class="player-top-bar">
+                                                    <button class="player-back-btn" onclick="closeModal()"><i class="fas fa-arrow-left"></i></button>
+                                                    <span class="player-title">${file.name}</span>
+                                                </div>
+                                                <div class="player-center-area">
+                                                    <div class="double-tap-zone zone-left" id="zone-left"></div>
+                                                    <button class="player-play-btn" id="btn-play-local"><i class="fas fa-play"></i></button>
+                                                    <div class="double-tap-zone zone-right" id="zone-right"></div>
+                                                </div>
+                                                <div class="player-bottom-bar">
+                                                    <div class="player-progress-area" id="progress-area">
+                                                        <div class="player-progress-track"><div class="player-progress-fill" id="progress-fill"><div class="player-progress-thumb"></div></div></div>
+                                                    </div>
+                                                    <div class="player-tools">
+                                                        <div class="player-time"><span id="current-time">0:00</span> / <span id="total-time">0:00</span></div>
+                                                        <div class="player-actions"><button class="player-icon-btn"><i class="fas fa-cog"></i></button><button class="player-icon-btn" id="btn-fullscreen"><i class="fas fa-expand"></i></button></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     `;
+                                    setupPremiumPlayer();
                                 }
                             };
                             if(localFilesList) localFilesList.appendChild(item);
@@ -365,15 +385,150 @@ document.addEventListener("DOMContentLoaded", () => {
                         
                         let mediaTag = isAudio ? 'audio' : 'video';
                         videoWrapper.innerHTML = `
-                            <${mediaTag} controls autoplay style="width:100%; height:100%; object-fit:contain; background:black;">
-                                <source src="${fileURL}" type="${file.type}">
-                            </${mediaTag}>
+                            <div class="premium-player-wrapper paused" id="premium-player">
+                                <${mediaTag} id="main-video" class="premium-video" src="${fileURL}" playsinline></${mediaTag}>
+                                <div id="skip-indicator" class="skip-indicator"><i class="fas fa-forward"></i> 10s</div>
+                                <div class="player-ui-overlay" id="player-ui">
+                                    <div class="player-top-bar">
+                                        <button class="player-back-btn" onclick="closeModal()"><i class="fas fa-arrow-left"></i></button>
+                                        <span class="player-title">${file.name}</span>
+                                    </div>
+                                    <div class="player-center-area">
+                                        <div class="double-tap-zone zone-left" id="zone-left"></div>
+                                        <button class="player-play-btn" id="btn-play-local"><i class="fas fa-play"></i></button>
+                                        <div class="double-tap-zone zone-right" id="zone-right"></div>
+                                    </div>
+                                    <div class="player-bottom-bar">
+                                        <div class="player-progress-area" id="progress-area">
+                                            <div class="player-progress-track"><div class="player-progress-fill" id="progress-fill"><div class="player-progress-thumb"></div></div></div>
+                                        </div>
+                                        <div class="player-tools">
+                                            <div class="player-time"><span id="current-time">0:00</span> / <span id="total-time">0:00</span></div>
+                                            <div class="player-actions"><button class="player-icon-btn"><i class="fas fa-cog"></i></button><button class="player-icon-btn" id="btn-fullscreen"><i class="fas fa-expand"></i></button></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         `;
+                        setupPremiumPlayer();
                     }
                 };
                 if(localFilesList) localFilesList.appendChild(item);
             });
         };
+    }
+
+    function setupPremiumPlayer() {
+        const video = document.getElementById('main-video');
+        const playerWrapper = document.getElementById('premium-player');
+        const btnPlay = document.getElementById('btn-play-local') || document.getElementById('btn-play');
+        const btnFullscreen = document.getElementById('btn-fullscreen');
+        const progressArea = document.getElementById('progress-area');
+        const progressFill = document.getElementById('progress-fill');
+        const currentTimeEl = document.getElementById('current-time');
+        const totalTimeEl = document.getElementById('total-time');
+        const zoneLeft = document.getElementById('zone-left');
+        const zoneRight = document.getElementById('zone-right');
+        const skipIndicator = document.getElementById('skip-indicator');
+
+        if(!video || !playerWrapper || !btnPlay) return;
+
+        let hideUITimeout;
+        const showUI = () => {
+            playerWrapper.classList.add('active');
+            clearTimeout(hideUITimeout);
+            if (!video.paused) {
+                hideUITimeout = setTimeout(() => { playerWrapper.classList.remove('active'); }, 3000);
+            }
+        };
+
+        playerWrapper.addEventListener('click', showUI);
+        playerWrapper.addEventListener('mousemove', showUI);
+        playerWrapper.addEventListener('touchstart', showUI);
+
+        const togglePlay = (e) => {
+            if(e) e.stopPropagation(); 
+            if(video.paused) { 
+                video.play(); 
+                btnPlay.innerHTML = '<i class="fas fa-pause"></i>'; 
+                playerWrapper.classList.remove('paused');
+                showUI(); 
+            } else { 
+                video.pause(); 
+                btnPlay.innerHTML = '<i class="fas fa-play"></i>'; 
+                playerWrapper.classList.add('paused'); 
+            }
+        };
+        btnPlay.onclick = togglePlay;
+
+        const formatTime = (time) => {
+            let min = Math.floor(time / 60);
+            let sec = Math.floor(time % 60);
+            return `${min}:${sec < 10 ? '0':''}${sec}`;
+        };
+
+        video.addEventListener('timeupdate', () => {
+            if (!isNaN(video.duration)) {
+                const percent = (video.currentTime / video.duration) * 100;
+                progressFill.style.width = `${percent}%`;
+                currentTimeEl.innerText = formatTime(video.currentTime);
+            }
+        });
+
+        video.addEventListener('loadedmetadata', () => {
+            totalTimeEl.innerText = formatTime(video.duration);
+        });
+
+        progressArea.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const rect = progressArea.getBoundingClientRect();
+            const pos = (e.clientX - rect.left) / rect.width;
+            video.currentTime = pos * video.duration;
+        });
+
+        let lastTap = 0;
+        const handleDoubleTap = (e, direction) => {
+            e.stopPropagation();
+            const currentTime = new Date().getTime();
+            const tapLength = currentTime - lastTap;
+            
+            if (tapLength < 300 && tapLength > 0) {
+                if(direction === 'forward') {
+                    video.currentTime += 10;
+                    skipIndicator.innerHTML = '<i class="fas fa-forward"></i> 10s';
+                } else {
+                    video.currentTime -= 10;
+                    skipIndicator.innerHTML = '<i class="fas fa-backward"></i> 10s';
+                }
+                skipIndicator.classList.add('show');
+                setTimeout(() => skipIndicator.classList.remove('show'), 500);
+                e.preventDefault(); 
+            }
+            lastTap = currentTime;
+        };
+
+        zoneLeft.addEventListener('touchend', (e) => handleDoubleTap(e, 'backward'));
+        zoneRight.addEventListener('touchend', (e) => handleDoubleTap(e, 'forward'));
+        zoneLeft.addEventListener('dblclick', (e) => handleDoubleTap(e, 'backward'));
+        zoneRight.addEventListener('dblclick', (e) => handleDoubleTap(e, 'forward'));
+
+        btnFullscreen.onclick = (e) => {
+            e.stopPropagation();
+            if (!document.fullscreenElement) {
+                if (playerWrapper.requestFullscreen) playerWrapper.requestFullscreen();
+                else if (playerWrapper.webkitRequestFullscreen) playerWrapper.webkitRequestFullscreen();
+                if(screen.orientation && screen.orientation.lock) screen.orientation.lock('landscape').catch(err=>console.log(err));
+            } else {
+                if (document.exitFullscreen) document.exitFullscreen();
+                else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
+                if(screen.orientation && screen.orientation.unlock) screen.orientation.unlock();
+            }
+        };
+
+        video.play();
+        btnPlay.innerHTML = '<i class="fas fa-pause"></i>';
+        playerWrapper.classList.remove('paused');
+        showUI();
     }
 
     function openModal(data) {
@@ -407,12 +562,48 @@ document.addEventListener("DOMContentLoaded", () => {
         };
 
         const playMedia = () => {
-            if (!data.driveId) { alert("Bientôt disponible !"); return; }
-            document.body.classList.add('cinema-mode'); 
-            if(modalCover) modalCover.style.display = 'none';
-            if(videoWrapper) {
-                videoWrapper.style.display = 'block';
-                videoWrapper.innerHTML = `<div class="video-overlay-fix"></div><iframe src="https://drive.google.com/file/d/${data.driveId}/preview" allow="autoplay; fullscreen" style="width:100%; height:100%; border:none;"></iframe>`;
+            if (data.videoUrl && data.videoUrl !== "") {
+                document.body.classList.add('cinema-mode'); 
+                if(modalCover) modalCover.style.display = 'none';
+                if(videoWrapper) {
+                    videoWrapper.style.display = 'block';
+                    videoWrapper.innerHTML = `
+                        <div class="premium-player-wrapper paused" id="premium-player">
+                            <video id="main-video" class="premium-video" src="${data.videoUrl}" playsinline></video>
+                            <div id="skip-indicator" class="skip-indicator"><i class="fas fa-forward"></i> 10s</div>
+                            <div class="player-ui-overlay" id="player-ui">
+                                <div class="player-top-bar">
+                                    <button class="player-back-btn" onclick="closeModal()"><i class="fas fa-arrow-left"></i></button>
+                                    <span class="player-title">${data.titre}</span>
+                                </div>
+                                <div class="player-center-area">
+                                    <div class="double-tap-zone zone-left" id="zone-left"></div>
+                                    <button class="player-play-btn" id="btn-play"><i class="fas fa-play"></i></button>
+                                    <div class="double-tap-zone zone-right" id="zone-right"></div>
+                                </div>
+                                <div class="player-bottom-bar">
+                                    <div class="player-progress-area" id="progress-area">
+                                        <div class="player-progress-track"><div class="player-progress-fill" id="progress-fill"><div class="player-progress-thumb"></div></div></div>
+                                    </div>
+                                    <div class="player-tools">
+                                        <div class="player-time"><span id="current-time">0:00</span> / <span id="total-time">0:00</span></div>
+                                        <div class="player-actions"><button class="player-icon-btn"><i class="fas fa-cog"></i></button><button class="player-icon-btn" id="btn-fullscreen"><i class="fas fa-expand"></i></button></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    setupPremiumPlayer();
+                }
+            } else if (data.driveId) {
+                document.body.classList.add('cinema-mode'); 
+                if(modalCover) modalCover.style.display = 'none';
+                if(videoWrapper) {
+                    videoWrapper.style.display = 'block';
+                    videoWrapper.innerHTML = `<div class="video-overlay-fix"></div><iframe src="https://drive.google.com/file/d/${data.driveId}/preview" allow="autoplay; fullscreen" style="width:100%; height:100%; border:none;"></iframe>`;
+                }
+            } else {
+                alert("Bientôt disponible !");
             }
         };
 
@@ -453,7 +644,13 @@ document.addEventListener("DOMContentLoaded", () => {
                             <div class="episode-meta">${ep.titre}</div>
                             <a href="#" class="episode-download" onclick="event.stopPropagation()"><i class="fas fa-download"></i></a>
                         `;
-                        item.onclick = () => { if(ep.driveId && ep.driveId !== "") { data.driveId = ep.driveId; playMedia(); } else alert("Épisode bientôt disponible !"); };
+                        item.onclick = () => { 
+                            if(ep.videoUrl && ep.videoUrl !== "") { 
+                                data.videoUrl = ep.videoUrl; data.driveId = ""; playMedia(); 
+                            } else if(ep.driveId && ep.driveId !== "") { 
+                                data.driveId = ep.driveId; data.videoUrl = ""; playMedia(); 
+                            } else alert("Épisode bientôt disponible !"); 
+                        };
                         
                         const dlLink = item.querySelector('.episode-download');
                         dlLink.onclick = (e) => {
@@ -561,23 +758,16 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    const closeBtn = document.querySelector('.close-modal');
-    if(closeBtn) closeBtn.onclick = () => { 
-        modal.style.display = 'none'; 
+    window.closeModal = function() {
+        if(modal) modal.style.display = 'none'; 
+        const videoWrapper = document.getElementById('video-wrapper'); 
         if(videoWrapper) videoWrapper.innerHTML = ""; 
         document.body.classList.remove('cinema-mode'); 
-        const modalInfo = document.getElementById('modal-info');
-        if(modalInfo) modalInfo.style.display = 'block';
     };
-    window.onclick = (e) => { 
-        if(e.target == modal) { 
-            modal.style.display = 'none'; 
-            if(videoWrapper) videoWrapper.innerHTML = ""; 
-            document.body.classList.remove('cinema-mode'); 
-            const modalInfo = document.getElementById('modal-info');
-            if(modalInfo) modalInfo.style.display = 'block';
-        } 
-    };
+    
+    const closeBtn = document.querySelector('.close-modal');
+    if(closeBtn) closeBtn.onclick = window.closeModal;
+    window.onclick = (e) => { if(e.target == modal) window.closeModal(); };
 
     function loadHeroAnimated(movies) {
         const heroSection = document.getElementById('hero-section');
@@ -599,7 +789,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 if(heroDesc) heroDesc.innerText = currentMovie.description || "";
                 if(heroPlay) heroPlay.onclick = () => {
                     openModal(currentMovie);
-                    if(currentMovie.driveId) setTimeout(() => { const playBtn = document.getElementById('center-play-btn'); if(playBtn) playBtn.click(); }, 300);
+                    if(currentMovie.driveId || currentMovie.videoUrl) setTimeout(() => { const playBtn = document.getElementById('center-play-btn'); if(playBtn) playBtn.click(); }, 300);
                 };
                 currentIndex = (currentIndex + 1) % featuredMovies.length;
             }
