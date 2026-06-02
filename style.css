@@ -13,7 +13,7 @@
 * { 
     margin: 0; padding: 0; box-sizing: border-box; 
     font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
-    outline: none; -webkit-tap-highlight-color: transparent;
+    outline: none; -webkit-tap-highlight-color: transparent; 
 }
 
 body { 
@@ -56,7 +56,11 @@ img {
     height: 70px;
     transition: 0.3s; 
 }
-.logo-img { height: 35px; width: auto; object-fit: contain; transition: transform 0.3s; }
+
+.logo-img { 
+    height: 35px; width: auto; object-fit: contain; 
+    transition: transform 0.3s; 
+}
 .logo-img:hover { transform: scale(1.05); }
 
 .search-box { 
@@ -170,7 +174,7 @@ img {
 .modal-cover { height: 40vh; background-size: cover; background-position: center; }
 .modal-cover::after { content:''; position: absolute; bottom:0; left:0; width:100%; height:60%; background: linear-gradient(to top, var(--bg) 0%, transparent 100%); }
 .video-container { aspect-ratio: 16/9; display: none; }
-.video-container iframe, .video-container video, .video-container audio { width: 100%; height: 100%; border: none; object-fit: contain; }
+.video-container iframe { width: 100%; height: 100%; border: none; object-fit: contain; }
 .video-overlay-fix { position: absolute; top: 0; right: 0; width: 60px; height: 60px; background: #000000; z-index: 10; }
 
 .close-modal { position: absolute; top: 15px; left: 15px; font-size: 22px; color: white; background: rgba(0,0,0,0.6); width: 45px; height: 45px; border-radius: 50%; display: flex; justify-content: center; align-items: center; z-index: 10000; cursor: pointer; border: 1px solid rgba(255,255,255,0.2); backdrop-filter: blur(5px); transition: 0.2s; }
@@ -180,20 +184,24 @@ img {
 .center-play:hover { transform: translate(-50%, -50%) scale(1.1); background: #0056b3; }
 
 /* =========================================
-   9. LECTEUR VIDÉO PREMIUM (STYLE YOUTUBE/NETFLIX)
+   9. LECTEUR VIDÉO PREMIUM (POUR FICHIERS LOCAUX/MP4)
    ========================================= */
 .premium-player-wrapper { position: relative; width: 100%; background: #000; aspect-ratio: 16/9; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.9); }
 .premium-video { width: 100%; height: 100%; object-fit: contain; background: #000; }
 .player-ui-overlay { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.4); display: flex; flex-direction: column; justify-content: space-between; opacity: 0; transition: opacity 0.3s ease; z-index: 10; }
 .premium-player-wrapper.active .player-ui-overlay, .premium-player-wrapper.paused .player-ui-overlay { opacity: 1; }
+
 .player-top-bar { display: flex; align-items: center; padding: 15px; gap: 15px; background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent); }
 .player-back-btn { background: transparent; border: none; color: white; font-size: 20px; cursor: pointer; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
 .player-title { color: white; font-size: 14px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
+
 .player-center-area { display: flex; justify-content: space-between; align-items: center; flex: 1; position: relative; }
 .double-tap-zone { width: 30%; height: 100%; position: absolute; top: 0; z-index: 15; }
 .zone-left { left: 0; } .zone-right { right: 0; }
-.player-play-btn { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: transparent; border: none; color: white; font-size: 45px; cursor: pointer; filter: drop-shadow(0 2px 8px rgba(0,0,0,0.5)); transition: transform 0.1s; z-index: 20; }
-.player-play-btn:active { transform: translate(-50%, -50%) scale(0.9); }
+
+.player-play-btn { background: transparent; border: none; color: white; font-size: 55px; cursor: pointer; filter: drop-shadow(0 2px 8px rgba(0,0,0,0.5)); transition: transform 0.1s; z-index: 20; }
+.player-play-btn:active { transform: scale(0.9); }
+
 .player-bottom-bar { padding: 10px 15px 15px 15px; background: linear-gradient(to top, rgba(0,0,0,0.8), transparent); display: flex; flex-direction: column; gap: 8px; }
 .player-progress-area { width: 100%; height: 12px; display: flex; align-items: center; cursor: pointer; }
 .player-progress-track { width: 100%; height: 3px; background: rgba(255, 255, 255, 0.3); border-radius: 2px; position: relative; transition: height 0.2s; }
@@ -201,13 +209,19 @@ img {
 .player-progress-fill { height: 100%; background: var(--primary); width: 0%; border-radius: 2px; position: relative; }
 .player-progress-thumb { position: absolute; right: -6px; top: 50%; transform: translateY(-50%); width: 12px; height: 12px; background: var(--primary); border-radius: 50%; opacity: 0; transition: opacity 0.2s; }
 .player-progress-area:hover .player-progress-thumb { opacity: 1; }
+
 .player-tools { display: flex; justify-content: space-between; align-items: center; }
 .player-time { color: white; font-size: 12px; font-weight: 500; font-variant-numeric: tabular-nums; }
 .player-actions { display: flex; gap: 20px; align-items: center; }
 .player-icon-btn { background: transparent; border: none; color: white; font-size: 18px; cursor: pointer; transition: color 0.2s; }
 .player-icon-btn:hover { color: var(--primary); }
+
 .skip-indicator { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(0,0,0,0.6); color: white; padding: 10px 20px; border-radius: 30px; font-weight: bold; font-size: 14px; pointer-events: none; opacity: 0; transition: opacity 0.2s; z-index: 30; display: flex; align-items: center; gap: 8px; }
 .skip-indicator.show { opacity: 1; }
+
+/* Bouton pour forcer le PIP (Picture-in-Picture) */
+.btn-pip { position: absolute; bottom: 10px; right: 10px; background: rgba(0,0,0,0.6); color: white; border: 1px solid rgba(255,255,255,0.3); padding: 8px 12px; border-radius: 5px; cursor: pointer; z-index: 20; font-size: 14px; transition: 0.3s; display:none; }
+.btn-pip:hover { background: var(--primary); border-color: var(--primary); }
 
 /* =========================================
    10. INFORMATIONS DU FILM (MODAL)
@@ -230,7 +244,7 @@ img {
 .episodes-list::-webkit-scrollbar { display: none; }
 .episode-item { flex: 0 0 auto; min-width: 220px; max-width: 220px; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; padding: 15px; background: var(--surface); border-radius: 10px; border: 1px solid #1f2937; cursor: pointer; transition: 0.2s; position: relative; min-height: 90px;}
 .episode-item:hover { background: #1f2937; border-color: var(--primary); }
-.episode-title { color: white; font-size: 14px; display: flex; align-items: center; gap: 8px; font-weight: bold; margin-bottom: 5px; width: 80%;}
+.episode-title { color: white; font-size: 15px; display: flex; align-items: center; gap: 8px; font-weight: bold; margin-bottom: 5px; width: 80%;}
 .episode-title i { color: var(--primary); font-size: 18px; }
 .episode-meta { color: var(--gray); font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 85%; }
 .episode-download { position: absolute; top: 15px; right: 15px; color: var(--whatsapp); font-size: 18px; text-decoration:none; transition: 0.2s;}
@@ -259,6 +273,7 @@ img {
 body.cinema-mode { background-color: #000 !important; }
 body.cinema-mode .bottom-nav { display: none !important; }
 body.cinema-mode .modal-content { background-color: #000 !important; }
+body.cinema-mode .modal-info { display: none; } /* On cache tout sauf la vidéo en mode cinéma pour une immersion totale */
 
 /* =========================================
    12. NOTIFICATIONS TOAST
@@ -344,10 +359,12 @@ body.cinema-mode .modal-content { background-color: #000 !important; }
 @media screen and (orientation: landscape) and (max-height: 500px) {
     body.cinema-mode .modal-info { display: none !important; }
     body.cinema-mode .video-container { height: 100vh !important; width: 100vw !important; position: fixed; top: 0; left: 0; z-index: 100000; }
-    body.cinema-mode .close-modal { top: 5px; left: 5px; transform: scale(0.8); opacity: 0.5; z-index: 100001; } /* On s'assure que la croix passe au-dessus de la vidéo */
+    body.cinema-mode .premium-player-wrapper { border-radius: 0; }
+    body.cinema-mode .close-modal { top: 5px; left: 5px; transform: scale(0.8); opacity: 0.5; z-index: 100001; } 
 }
 .video-container:fullscreen { width: 100vw !important; height: 100vh !important; display: flex; justify-content: center; align-items: center; background: black; }
 .video-container:fullscreen iframe, .video-container:fullscreen video { width: 100%; height: 100%; }
+.premium-player-wrapper:fullscreen { width: 100vw !important; height: 100vh !important; border-radius: 0; }
 
 /* =========================================
    17. OPTIMISATION ORDINATEUR (DESKTOP)

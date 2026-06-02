@@ -257,12 +257,32 @@ document.addEventListener("DOMContentLoaded", () => {
             } else {
                 percentTxt.innerText = 'Erreur';
                 fillBar.style.background = 'red';
-                setTimeout(() => { window.open(fileUrl, '_blank'); progressDiv.remove(); }, 2000);
+                // Fallback: force direct download link if XHR fails (e.g. CORS block from Drive)
+                setTimeout(() => { 
+                    const a = document.createElement('a');
+                    a.href = fileUrl;
+                    a.target = '_blank';
+                    a.download = fileName;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    progressDiv.remove(); 
+                }, 2000);
             }
         };
         xhr.onerror = () => {
             percentTxt.innerText = 'Redirection...';
-            setTimeout(() => { window.open(fileUrl, '_blank'); progressDiv.remove(); }, 1000);
+            // Fallback: force direct download link if XHR fails
+            setTimeout(() => { 
+                const a = document.createElement('a');
+                a.href = fileUrl;
+                a.target = '_blank';
+                a.download = fileName;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                progressDiv.remove(); 
+            }, 1000);
         };
         xhr.send();
     }
@@ -270,7 +290,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const btnImportLocal = document.getElementById('btn-import-local');
     const localFilesList = document.getElementById('local-files-list');
 
-    if (btnImportLocal) {
+    if (btnImportLocal && localFileInput) {
         btnImportLocal.onclick = async () => {
             try {
                 const directoryHandle = await window.showDirectoryPicker();
@@ -333,7 +353,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                             </div>
                                         </div>
                                     `;
-                                    setupPremiumPlayer();
+                                    setupPremiumPlayer(document.getElementById('premium-player'), document.getElementById('main-video'));
                                 }
                             };
                             if(localFilesList) localFilesList.appendChild(item);
@@ -410,7 +430,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                 </div>
                             </div>
                         `;
-                        setupPremiumPlayer();
+                        setupPremiumPlayer(document.getElementById('premium-player'), document.getElementById('main-video'));
                     }
                 };
                 if(localFilesList) localFilesList.appendChild(item);
@@ -418,9 +438,7 @@ document.addEventListener("DOMContentLoaded", () => {
         };
     }
 
-    function setupPremiumPlayer() {
-        const video = document.getElementById('main-video');
-        const playerWrapper = document.getElementById('premium-player');
+    function setupPremiumPlayer(playerWrapper, video) {
         const btnPlay = document.getElementById('btn-play-local') || document.getElementById('btn-play');
         const btnFullscreen = document.getElementById('btn-fullscreen');
         const progressArea = document.getElementById('progress-area');
@@ -555,6 +573,20 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         if(actionGrid) actionGrid.innerHTML = "";
 
+        // Improved download handling for direct links, bypassing API redirection issues
+        const handleDirectDownload = (url, fileName) => {
+            if(!url) { alert("Lien indisponible !"); return; }
+            const a = document.createElement('a');
+            a.style.display = 'none';
+            a.href = url;
+            a.download = fileName;
+            a.target = '_blank'; // Ensuring it opens in a new tab if force-download fails
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            saveDownloadHistory(fileName);
+        };
+
         const handleDownloadRedirection = (fileUrl, fileName) => {
             if(!fileUrl) { alert("Lien indisponible !"); return; }
             localStorage.setItem('pending_download', JSON.stringify({ url: fileUrl, name: fileName }));
@@ -562,48 +594,12 @@ document.addEventListener("DOMContentLoaded", () => {
         };
 
         const playMedia = () => {
-            if (data.videoUrl && data.videoUrl !== "") {
-                document.body.classList.add('cinema-mode'); 
-                if(modalCover) modalCover.style.display = 'none';
-                if(videoWrapper) {
-                    videoWrapper.style.display = 'block';
-                    videoWrapper.innerHTML = `
-                        <div class="premium-player-wrapper paused" id="premium-player">
-                            <video id="main-video" class="premium-video" src="${data.videoUrl}" playsinline></video>
-                            <div id="skip-indicator" class="skip-indicator"><i class="fas fa-forward"></i> 10s</div>
-                            <div class="player-ui-overlay" id="player-ui">
-                                <div class="player-top-bar">
-                                    <button class="player-back-btn" onclick="closeModal()"><i class="fas fa-arrow-left"></i></button>
-                                    <span class="player-title">${data.titre}</span>
-                                </div>
-                                <div class="player-center-area">
-                                    <div class="double-tap-zone zone-left" id="zone-left"></div>
-                                    <button class="player-play-btn" id="btn-play"><i class="fas fa-play"></i></button>
-                                    <div class="double-tap-zone zone-right" id="zone-right"></div>
-                                </div>
-                                <div class="player-bottom-bar">
-                                    <div class="player-progress-area" id="progress-area">
-                                        <div class="player-progress-track"><div class="player-progress-fill" id="progress-fill"><div class="player-progress-thumb"></div></div></div>
-                                    </div>
-                                    <div class="player-tools">
-                                        <div class="player-time"><span id="current-time">0:00</span> / <span id="total-time">0:00</span></div>
-                                        <div class="player-actions"><button class="player-icon-btn"><i class="fas fa-cog"></i></button><button class="player-icon-btn" id="btn-fullscreen"><i class="fas fa-expand"></i></button></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                    setupPremiumPlayer();
-                }
-            } else if (data.driveId) {
-                document.body.classList.add('cinema-mode'); 
-                if(modalCover) modalCover.style.display = 'none';
-                if(videoWrapper) {
-                    videoWrapper.style.display = 'block';
-                    videoWrapper.innerHTML = `<div class="video-overlay-fix"></div><iframe src="https://drive.google.com/file/d/${data.driveId}/preview" allow="autoplay; fullscreen" style="width:100%; height:100%; border:none;"></iframe>`;
-                }
-            } else {
-                alert("Bientôt disponible !");
+            if (!data.driveId) { alert("Bientôt disponible !"); return; }
+            document.body.classList.add('cinema-mode'); 
+            if(modalCover) modalCover.style.display = 'none';
+            if(videoWrapper) {
+                videoWrapper.style.display = 'block';
+                videoWrapper.innerHTML = `<div class="video-overlay-fix"></div><iframe src="https://drive.google.com/file/d/${data.driveId}/preview" allow="autoplay; fullscreen" style="width:100%; height:100%; border:none;"></iframe>`;
             }
         };
 
@@ -624,18 +620,25 @@ document.addEventListener("DOMContentLoaded", () => {
             if (data.saisons) {
                 data.saisons.forEach((s, idx) => seasonSelect.innerHTML += `<option value="${idx}">${s.nom}</option>`);
                 
-                const renderEp = (idx, showAll = false) => {
-                    episodesList.innerHTML = "";
+                let displayedEpisodes = 0;
+                const EPISODES_PER_PAGE = 3; 
+
+                const renderEp = (idx, isAppending = false) => {
                     const currentSeason = data.saisons[idx];
                     
+                    if (!isAppending) {
+                        episodesList.innerHTML = "";
+                        displayedEpisodes = 0;
+                    }
+
                     const oldBtn = document.getElementById('btn-load-more');
                     if (oldBtn) oldBtn.remove();
 
-                    const epsToShow = showAll ? currentSeason.episodes : currentSeason.episodes.slice(0, 3);
+                    const episodesToRender = currentSeason.episodes.slice(displayedEpisodes, displayedEpisodes + EPISODES_PER_PAGE);
 
-                    epsToShow.forEach((ep, i) => {
+                    episodesToRender.forEach((ep, i) => {
                         const sNum = (idx + 1).toString().padStart(2, '0');
-                        const eNum = (i + 1).toString().padStart(2, '0');
+                        const eNum = (displayedEpisodes + i + 1).toString().padStart(2, '0');
                         
                         const item = document.createElement('div');
                         item.className = 'episode-item';
@@ -656,8 +659,9 @@ document.addEventListener("DOMContentLoaded", () => {
                         dlLink.onclick = (e) => {
                             e.preventDefault(); e.stopPropagation();
                             if(ep.driveId) {
+                                // Direct download handling
                                 const dlUrl = `https://drive.usercontent.google.com/download?id=${ep.driveId}&export=download&confirm=t`;
-                                handleDownloadRedirection(dlUrl, `${data.titre}_S${sNum}E${eNum}.mp4`);
+                                handleDirectDownload(dlUrl, `${data.titre}_S${sNum}E${eNum}.mp4`);
                             }
                             else alert("Bientôt !");
                         }
@@ -665,12 +669,15 @@ document.addEventListener("DOMContentLoaded", () => {
                         episodesList.appendChild(item);
                     });
 
-                    if (!showAll && currentSeason.episodes.length > 3) {
-                        const moreBtn = document.createElement('div');
-                        moreBtn.className = 'episode-more';
-                        moreBtn.innerHTML = 'Tous les épisodes';
-                        moreBtn.onclick = () => renderEp(idx, true);
-                        episodesList.appendChild(moreBtn);
+                    displayedEpisodes += episodesToRender.length;
+
+                    if (displayedEpisodes < currentSeason.episodes.length) {
+                        const btn = document.createElement('button');
+                        btn.id = 'btn-load-more';
+                        btn.className = 'btn-load-more';
+                        btn.innerHTML = 'Épisodes suivants <i class="fas fa-chevron-down"></i>';
+                        btn.onclick = () => renderEp(idx, true);
+                        episodesList.appendChild(btn);
                     }
                 };
 
@@ -695,14 +702,14 @@ document.addEventListener("DOMContentLoaded", () => {
                     const btnVid = document.createElement('button');
                     btnVid.className = 'btn-action';
                     btnVid.innerHTML = '<i class="fas fa-video"></i> MP4';
-                    btnVid.onclick = () => handleDownloadRedirection(data.downloads.video, `${data.titre}.mp4`);
+                    btnVid.onclick = () => handleDirectDownload(data.downloads.video, `${data.titre}.mp4`);
                     actionGrid.appendChild(btnVid);
                 }
                 if(data.downloads.audio) {
                     const btnAud = document.createElement('button');
                     btnAud.className = 'btn-action';
                     btnAud.innerHTML = '<i class="fas fa-music"></i> MP3';
-                    btnAud.onclick = () => handleDownloadRedirection(data.downloads.audio, `${data.titre}.mp3`);
+                    btnAud.onclick = () => handleDirectDownload(data.downloads.audio, `${data.titre}.mp3`);
                     actionGrid.appendChild(btnAud);
                 }
             } else {
@@ -710,7 +717,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 dlBtn.className = 'btn-action';
                 if(data.driveId) {
                     const driveDlLink = `https://drive.usercontent.google.com/download?id=${data.driveId}&export=download&confirm=t`;
-                    dlBtn.onclick = () => handleDownloadRedirection(driveDlLink, `${data.titre}.mp4`);
+                    dlBtn.onclick = () => handleDirectDownload(driveDlLink, `${data.titre}.mp4`);
                     dlBtn.innerHTML = '<i class="fas fa-download"></i> TÉLÉCHARGER';
                 } else { 
                     dlBtn.onclick = (e)=>{e.preventDefault(); alert("Bientôt !");} 
